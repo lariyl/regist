@@ -16,7 +16,7 @@ if(!$id){
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
   </head>
   <body>
- <!-- <p class="navbar-text navbar-left">Signed in as <a href="#" class="navbar-link"><?php echo $this->session->userdata('username'); ?></a></p> -->
+  <p class="navbar-text navbar-left">Signed in as <a href="#" class="navbar-link"><?php echo $this->session->userdata('username'); ?></a></p> 
 <div class="container">
   <div class="row">
     <div class="col-md-4">

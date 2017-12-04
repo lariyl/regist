@@ -3,9 +3,10 @@
   <head>
     <meta charset="utf-8">
     <title>THESIS</title>
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" media="screen" title="no title">
+<link rel="stylesheet" href="<?php echo base_url(); ?>assets/css/bootstrap.min.css" media="screen" title="no title">
   </head>
   <body>
+  
  
     <div class="container">
     <div class="row">
@@ -45,8 +46,6 @@
                               <label>Password</label>
                                 <input class="form-control" placeholder="Password" name="password" type="password" required>
                             </div>
- 
- 
                                 <input class="btn btn-lg btn-success btn-block" type="submit" value="login" name="login" >
  
                         </fieldset>

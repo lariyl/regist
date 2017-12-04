@@ -39,6 +39,9 @@
                               <div class="form-group">
                                   <input class="form-control" placeholder="Password" name="password" type="password" required >
                               </div>
+                              <div class="form-group">
+                                  <input class="form-control" placeholder="Confirm Password" name="confirmpassword" type="password" required >
+                              </div>
  
                               <input class="btn btn-lg btn-success btn-block" type="submit" value="Register" name="register" >
  

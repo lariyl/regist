@@ -13,10 +13,19 @@ if(!$id){
   <head>
     <meta charset="utf-8">
     <title>User Profile Dashboard-CodeIgniter Login Registration</title>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+          <!-- Bootstrap core CSS-->
+      <link href="<?php echo base_url(); ?>assets/css/bootstrap.min.css" rel="stylesheet">
+      <!-- Custom fonts for this template-->
+      <link href="<?php echo base_url(); ?>assets/vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+      <!-- Page level plugin CSS-->
+      <link href="<?php echo base_url(); ?>assets/vendor/datatables/dataTables.bootstrap4.css" rel="stylesheet">
+      <!-- Custom styles for this template-->
+      <link href="<?php echo base_url(); ?>assets/css/sb-admin.css" rel="stylesheet">
   </head>
+
+
   <body>
- <!-- <p class="navbar-text navbar-left">Signed in as <a href="#" class="navbar-link"><?php echo $this->session->userdata('username'); ?></a></p> -->
+ <p class="navbar-text navbar-left">Signed in as <a href="#" class="navbar-link"><?php echo $this->session->userdata('username'); ?></a></p>
 <div class="container">
   <div class="row">
     <div class="col-md-4">

@@ -8,7 +8,7 @@ public function __construct(){
   			$this->load->helper('url');
   	 		$this->load->model('user_model');
         $this->load->library('session');
- 
+        $this->load->library('form_validation');
 }
  
 public function index()
@@ -24,9 +24,24 @@ public function register_user(){
       'password'=>md5($this->input->post('password')),
         );
         print_r($user);
- 
 $username_check=$this->user_model->username_check($user['username']);
+$this->form_validation->set_rules('confirmpassword', 'Confirm Password', 'required|matches[password]');
  
+
+if($this->form_validation->run()){
+  $this->user_model->register_user($user);
+  $this->session->set_flashdata('success_msg', 'Registered successfully.Now login to your account.');
+  redirect('user/login_view');
+ 
+}
+else{
+ 
+  $this->session->set_flashdata('error_msg', 'Error! Form validation failed.');
+  redirect('user');
+ 
+ 
+}
+
 if($username_check){
   $this->user_model->register_user($user);
   $this->session->set_flashdata('success_msg', 'Registered successfully.Now login to your account.');
@@ -35,7 +50,7 @@ if($username_check){
 }
 else{
  
-  $this->session->set_flashdata('error_msg', 'Error occured,Try again.');
+  $this->session->set_flashdata('error_msg', 'Error! Username has already been taken.');
   redirect('user');
  
  
@@ -88,5 +103,7 @@ public function user_logout(){
 }
  
 }
+ 
+
  
 ?>  

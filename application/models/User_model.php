@@ -42,7 +42,21 @@ public function username_check($username){
  
 }
  
+ public function password_check($password){
  
+  $this->db->select('*');
+  $this->db->from('users');
+  $this->db->where('password',$password);
+  $query=$this->db->get();
+ 
+  if($query->num_rows()>0){
+    return false;
+  }else{
+    return true;
+  }
+ 
+}
+
 }
  
  

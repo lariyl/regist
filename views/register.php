@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <title>THESIS REGISTRATION</title>
  
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" media="screen" title="no title">
+<link rel="stylesheet" href="<?php echo base_url(); ?>assets/css/bootstrap.min.css" media="screen" title="no title">
  
  
   </head>

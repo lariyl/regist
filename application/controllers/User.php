@@ -25,10 +25,9 @@ public function register_user(){
         );
         print_r($user);
 $username_check=$this->user_model->username_check($user['username']);
-$this->form_validation->set_rules('confirmpassword', 'Confirm Password', 'required|matches[password]');
- 
+$password_check=$this->user_model->password_check($user['password']);
 
-if($this->form_validation->run()){
+if($username_check &&  $password_check == 'confirmpassword'){
   $this->user_model->register_user($user);
   $this->session->set_flashdata('success_msg', 'Registered successfully.Now login to your account.');
   redirect('user/login_view');
@@ -36,21 +35,7 @@ if($this->form_validation->run()){
 }
 else{
  
-  $this->session->set_flashdata('error_msg', 'Error! Form validation failed.');
-  redirect('user');
- 
- 
-}
-
-if($username_check){
-  $this->user_model->register_user($user);
-  $this->session->set_flashdata('success_msg', 'Registered successfully.Now login to your account.');
-  redirect('user/login_view');
- 
-}
-else{
- 
-  $this->session->set_flashdata('error_msg', 'Error! Username has already been taken.');
+  $this->session->set_flashdata('error_msg', 'Error! Username has already been taken or Invalid Confirmation of Password.');
   redirect('user');
  
  

@@ -37,10 +37,10 @@
                                   <input class="form-control" placeholder="E-mail" name="email" type="text" required >
                               </div>
                               <div class="form-group">
-                                  <input class="form-control" placeholder="Password" id="password" type="password" required >
+                                  <input class="form-control" placeholder="Password" id="password" name="password" type="password" required >
                               </div>
                               <div class="form-group">
-                                  <input class="form-control" placeholder="Confirm Password" id="confirmpassword" onkeyup="checkPass(); return false;" type="password" required >
+                                  <input class="form-control" placeholder="Confirm Password" id="confirmpassword" name="confirmpassword" onkeyup="checkPass(); return false;" type="password" required >
                                   <span id="confirmMessage" class="confirmMessage"></span>
                               </div>
  
@@ -54,6 +54,7 @@
           </div>
       </div>
   </div>
+<!-- verification on password -->
  <script>
  function checkPass()
 {
@@ -83,8 +84,6 @@
         message.innerHTML = "Passwords Do Not Match!"
     }
 }  
- 
- 
  </script>
 </span>
  

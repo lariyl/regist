@@ -5,7 +5,7 @@
     <title>THESIS REGISTRATION</title>
  
 <link rel="stylesheet" href="<?php echo base_url(); ?>assets/css/bootstrap.min.css" media="screen" title="no title">
- 
+ <script type="text/javascript" src="/code_examples/passtest.js"></script>
  
   </head>
   <body>
@@ -37,10 +37,11 @@
                                   <input class="form-control" placeholder="E-mail" name="email" type="text" required >
                               </div>
                               <div class="form-group">
-                                  <input class="form-control" placeholder="Password" name="password" type="password" required >
+                                  <input class="form-control" placeholder="Password" id="password" type="password" required >
                               </div>
                               <div class="form-group">
-                                  <input class="form-control" placeholder="Confirm Password" name="confirmpassword" type="password" required >
+                                  <input class="form-control" placeholder="Confirm Password" id="confirmpassword" onkeyup="checkPass(); return false;" type="password" required >
+                                  <span id="confirmMessage" class="confirmMessage"></span>
                               </div>
  
                               <input class="btn btn-lg btn-success btn-block" type="submit" value="Register" name="register" >
@@ -53,11 +54,38 @@
           </div>
       </div>
   </div>
+ <script>
+ function checkPass()
+{
+    //Store the password field objects into variables ...
+    var password = document.getElementById('password');
+    var confirmpassword = document.getElementById('confirmpassword');
+    //Store the Confimation Message Object ...
+    var message = document.getElementById('confirmMessage');
+    //Set the colors we will be using ...
+    var goodColor = "#66cc66";
+    var badColor = "#ff6666";
+    //Compare the values in the password field 
+    //and the confirmation field
+    if(password.value == confirmpassword.value){
+        //The passwords match. 
+        //Set the color to the good color and inform
+        //the user that they have entered the correct password 
+        confirmpassword.style.backgroundColor = goodColor;
+        message.style.color = goodColor;
+        message.innerHTML = "Passwords Match!"
+    }else{
+        //The passwords do not match.
+        //Set the color to the bad color and
+        //notify the user.
+        confirmpassword.style.backgroundColor = badColor;
+        message.style.color = badColor;
+        message.innerHTML = "Passwords Do Not Match!"
+    }
+}  
  
  
- 
- 
- 
+ </script>
 </span>
  
  

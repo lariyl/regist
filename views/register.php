@@ -40,10 +40,11 @@
                                   <input class="form-control" placeholder="Password" id="password" name="password" type="password" required >
                               </div>
                               <div class="form-group">
-                                  <input class="form-control" placeholder="Confirm Password" id="confirmpassword" name="confirmpassword" onkeyup="checkPass(); return false;" type="password" required >
+                                  <input class="form-control" placeholder="Confirm Password" id="confirmpassword" name="confirmpassword" onkeyup="checkPass(); return false;" type="password" required>
                                   <span id="confirmMessage" class="confirmMessage"></span>
                               </div>
  
+                       <!--   <button onclick="myFunction()">Register</button> -->
                               <input class="btn btn-lg btn-success btn-block" type="submit" value="Register" name="register" >
  
                           </fieldset>
@@ -58,12 +59,12 @@
  <script>
  function checkPass()
 {
-    //Store the password field objects into variables ...
+    //Store the password field objects into variables
     var password = document.getElementById('password');
     var confirmpassword = document.getElementById('confirmpassword');
-    //Store the Confimation Message Object ...
+    //Store the Confimation Message Object
     var message = document.getElementById('confirmMessage');
-    //Set the colors we will be using ...
+    //Set the colors we will be using
     var goodColor = "#66cc66";
     var badColor = "#ff6666";
     //Compare the values in the password field 
@@ -82,6 +83,8 @@
         confirmpassword.style.backgroundColor = badColor;
         message.style.color = badColor;
         message.innerHTML = "Passwords Do Not Match!"
+        // alert("Password doens't match");
+        // redirect('user');
     }
 }  
  </script>

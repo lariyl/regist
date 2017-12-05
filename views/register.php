@@ -40,7 +40,7 @@
                                   <input class="form-control" placeholder="Password" id="password" name="password" type="password" required >
                               </div>
                               <div class="form-group">
-                                  <input class="form-control" placeholder="Confirm Password" id="confirmpassword" name="confirmpassword" onkeyup="checkPass(); return false;" type="password" required>
+                                  <input class="form-control" placeholder="Confirm Password" id="confirmpassword" name="confirmpassword" type="password" required>
                                   <span id="confirmMessage" class="confirmMessage"></span>
                               </div>
  
@@ -57,36 +57,19 @@
   </div>
 <!-- verification on password -->
  <script>
- function checkPass()
-{
-    //Store the password field objects into variables
-    var password = document.getElementById('password');
-    var confirmpassword = document.getElementById('confirmpassword');
-    //Store the Confimation Message Object
-    var message = document.getElementById('confirmMessage');
-    //Set the colors we will be using
-    var goodColor = "#66cc66";
-    var badColor = "#ff6666";
-    //Compare the values in the password field 
-    //and the confirmation field
-    if(password.value == confirmpassword.value){
-        //The passwords match. 
-        //Set the color to the good color and inform
-        //the user that they have entered the correct password 
-        confirmpassword.style.backgroundColor = goodColor;
-        message.style.color = goodColor;
-        message.innerHTML = "Passwords Match!"
-    }else{
-        //The passwords do not match.
-        //Set the color to the bad color and
-        //notify the user.
-        confirmpassword.style.backgroundColor = badColor;
-        message.style.color = badColor;
-        message.innerHTML = "Passwords Do Not Match!"
-        // alert("Password doens't match");
-        // redirect('user');
-    }
-}  
+ var password = document.getElementById("password")
+  , confirmpassword = document.getElementById("confirmpassword");
+
+function validatePassword(){
+  if(password.value != confirmpassword.value) {
+    confirmpassword.setCustomValidity("Passwords Don't Match");
+  } else {
+    confirmpassword.setCustomValidity('');
+  }
+}
+
+password.onchange = validatePassword;
+confirmpassword.onkeyup = validatePassword;
  </script>
 </span>
  

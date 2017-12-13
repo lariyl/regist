@@ -1,3 +1,5 @@
+<?php include_once('header.php');?>
+
 <!DOCTYPE html>
 <html>
   <head>
@@ -78,3 +80,5 @@ confirmpassword.onkeyup = validatePassword;
  
   </body>
 </html>
+
+<?php include_once('footer.php');?>

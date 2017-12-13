@@ -1,3 +1,5 @@
+<?php include_once('header.php');?>
+
 <!DOCTYPE html>
 <html>
   <head>
@@ -61,3 +63,5 @@
  
   </body>
 </html>
+
+<?php include_once('footer.php');?>

@@ -13,7 +13,7 @@ public function __construct(){
  
 public function index()
 {
-$this->load->view("register.php");
+$this->load->view("login.php");
 }
  
 public function register_user(){
@@ -61,7 +61,6 @@ function login_user(){
       {
         $this->session->set_userdata('id',$data['id']);
         $this->session->set_userdata('username',$data['username']);
-        $this->session->set_userdata('email',$data['email']);
 
         $this->load->view('user_profile.php');
  
@@ -86,8 +85,50 @@ public function user_logout(){
   redirect('user/login_view', 'refresh');
 }
  
-}
+public function changepass(){
  
+$this->load->view("changepassword");
+} 
 
- 
+public function updatePwd(){
+    $this->form_validation->set_rules('password', 'Current Password', 'required|alpha_numeric');
+    $this->form_validation->set_rules('newpass', 'New Password', 'required|alpha_numeric');
+    $this->form_validation->set_rules('confpassword', 'Password Confirmation', 'required|alpha_numeric');
+    if($this->form_validation->run()){
+        $curr_password = md5($this->input->post('password')); 
+        $new_password = md5($this->input->post('newpass')); 
+        $conf_password = md5($this->input->post('confpassword'));
+        $this->load->model('user_model'); 
+        $userid= $this->session->userdata('id');
+        $passwd = $this->user_model->getCurrPassword($userid);
+        if($passwd->password == $curr_password){
+          if($new_password == $conf_password){
+            if($this->user_model->updatePassword($new_password,$userid)){
+              $this->load->view("user_profile.php");              
+            }
+            else{
+              $this->session->set_flashdata('error_msg', 'Failed to update password.');
+              
+            }
+          }
+          else{
+              $this->session->set_flashdata('error_msg', 'New Password & Confirm Password dont match.');
+                                  
+            }
+        }
+        else{
+              $this->session->set_flashdata('error_msg', 'Sorry! Current Password dont match.');
+                                 
+        }
+      }
+   
+     $this->load->view("changepassword");  
+}
+
+public function helloworld(){
+  $this->load->view("helloworld");
+}
+
+}
+   
 ?>  

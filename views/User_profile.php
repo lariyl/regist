@@ -8,202 +8,239 @@ if(!$id){
  
  ?>
  
-<!DOCTYPE html>
 <html>
-<head>
-  <meta charset="utf-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>THESIS DASHBOARD</title>
-  <!-- Tell the browser to be responsive to screen width -->
-  <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
-  <!-- Bootstrap 3.3.7 -->
-  <link rel="stylesheet" href="<?php echo base_url()."assets/"; ?>bower_components/bootstrap/dist/css/bootstrap.min.css">
-  <!-- Font Awesome -->
-  <link rel="stylesheet" href="<?php echo base_url()."assets/"; ?>bower_components/font-awesome/css/font-awesome.min.css">
-  <!-- Ionicons -->
-  <link rel="stylesheet" href="<?php echo base_url()."assets/"; ?>bower_components/Ionicons/css/ionicons.min.css">
-  <!-- Theme style -->
-  <link rel="stylesheet" href="<?php echo base_url()."assets/"; ?>dist/css/AdminLTE.min.css">
-  <!-- AdminLTE Skins. Choose a skin from the css/skins
-       folder instead of downloading all of them to reduce the load. -->
-  <link rel="stylesheet" href="<?php echo base_url()."assets/"; ?>dist/css/skins/_all-skins.min.css">
-  <!-- Morris chart -->
-  <link rel="stylesheet" href="<?php echo base_url()."assets/"; ?>bower_components/morris.js/morris.css">
-  <!-- jvectormap -->
-  <link rel="stylesheet" href="<?php echo base_url()."assets/"; ?>bower_components/jvectormap/jquery-jvectormap.css">
-  <!-- Date Picker -->
-  <link rel="stylesheet" href="<?php echo base_url()."assets/"; ?>bower_components/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css">
-  <!-- Daterange picker -->
-  <link rel="stylesheet" href="<?php echo base_url()."assets/"; ?>bower_components/bootstrap-daterangepicker/daterangepicker.css">
-  <!-- bootstrap wysihtml5 - text editor -->
-  <link rel="stylesheet" href="<?php echo base_url()."assets/"; ?>plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css">
+<title>Record Module</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link href="<?php echo base_url(); ?>assets/css/bootstrap.min.css" rel="stylesheet">
+<script scr="<?php echo base_url(); ?>assets/css/bootstrap.min.js"></script> 
+<style>
+.w3-sidebar a {font-family: "Roboto", sans-serif}
+body,h1,h2,h3,h4,h5,h6,.w3-wide {font-family: "Montserrat", sans-serif;}
+</style>
+<body class="w3-content" style="max-width:1200px">
 
-  <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-  <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-  <!--[if lt IE 9]>
-  <script src="<?php echo base_url()."assets/"; ?>https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
-  <script src="<?php echo base_url()."assets/"; ?>https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-  <![endif]-->
+<!-- Sidebar/menu -->
+<nav class="w3-sidebar w3-bar-block w3-white w3-collapse w3-top" style="z-index:3;width:250px" id="mySidebar">
+  <div class="w3-container w3-display-container w3-padding-16">
+    <i onclick="w3_close()" class="fa fa-remove w3-hide-large w3-button w3-display-topright"></i>
+    <h3 class="w3-wide"><b>Dashboard</b></h3>
+  </div>
+  <div class="w3-padding-64 w3-large w3-text-grey" style="font-weight:bold">
+    <a onclick="myAccFunc()" href="javascript:void(0)" class="w3-button w3-block w3-white w3-left-align" id="myBtn">Courses <i class="fa fa-caret-down"></i></a>
+    <div id="demoAcc" class="w3-bar-block w3-hide w3-padding-large w3-medium">
+      <a href="javascript:void(0)" class="w3-bar-item w3-button w3-padding w3-blue" onclick="document.getElementById('createcourse').style.display='block'">Create a Course</a> 
+      <a href="helloworld" class="w3-bar-item w3-button">A Course</a>
+    </div>
+    <a href="<?php echo base_url('user/changepass'); ?>" class="w3-bar-item w3-button">Change Pasword</a> 
+  </div>  
+</nav>
 
-  <!-- Google Font -->
-  <link rel="stylesheet" href="<?php echo base_url()."assets/"; ?>https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
-</head>
-<body class="hold-transition skin-blue sidebar-mini">
-<div class="wrapper">
+<!-- Top menu on small screens -->
+<header class="w3-bar w3-top w3-hide-large w3-black w3-xlarge">
+  <div class="w3-bar-item w3-padding-24 w3-wide">Dashboard</div>
+  <a href="javascript:void(0)" class="w3-bar-item w3-button w3-padding-24 w3-right" onclick="w3_open()"><i class="fa fa-bars"></i></a>
+</header>
 
-  <header class="main-header">
-    <!-- Logo -->
-    <a href="<?php echo base_url()."assets/"; ?>index2.html" class="logo">
-      <!-- mini logo for sidebar mini 50x50 pixels -->
-      <span class="logo-mini"><b>T</b>DB</span>
-      <!-- logo for regular state and mobile devices -->
-      <span class="logo-lg"><b>THESIS</b>DASHBOARD</span>
-    </a>
-    <!-- Header Navbar: style can be found in header.less -->
-    <nav class="navbar navbar-static-top">
-      <!-- Sidebar toggle button-->
-      <a href="<?php echo base_url()."assets/"; ?>#" class="sidebar-toggle" data-toggle="push-menu" role="button">
-        <span class="sr-only">Toggle navigation</span>
-      </a>
+<!-- Overlay effect when opening sidebar on small screens -->
+<div class="w3-overlay w3-hide-large" onclick="w3_close()" style="cursor:pointer" title="close side menu" id="myOverlay"></div>
 
-      <div class="navbar-custom-menu">
-        <ul class="nav navbar-nav">
+<!-- !PAGE CONTENT! -->
+<div class="w3-main" style="margin-left:250px">
 
-          <!-- User Account: style can be found in dropdown.less -->
-          <li class="dropdown user user-menu">
-            <a href="<?php echo base_url()."assets/"; ?>#" class="dropdown-toggle" data-toggle="dropdown">
-              <p class="navbar-text navbar-left">Signed in as <?php echo $this->session->userdata('username'); ?></p>
-            </a>
-            <ul class="dropdown-menu">
-              <!-- Menu Footer-->
-              <li class="user-footer">
-                <div class="pull-right">
-              <a href="<?php echo base_url('user/user_logout');?>" >  <button type="button" class="btn-primary">Logout</button></a>
-                </div>
-              </li>
-            </ul>
-          </li>
-        </ul>
-      </div>
-    </nav>
+  <!-- Push down content on small screens -->
+  <div class="w3-hide-large" style="margin-top:83px"></div>
+  
+  <!-- Top header -->
+  <header class="w3-container w3-xlarge">
+    <p class="w3-left">Signed in as <a href="#" class="navbar-link"><?php echo $this->session->userdata('username'); ?></a></p>
+    <p class="w3-right"><a href="<?php echo base_url('user/user_logout');?>" >  <button type="button" class="btn-primary">Logout</button></a></p>
   </header>
-  <!-- Left side column. contains the logo and sidebar -->
-  <aside class="main-sidebar">
-    <!-- sidebar: style can be found in sidebar.less -->
-    <section class="sidebar">
-      <!-- sidebar menu: : style can be found in sidebar.less -->
-      <ul class="sidebar-menu" data-widget="tree">
-        <li class="header">MAIN NAVIGATION</li>
-        <li class="active treeview">
-          <a href="<?php echo base_url()."assets/"; ?>#">
-            <i class="fa fa-dashboard"></i> <span>Course</span>
-            <span class="pull-right-container">
-              <i class="fa fa-angle-left pull-right"></i>
-            </span>
-          </a>
-          <ul class="treeview-menu">
-          <!-- Modal for Creating a Course -->
-            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">Create a Course</button>
-            
-            <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title" id="exampleModalLabel">New message</h4>
-      </div>
-      <div class="modal-body">
-        <form>
-          <div class="form-group">
-            <label for="recipient-name" class="control-label">Recipient:</label>
-            <input type="text" class="form-control" id="recipient-name">
-          </div>
-          <div class="form-group">
-            <label for="message-text" class="control-label">Message:</label>
-            <textarea class="form-control" id="message-text"></textarea>
-          </div>
-        </form>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Send message</button>
+  
+  <!--Dashboard Header -->
+  <header class="w3-container w3-xlarge" style="padding-top:22px">
+    <h5><b><i class="fa fa-dashboard"></i> My Dashboard</b></h5>
+  </header>
+
+
+
+  <div id="ajax-content">
+    <button type="button" onclick="loadDoc()">Press Button</button>
+  </div>
+
+  <script>
+function loadDoc() {
+  var xhttp = new XMLHttpRequest();
+  xhttp.onreadystatechange = function() {
+    if (this.readyState == 4 && this.status == 200) {
+      document.getElementById("ajax-content").innerHTML =
+      this.responseText;
+    }
+  };
+  xhttp.open("GET", "<?php echo base_url('user/helloworld');?>", true);
+  xhttp.send();
+}
+</script>
+ 
+     <!-- Add an Exam -->
+    <p class="w3-left">
+    <!-- <input type="button" class="w3-button w3-green" value="Add Exam"> -->
+    <a href="javascript:void(0)" class="w3-bar-item w3-button w3-padding w3-green" onclick="document.getElementById('addexam').style.display='block'">Add Exam</a> 
+    <!-- Print Record -->
+    <p class="w3-right">
+    <input type="button" class="w3-button w3-brown" value="Print Record">
+
+
+<!--Class Record -->
+  <div class="w3-container">
+    <h5>A Course</h5>
+    <div class="w3-responsive">
+    <table class="w3-table-all">
+      <tr class="w3-cyan">
+       <th>Student Name</th>
+       <th>Pre-Mid</th>
+       <th>Midterm</th>
+       <th>Pre-Fi</th>
+       <th>Finals</th>
+       <th>Final Grade</th>
+      </tr>
+      <tr>
+       <td>John Doe</td>
+       <td>1.0</td>
+       <td>1.0</td>
+       <td>1.0</td>
+       <td>1.0</td>
+       <td>1.0</td>
+      </tr>
+    </table>
+  </div>
+ </div>
+ 
+  <!-- Reports -->
+  <footer class="w3-panel w3-padding-small w3-light-grey w3-small w3-center" id="reports" >
+    <div class="w3-container">
+      <h4>Reports</h4>
+        <div class="w3-responsive">
+         <table class="w3-table">
+          <tr>
+            <th>Course Outcome</th>
+            <th>Attained?</th>
+            <th>Comment</th>
+          </tr>
+            <tr>
+              <td>Course Outcome 1</td>
+              <td>Yes</td>
+              <td>CO attained</td>
+            </tr>
+           <tr>
+              <td>Course Outcome 2</td>
+              <td>Yes</td>
+              <td>CO attained</td>
+            </tr>
+            <tr>
+              <td>Course Outcome 3</td>
+              <td>Yes</td>
+              <td>CO attained</td>
+            </tr>
+        </table>
       </div>
     </div>
-  </div>
-</div>
-             
-            <li class="active"><a href="<?php echo base_url()."assets/"; ?>index.html"><i class="fa fa-circle-o"></i> CpE. 311 </a></li>
-          </ul>
-        </li>  
-      </ul>
-    </section>
-    <!-- /.sidebar -->
-  </aside>
-
-  <!-- Content Wrapper. Contains page content -->
-  <div class="content-wrapper">
-    <!-- Content Header (Page header) -->
-    <section class="content-header">
-      <h1>
-        Dashboard
-        <small>Control panel</small>
-      </h1>
-    </section>
-
-    <!-- /.content -->
-  </div>
-  <!-- /.content-wrapper -->
-  <footer class="main-footer">
-    <div class="pull-right hidden-xs">
-      <b>Version</b> 1.0
-    </div>
-    <strong>Copyright © Your Website 2017.</strong> All rights
-    reserved.
   </footer>
 
-
-  <!-- /.control-sidebar -->
-  <!-- Add the sidebar's background. This div must be placed
-       immediately after the control sidebar -->
+  <!-- Action Plan -->
+  <footer class="w3-panel w3-padding-small w3-light-grey w3-small w3-center" id="actionplan" >
+    <div class="w3-container">
+      <h4>Action Plan</h4>
+        <div class="w3-responsive">
+         <table class="w3-table">
+          <tr>
+            <th>Course Outcome</th>
+            <th>Suggestive Action Plan</th>
+          </tr>
+            <tr>
+              <td>Course Outcome 1</td>
+              <td>Retain</td>
+            </tr>
+           <tr>
+              <td>Course Outcome 2</td>
+              <td>Change</td>
+            </tr>
+            <tr>
+              <td>Course Outcome 3</td>
+              <td>Change</td>
+            </tr>
+        </table>
+        <button type="submit" class="w3-button w3-block w3-blue">Submit</button>
+      </div>
+    </div>
+  </footer>
+  <!-- End page content -->
 </div>
-<!-- ./wrapper -->
 
-<!-- jQuery 3 -->
-<script src="<?php echo base_url()."assets/"; ?>bower_components/jquery/dist/jquery.min.js"></script>
-<!-- jQuery UI 1.11.4 -->
-<script src="<?php echo base_url()."assets/"; ?>bower_components/jquery-ui/jquery-ui.min.js"></script>
-<!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
+<!-- Create a Course Modal -->
+<div id="createcourse" class="w3-modal">
+  <div class="w3-modal-content w3-animate-zoom" style="padding:32px">
+    <div class="w3-container w3-white w3-center">
+      <i onclick="document.getElementById('createcourse').style.display='none'" class="fa fa-remove w3-right w3-button w3-transparent w3-xxlarge"></i>
+      <h2 class="w3-wide">Course</h2>
+      <form action="/action_page.php" target="_blank">
+       <p><input class="w3-input w3-border" placeholder="Course Subject" type="text" required></p>
+       <p><input class="w3-input w3-border" placeholder="Description" type="text" required ></p>
+<!--        <p><input class="w3-input w3-border" type="file"></p> -->
+       <button type="button" class="w3-button w3-padding-large w3-blue w3-margin-bottom" onclick="document.getElementById('createcourse').style.display='block'">Create</button>
+      </form>
+    </div>
+  </div>
+</div>
+
+<!-- Add Exam Modal -->
+<div id="addexam" class="w3-modal">
+  <div class="w3-modal-content w3-animate-zoom" style="padding:32px">
+    <div class="w3-container w3-white w3-center">
+      <i onclick="document.getElementById('addexam').style.display='none'" class="fa fa-remove w3-right w3-button w3-transparent w3-xxlarge"></i>
+      <h2 class="w3-wide">Add Exam</h2>
+      <form action="/action_page.php" target="_blank">
+       <p><input class="w3-input w3-border" placeholder="Course Outcome" type="text" required></p>
+       <p><input class="w3-input w3-border" placeholder="Description" type="text" required ></p>
+       <p><input class="w3-input w3-border" placeholder="Weight" type="float" required ></p>
+       <button type="button" class="w3-button w3-padding-large w3-green w3-margin-bottom" onclick="document.getElementById('addexam').style.display='block'">Add Exam</button>
+      </form>
+    </div>
+  </div>
+</div>
+
+
 <script>
-  $.widget.bridge('uibutton', $.ui.button);
+// Accordion 
+function myAccFunc() {
+    var x = document.getElementById("demoAcc");
+    if (x.className.indexOf("w3-show") == -1) {
+        x.className += " w3-show";
+    } else {
+        x.className = x.className.replace(" w3-show", "");
+    }
+}
+
+// Click on the "Jeans" link on page load to open the accordion for demo purposes
+// document.getElementById("myBtn").click();
+
+
+// Script to open and close sidebar
+function w3_open() {
+    document.getElementById("mySidebar").style.display = "block";
+    document.getElementById("myOverlay").style.display = "block";
+}
+ 
+function w3_close() {
+    document.getElementById("mySidebar").style.display = "none";
+    document.getElementById("myOverlay").style.display = "none";
+}
 </script>
-<!-- Bootstrap 3.3.7 -->
-<script src="<?php echo base_url()."assets/"; ?>bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
-<!-- Morris.js charts -->
-<script src="<?php echo base_url()."assets/"; ?>bower_components/raphael/raphael.min.js"></script>
-<script src="<?php echo base_url()."assets/"; ?>bower_components/morris.js/morris.min.js"></script>
-<!-- Sparkline -->
-<script src="<?php echo base_url()."assets/"; ?>bower_components/jquery-sparkline/dist/jquery.sparkline.min.js"></script>
-<!-- jvectormap -->
-<script src="<?php echo base_url()."assets/"; ?>plugins/jvectormap/jquery-jvectormap-1.2.2.min.js"></script>
-<script src="<?php echo base_url()."assets/"; ?>plugins/jvectormap/jquery-jvectormap-world-mill-en.js"></script>
-<!-- jQuery Knob Chart -->
-<script src="<?php echo base_url()."assets/"; ?>bower_components/jquery-knob/dist/jquery.knob.min.js"></script>
-<!-- daterangepicker -->
-<script src="<?php echo base_url()."assets/"; ?>bower_components/moment/min/moment.min.js"></script>
-<script src="<?php echo base_url()."assets/"; ?>bower_components/bootstrap-daterangepicker/daterangepicker.js"></script>
-<!-- datepicker -->
-<script src="<?php echo base_url()."assets/"; ?>bower_components/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js"></script>
-<!-- Bootstrap WYSIHTML5 -->
-<script src="<?php echo base_url()."assets/"; ?>plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.all.min.js"></script>
-<!-- Slimscroll -->
-<script src="<?php echo base_url()."assets/"; ?>bower_components/jquery-slimscroll/jquery.slimscroll.min.js"></script>
-<!-- FastClick -->
-<script src="<?php echo base_url()."assets/"; ?>bower_components/fastclick/lib/fastclick.js"></script>
-<!-- AdminLTE App -->
-<script src="<?php echo base_url()."assets/"; ?>dist/js/adminlte.min.js"></script>
-<!-- AdminLTE dashboard demo (This is only for demo purposes) -->
-<script src="<?php echo base_url()."assets/"; ?>dist/js/pages/dashboard.js"></script>
-<!-- AdminLTE for demo purposes -->
-<script src="<?php echo base_url()."assets/"; ?>dist/js/demo.js"></script>
+
+
 </body>
 </html>

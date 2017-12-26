@@ -1,4 +1,4 @@
-<?php include_once('header.php');?>
+
 
 <!DOCTYPE html>
 <html>
@@ -9,9 +9,8 @@
   </head>
   <body>
   
- 
-    <div class="container">
-    <div class="row">
+    <div class="w3-container" style="margin-top:150px">
+    <div class="w3-row">
         <div class="col-md-4 col-md-offset-4">
             <div class="login-panel panel panel-success">
                 <div class="panel-heading">
@@ -39,29 +38,19 @@
  
                 <div class="panel-body">
                     <form role="form" method="post" action="<?php echo base_url('user/login_user'); ?>">
-                        <fieldset>
-                            <div class="form-group"  >
-                              <label>Username</label>
-                                <input class="form-control" placeholder="Username" name="username" type="text" required >
-                            </div>
-                            <div class="form-group">
-                              <label>Password</label>
-                                <input class="form-control" placeholder="Password" name="password" type="password" required>
-                            </div>
-                                <input class="btn btn-lg btn-success btn-block" type="submit" value="login" name="login" >
- 
-                        </fieldset>
+                      <label>Username</label>
+                      <p><input class="form-control" placeholder="Username" name="username" type="text" required></p>
+                      <label>Password</label>
+                      <p><input class="form-control" placeholder="Password" name="password" type="password" required></p>
+                      <p><input class="btn btn-lg btn-success btn-block" type="submit" value="login" name="login"></p>
                     </form>
                 <center><b>Not registered ?</b> <br></b><a href="<?php echo base_url('user'); ?>">Register here</a></center><!--for centered text-->
- 
+                </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
- 
- 
   </body>
 </html>
 
-<?php include_once('footer.php');?>

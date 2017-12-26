@@ -39,7 +39,7 @@
                   }
                   ?>
 
- <?php echo validation_errors(); ?>
+<!--  <?php echo validation_errors(); ?> -->
  				<?php echo form_open('user/updatePwd'); ?>
  				<div class="panel-body">
             <label>Current Password</label>

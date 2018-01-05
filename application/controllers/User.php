@@ -16,6 +16,10 @@ public function index()
 $this->load->view("login.php");
 }
  
+public function registration(){
+  $this->load->view('register.php');
+}
+
 public function register_user(){
  
       $user=array(
@@ -125,9 +129,27 @@ public function updatePwd(){
      $this->load->view("changepassword");  
 }
 
-public function helloworld(){
-  $this->load->view("helloworld");
-}
+  public function helloworld(){
+    $this->load->view("helloworld");
+  }
+
+  public function user_action(){
+  
+    if($_POST["action"] == "Create")
+    {
+      $insert_data = array(
+        'subject' => $_POST['psubject'],
+        'description' => $_POST['pdescription'],
+        'user_id' =>  $this->session->userdata('id'),
+      );
+      $this->load->model('user_model');
+      $this->user_model->insert_course($insert_data);
+      echo 'Data Inserted';
+    }
+
+      
+  }
+
 
 }
    

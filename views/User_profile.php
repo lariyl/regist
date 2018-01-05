@@ -69,7 +69,7 @@ body,h1,h2,h3,h4,h5,h6,.w3-wide {font-family: "Montserrat", sans-serif;}
 
 
 
-  <div id="ajax-content">
+ <!--  <div id="ajax-content">
     <button type="button" onclick="loadDoc()">Press Button</button>
   </div>
 
@@ -85,7 +85,7 @@ function loadDoc() {
   xhttp.open("GET", "<?php echo base_url('user/helloworld');?>", true);
   xhttp.send();
 }
-</script>
+</script> -->
  
      <!-- Add an Exam -->
     <p class="w3-left">
@@ -186,14 +186,16 @@ function loadDoc() {
 <div id="createcourse" class="w3-modal">
   <div class="w3-modal-content w3-animate-zoom" style="padding:32px">
     <div class="w3-container w3-white w3-center">
+      <!-- x button -->
       <i onclick="document.getElementById('createcourse').style.display='none'" class="fa fa-remove w3-right w3-button w3-transparent w3-xxlarge"></i>
       <h2 class="w3-wide">Course</h2>
-      <form action="/action_page.php" target="_blank">
-       <p><input class="w3-input w3-border" placeholder="Course Subject" type="text" required></p>
-       <p><input class="w3-input w3-border" placeholder="Description" type="text" required ></p>
-<!--        <p><input class="w3-input w3-border" type="file"></p> -->
-       <button type="button" class="w3-button w3-padding-large w3-blue w3-margin-bottom" onclick="document.getElementById('createcourse').style.display='block'">Create</button>
-      </form>
+      <form method="post" id="user_form" data-action="Create">
+       <p><input type="text" id="subject"  class="w3-input w3-border" placeholder="Course Subject"  required></p>
+       <p><input type="text" id="description" class="w3-input w3-border" placeholder="Description"  required ></p>
+<!--        <p><input type="file" id="course_file" class="w3-input w3-border" ></p> -->
+       <input type="submit" class="btn btn-primary" name="action" value="Create"/>
+   <!--     <button type="button" class="w3-button w3-padding-large w3-blue w3-margin-bottom"  onclick="document.getElementById('createcourse').style.display='block'">Create</button>
+    -->   </form>
     </div>
   </div>
 </div>
@@ -206,7 +208,7 @@ function loadDoc() {
     <div class="w3-container w3-white w3-center">
       <i onclick="document.getElementById('addexam').style.display='none'" class="fa fa-remove w3-right w3-button w3-transparent w3-xxlarge"></i>
       <h2 class="w3-wide">Add Exam</h2>
-      <form action="/action_page.php" target="_blank">
+      <form method="post" target="_blank">
        <p><input class="w3-input w3-border" placeholder="Course Outcome" type="text" required></p>
        <p><input class="w3-input w3-border" placeholder="Description" type="text" required ></p>
        <p><input class="w3-input w3-border" placeholder="Weight" type="float" required ></p>
@@ -242,6 +244,38 @@ function w3_close() {
     document.getElementById("mySidebar").style.display = "none";
     document.getElementById("myOverlay").style.display = "none";
 }
+
+// ajax for creating a course
+$(document).on('submit', '#user_form', function(event){
+  event.preventDefault();
+  var subject = $('#subject').val();
+  var description = $( '#description').val(); 
+
+  var ajaxdata = {action: $(this).data('action'), psubject: subject, pdescription: description};
+
+  if(subject != '' && description !='')
+  {
+    $.ajax({
+      url: "<?php echo base_url(). 'user/user_action'?>",
+      type: 'POST',
+      data: ajaxdata,
+      // contentType:false,
+      // processData:false,
+      success:function(response)
+      {
+        console.log(response);
+        // alert(data);
+        $('#user_form')[0].reset();
+        $('#createcourse').hide();
+        // dataTable.ajax.reload();
+      }
+    });
+  }
+  else
+  {
+    alert("Both fields are required");
+  }
+});
 </script>
 
 

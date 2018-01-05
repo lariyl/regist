@@ -58,8 +58,10 @@ public function updatePassword($new_password,$userid){
   ->update('users', $data);
 }
 
+public function insert_course($data)
+{
+  $this->db->insert('courses',$data);
 }
 
- 
- 
+} 
 ?>

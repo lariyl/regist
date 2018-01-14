@@ -5,11 +5,12 @@
     <title>THESIS</title>
 <link rel="stylesheet" href="<?php echo base_url(); ?>assets/css/bootstrap.min.css" media="screen" title="no title">
 <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<link href="<?php echo base_url(); ?>assets/css/bootstrap.min.css" rel="stylesheet">
   </head>
   <body>
 
-<p class="w3-left" style="padding-left:450px"><a href="<?php echo base_url('user/user_profile');?>" >  <button type="button" class="btn-primary">Home</button></a></p>
-<p class="w3-left" style="padding-left:0px" >Signed in as <a href="#" class="navbar-link"><?php echo $this->session->userdata('username'); ?></a></p>
+
+<p class="w3-left" style="padding-left:450px" >Signed in as <a href="<?php echo base_url('user/user_profile');?>" class="navbar-link"><?php echo $this->session->userdata('username'); ?></a></p>
 <p class="w3-left" style="padding-left:180px"><a href="<?php echo base_url('user/user_logout');?>" >  <button type="button" class="btn-primary">Logout</button></a></p>
 
     <div class="w3-container" style="margin-top:150px">

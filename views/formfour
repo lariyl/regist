@@ -9,7 +9,7 @@ if(!$id){
  ?>
  
 <html>
-<title>Record Module</title>
+<title>Form 4</title>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
@@ -22,14 +22,6 @@ if(!$id){
 <style>
 .w3-sidebar a {font-family: "Roboto", sans-serif}
 body,h1,h2,h3,h4,h5,h6,.w3-wide {font-family: "Montserrat", sans-serif;}
-table, th, td {
-    border: 1px solid black;
-    border-collapse: collapse;
-}
-th, td {
-    padding: 5px;
-    text-align: left;    
-}
 </style>
 <body class="w3-content" style="max-width:1200px">
 
@@ -43,12 +35,7 @@ th, td {
     <a onclick="myAccFunc()" href="javascript:void(0)" class="w3-button w3-block w3-white w3-left-align" id="myBtn">Courses <i class="fa fa-caret-down"></i></a>
     <div id="demoAcc" class="w3-bar-block w3-hide w3-padding-large w3-medium">
       <a href="javascript:void(0)" class="w3-bar-item w3-button w3-padding w3-blue" onclick="document.getElementById('createcourse').style.display='block'">Create a Course</a> 
-      <?php
-        foreach($list_course as $value){
-          echo  "<a href='#' data-id='$value->id' class='w3-bar-item w3-button'>$value->subject</a>";    
-        }
-      ?>
-      <a href="#" class="w3-bar-item w3-button">A Course</a>
+      <a href="helloworld" class="w3-bar-item w3-button">A Course</a>
     </div>
     <a href="<?php echo base_url('user/changepass'); ?>" class="w3-bar-item w3-button">Change Password</a> 
   </div>  
@@ -71,7 +58,7 @@ th, td {
   
   <!-- Top header -->
   <header class="w3-container w3-xlarge">
-    <p class="w3-left">Signed in as <a href="<?php echo base_url('user/user_profile');?>" class="navbar-link"><?php echo $this->session->userdata('username'); ?></a></p>
+    <p class="w3-left">Signed in as <a href="#" class="navbar-link"><?php echo $this->session->userdata('username'); ?></a></p>
     <p class="w3-right"><a href="<?php echo base_url('user/user_logout');?>" >  <button type="button" class="btn-primary">Logout</button></a></p>
   </header>
   
@@ -99,11 +86,11 @@ function loadDoc() {
   xhttp.send();
 }
 </script> -->
-    <p class="w3-center"><b>Students Record</b></p>
+ 
      <!-- Add an Exam -->
     <p class="w3-left">
     <!-- <input type="button" class="w3-button w3-green" value="Add Exam"> -->
-    <a href="javascript:void(0)" class="w3-bar-item w3-button w3-padding w3-green" onclick="document.getElementById('addexam').style.display='block'">Add Exam</a>     
+    <a href="javascript:void(0)" class="w3-bar-item w3-button w3-padding w3-green" onclick="document.getElementById('addexam').style.display='block'">Add Exam</a> 
     <!-- Print Record -->
     <p class="w3-right">
     <input type="button" class="w3-button w3-brown" value="Print Record">
@@ -115,16 +102,14 @@ function loadDoc() {
     <div class="w3-responsive">
     <table class="w3-table-all">
       <tr class="w3-cyan">
-       <th>Student Name</th>
-       <th>Pre-Mid</th>
-       <th>Midterm</th>
-       <th>Pre-Fi</th>
-       <th>Finals</th>
-       <th>Final Grade</th>
+       <th>Course OUtcome</th>
+       <th>Assessment Task/Output</th>
+       <th>Student's Level of Achievement Outcome</th>
+       <th>Target</th>
+       <th>Gap</th>
       </tr>
       <tr>
        <td>John Doe</td>
-       <td>1.0</td>
        <td>1.0</td>
        <td>1.0</td>
        <td>1.0</td>
@@ -191,7 +176,7 @@ function loadDoc() {
       </div>
     </div>
   </footer>
-  <a href="<?php echo base_url('user/formfour');?>" > <button type="submit" class="w3-button w3-block w3-blue">Submit</button></a>
+  <a href="<?php echo base_url('user/form4'); ?>" button type="submit" class="w3-button w3-block w3-blue">Submit </button> </a>
   <!-- End page content -->
 </div>
 
@@ -273,11 +258,9 @@ $(document).on('submit', '#user_form', function(event){
       // processData:false,
       success:function(response)
       {
-        $resp = JSON.parse(response);
         console.log(response);
         $('#user_form')[0].reset();
         $('#createcourse').hide();
-        $('#demoAcc').append("<a href='linkwhatsoever/"+$resp['id']+"' class='w3-bar-item w3-button'>"+$resp['subject']+"</a>");
       }
     });
   }

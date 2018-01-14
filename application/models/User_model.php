@@ -61,6 +61,12 @@ public function updatePassword($new_password,$userid){
 public function insert_course($data)
 {
   $this->db->insert('courses',$data);
+  return $this->db->insert_id();
+}
+
+public function fetch_course(){
+      $query = $this->db->get("courses");
+      return $query;
 }
 
 } 

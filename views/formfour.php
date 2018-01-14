@@ -9,7 +9,7 @@ if(!$id){
  ?>
  
 <html>
-<title>Record Module</title>
+<title>Form 4</title>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
@@ -31,6 +31,7 @@ th, td {
     text-align: left;    
 }
 </style>
+
 <body class="w3-content" style="max-width:1200px">
 
 <!-- Sidebar/menu -->
@@ -43,12 +44,7 @@ th, td {
     <a onclick="myAccFunc()" href="javascript:void(0)" class="w3-button w3-block w3-white w3-left-align" id="myBtn">Courses <i class="fa fa-caret-down"></i></a>
     <div id="demoAcc" class="w3-bar-block w3-hide w3-padding-large w3-medium">
       <a href="javascript:void(0)" class="w3-bar-item w3-button w3-padding w3-blue" onclick="document.getElementById('createcourse').style.display='block'">Create a Course</a> 
-      <?php
-        foreach($list_course as $value){
-          echo  "<a href='#' data-id='$value->id' class='w3-bar-item w3-button'>$value->subject</a>";    
-        }
-      ?>
-      <a href="#" class="w3-bar-item w3-button">A Course</a>
+      <a href="helloworld" class="w3-bar-item w3-button">A Course</a>
     </div>
     <a href="<?php echo base_url('user/changepass'); ?>" class="w3-bar-item w3-button">Change Password</a> 
   </div>  
@@ -73,6 +69,7 @@ th, td {
   <header class="w3-container w3-xlarge">
     <p class="w3-left">Signed in as <a href="<?php echo base_url('user/user_profile');?>" class="navbar-link"><?php echo $this->session->userdata('username'); ?></a></p>
     <p class="w3-right"><a href="<?php echo base_url('user/user_logout');?>" >  <button type="button" class="btn-primary">Logout</button></a></p>
+
   </header>
   
   <!--Dashboard Header -->
@@ -99,11 +96,13 @@ function loadDoc() {
   xhttp.send();
 }
 </script> -->
-    <p class="w3-center"><b>Students Record</b></p>
+ 
      <!-- Add an Exam -->
-    <p class="w3-left">
+<!--     <p class="w3-left"> -->
     <!-- <input type="button" class="w3-button w3-green" value="Add Exam"> -->
-    <a href="javascript:void(0)" class="w3-bar-item w3-button w3-padding w3-green" onclick="document.getElementById('addexam').style.display='block'">Add Exam</a>     
+<!--     <a href="javascript:void(0)" class="w3-bar-item w3-button w3-padding w3-green" onclick="document.getElementById('addexam').style.display='block'">Add Exam</a>  -->
+    <p class="w3-center"><b>OBTL Form 4</b></p>
+    <p class="w3-center"><b>Course Assessment Report</b></p>
     <!-- Print Record -->
     <p class="w3-right">
     <input type="button" class="w3-button w3-brown" value="Print Record">
@@ -112,88 +111,87 @@ function loadDoc() {
 <!--Class Record -->
   <div class="w3-container">
     <h5>A Course</h5>
-    <div class="w3-responsive">
+    <div class="w3-table">
     <table class="w3-table-all">
       <tr class="w3-cyan">
-       <th>Student Name</th>
-       <th>Pre-Mid</th>
-       <th>Midterm</th>
-       <th>Pre-Fi</th>
-       <th>Finals</th>
-       <th>Final Grade</th>
+       <th>Course OUtcome</th>
+       <th>Assessment Task/Output</th>
+       <th>Student's Level of Achievement Outcome
+        <div class="row">
+         <div class="col-sm-3">1.0</div>
+         <div class="col-sm-3">2.0</div>
+         <div class="col-sm-3">3.0</div>
+         <div class="col-sm-3">4.0</div>
+        </div>
+       </th> 
+       <th>Target</th>
+       <th>Gap</th>
       </tr>
       <tr>
-       <td>John Doe</td>
+       <td>CO1</td>
        <td>1.0</td>
+       <td>
+       <div class="row">
+         <div class="col-sm-3">1</div>
+         <div class="col-sm-3">10</div>
+         <div class="col-sm-3">15</div>
+         <div class="col-sm-3">1</div>
+        </div>
+       </td>
+       <td>80% of cohort with rating of 2.0 or better</td>
        <td>1.0</td>
+      </tr>
+      <tr>
+       <td>C02</td>
        <td>1.0</td>
+       <td>
+       <div class="row">
+         <div class="col-sm-3">1</div>
+         <div class="col-sm-3">10</div>
+         <div class="col-sm-3">15</div>
+         <div class="col-sm-3">2</div>
+        </div>
+       </td>
+       <td>80% of cohort with rating of 2.0 or better</td>
        <td>1.0</td>
+      </tr>
+      <tr>
+       <td>C03</td>
+       <td>1.0</td>
+       <td>
+       <div class="row">
+         <div class="col-sm-3">1</div>
+         <div class="col-sm-3">10</div>
+         <div class="col-sm-3">0</div>
+         <div class="col-sm-3">2</div>
+        </div>
+       </td>
+       <td>80% of cohort with rating of 2.0 or better</td>
        <td>1.0</td>
       </tr>
     </table>
-  </div>
+    <div class="row">
+      <div class="col-xs-9 col-md-7">1.0 – Exceeds Expectations (evaluation of output may range from 1.0 to 1.4)  </div>
+      <div class="col-xs-3 col-md-5">3.0 – Partially Meet Expectations (evaluation of output may range from 2.5 to 3.0)</div>
+    </div>
+    <div class="row">
+      <div class="col-xs-9 col-md-7">2.0 – Meets Expectations (evaluation of output may range from 1.5 to 2.4)</div>
+      <div class="col-xs-3 col-md-5">4.0 – Does Not Meet Expectations (evaluation of output with a rating of 3.0 or lower)</div>
+    </div>  
  </div>
- 
-  <!-- Reports -->
-  <footer class="w3-panel w3-padding-small w3-light-grey w3-small w3-center" id="reports" >
-    <div class="w3-container">
-      <h4>Reports</h4>
-        <div class="w3-responsive">
-         <table class="w3-table">
-          <tr>
-            <th>Course Outcome</th>
-            <th>Attained?</th>
-            <th>Comment</th>
-          </tr>
-            <tr>
-              <td>Course Outcome 1</td>
-              <td>Yes</td>
-              <td>CO attained</td>
-            </tr>
-           <tr>
-              <td>Course Outcome 2</td>
-              <td>Yes</td>
-              <td>CO attained</td>
-            </tr>
-            <tr>
-              <td>Course Outcome 3</td>
-              <td>Yes</td>
-              <td>CO attained</td>
-            </tr>
-        </table>
-      </div>
-    </div>
-  </footer>
-
-  <!-- Action Plan -->
-  <footer class="w3-panel w3-padding-small w3-light-grey w3-small w3-center" id="actionplan" >
-    <div class="w3-container">
-      <h4>Action Plan</h4>
-        <div class="w3-responsive">
-         <table class="w3-table">
-          <tr>
-            <th>Course Outcome</th>
-            <th>Suggestive Action Plan</th>
-          </tr>
-            <tr>
-              <td>Course Outcome 1</td>
-              <td>Retain</td>
-            </tr>
-           <tr>
-              <td>Course Outcome 2</td>
-              <td>Change</td>
-            </tr>
-            <tr>
-              <td>Course Outcome 3</td>
-              <td>Change</td>
-            </tr>
-        </table>
-      </div>
-    </div>
-  </footer>
-  <a href="<?php echo base_url('user/formfour');?>" > <button type="submit" class="w3-button w3-block w3-blue">Submit</button></a>
-  <!-- End page content -->
 </div>
+
+
+
+<div class="row">
+ <div class="col-xs-9 col-md-7">Total No. of Students Enrolled: </div>
+</div>  
+<div class="row">
+  <div class="col-xs-9 col-md-7">No. of Students Passed: </div>
+</div>  
+ 
+<!--   <a href="#" button type="submit" class="w3-button w3-block w3-blue">Submit </button> </a> -->
+  <!-- End page content -->
 
 <!-- Create a Course Modal -->
 <div id="createcourse" class="w3-modal">
@@ -255,6 +253,7 @@ function w3_close() {
     document.getElementById("myOverlay").style.display = "none";
 }
 
+
 // ajax for creating a course
 $(document).on('submit', '#user_form', function(event){
   event.preventDefault();
@@ -273,11 +272,9 @@ $(document).on('submit', '#user_form', function(event){
       // processData:false,
       success:function(response)
       {
-        $resp = JSON.parse(response);
         console.log(response);
         $('#user_form')[0].reset();
         $('#createcourse').hide();
-        $('#demoAcc').append("<a href='linkwhatsoever/"+$resp['id']+"' class='w3-bar-item w3-button'>"+$resp['subject']+"</a>");
       }
     });
   }

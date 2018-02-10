@@ -12,15 +12,9 @@ Class Auth Extends CI_Controller
 
 	public function index()
 	{
-		$credentials = array(
-			'username'=>$this->input->post('username'),
-			'password'=>md5($this->input->post('password'))
-		);
-
-		$login = $this->AuthModel->loginCheck($credentials['username'],$credentials['password']);
-		if($login != false)
+		if(!empty($this->session->userdata('id')))
 		{
-			if($login['role'] == 'admin')
+			if($this->session->userdata('role') == 'admin')
 			{
 				$this->load->view('Admin/');
 			}
@@ -35,4 +29,30 @@ Class Auth Extends CI_Controller
 		}
 	}
 
+
+	public function verifyLogin()
+	{
+		$credentials = array(
+			'username'=>$this->input->post('username'),
+			'password'=>md5($this->input->post('password'))
+		);
+
+		$login = $this->AuthModel->loginCheck($credentials['username'],$credentials['password']);
+		if($login != false)
+		{
+			$this->session->set_userdata('id',$login->id);
+			$this->session->set_userdata('username',$login->username);
+			$this->session->set_userdata('role',$login->role);
+			$this->index();
+		}
+		else
+		{
+			//redierct to landing page with error message
+		}
+	}
+
+	public function logout()
+	{
+		$this->session->sess_destroy();
+	}
 }

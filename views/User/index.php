@@ -91,7 +91,7 @@ th, td {
   <!-- Top header -->
   <header class="w3-container w3-xlarge">
     <p class="w3-left">Signed in as <a href="<?php echo base_url('user/user_profile');?>" class="navbar-link"><?php echo $this->session->userdata('username'); ?></a></p>
-    <p class="w3-right"><a href="<?php echo base_url('user/user_logout');?>" >  <button type="button" class="btn-primary">Logout</button></a></p>
+    <p class="w3-right"><a href="<?php echo base_url('auth/logout');?>" >  <button type="button" class="btn-primary">Logout</button></a></p>
   </header>
 
   <!--Dashboard Header -->

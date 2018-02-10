@@ -18,10 +18,10 @@ class User extends CI_Controller
     $this->load->view("user/index.php");
   }
 
-  public function registration()
-  {
-    $this->load->view('register.php');
-  }
+  // public function registration()
+  // {
+  //   $this->load->view('register.php');
+  // }
 
   public function register_user()
   {
@@ -30,7 +30,7 @@ class User extends CI_Controller
         'email'=>$this->input->post('email'),
         'password'=>md5($this->input->post('password')),
     );
-    print_r($user);
+    // print_r($user);
     $username_check=$this->user_model->username_check($user['username']);
 
     if($username_check)
@@ -70,26 +70,6 @@ class User extends CI_Controller
     $this->admin_view();
   }
 
-  public function login_user()
-  {
-    $user_login=array(
-      'username'=>$this->input->post('username'),
-      'password'=>md5($this->input->post('password'))
-    );
-
-    $data=$this->user_model->login_user($user_login['username'],$user_login['password']);
-    if($data)
-    {
-      $this->session->set_userdata('id',$data['id']);
-      $this->session->set_userdata('username',$data['username']);
-      $this->user_profile();
-    }
-    else
-    {
-      $this->session->set_flashdata('error_msg', 'Error occured,Try again.');
-      $this->load->view("login.php");
-    }
-   }
 
   public function user_profile()
   {
@@ -116,12 +96,6 @@ class User extends CI_Controller
 
 		$this->load->view('sample.php',$data);
 	}
-
-  public function user_logout()
-  {
-    $this->session->sess_destroy();
-    redirect('user/login_view', 'refresh');
-   }
 
   public function changepass()
   {

@@ -3,7 +3,7 @@
 Class AuthModel Extends CI_Model
 {
 
-	public function CheckUser($username)
+	public function checkUser($username)
 	{
 		$this->db->select('*');
 		$this->db->from('users');

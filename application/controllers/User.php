@@ -104,6 +104,19 @@ class User extends CI_Controller
     $this->load->view('user_profile.php',$data);
   }
 
+	public function sample()
+	{
+		$this->db->select('*');
+		$this->db->from('courses');
+		//$this->db->where('user_id',$this->session->userdata('id'));
+
+		$query = $this->db->get();
+
+		$data['list_course'] = $query->result();
+
+		$this->load->view('sample.php',$data);
+	}
+
   public function user_logout()
   {
     $this->session->sess_destroy();

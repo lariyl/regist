@@ -19,9 +19,16 @@ if($username == 'admin')
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-<link href="<?php echo base_url(); ?>assets/css/bootstrap.min.css" rel="stylesheet">
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-<script scr="<?php echo base_url(); ?>assets/css/bootstrap.min.js"></script> 
+
+
+<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+<link rel="stylesheet" href="http://davidstutz.de/bootstrap-multiselect/dist/css/bootstrap-multiselect.css" type="text/css"/>
+
+
+<script src="http://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+<script type="text/javascript" src="http://davidstutz.de/bootstrap-multiselect/dist/js/bootstrap-multiselect.js"></script>
+
 <style>
 .w3-sidebar a {font-family: "Roboto", sans-serif}
 body,h1,h2,h3,h4,h5,h6,.w3-wide {font-family: "Montserrat", sans-serif;}
@@ -34,7 +41,11 @@ th, td {
     text-align: left;    
 }
 </style>
+
+
 <body class="w3-content" style="max-width:1200px">
+
+
 
 <!-- Sidebar/menu -->
 <nav class="w3-sidebar w3-bar-block w3-white w3-collapse w3-top" style="z-index:3;width:250px" id="mySidebar">
@@ -42,21 +53,34 @@ th, td {
     <i onclick="w3_close()" class="fa fa-remove w3-hide-large w3-button w3-display-topright"></i>
     <h3 class="w3-wide"><b>Dashboard</b></h3>
   </div>
+
+	<div>
+		<label>Courses</label>
+		<select id="course-list" >
+			<?php
+			foreach($list_course as $idx => $lc)
+			{
+				echo "<option value='$lc->id'>$lc->subject</option>";
+			}
+			?>
+		</select>
+	</div>
+
   <div class="w3-padding-64 w3-large w3-text-grey" style="font-weight:bold">
     <a onclick="myAccFunc()" href="javascript:void(0)" class="w3-button w3-block w3-white w3-left-align" id="myBtn">Courses <i class="fa fa-caret-down"></i></a>
     <div id="demoAcc" class="w3-bar-block w3-hide w3-padding-large w3-medium">
-      <a href="javascript:void(0)" class="w3-bar-item w3-button w3-padding w3-blue" onclick="document.getElementById('createcourse').style.display='block'">Create a Course</a> 
+      <a href="javascript:void(0)" class="w3-bar-item w3-button w3-padding w3-blue" onclick="document.getElementById('createcourse').style.display='block'">Create a Course</a>
       <?php
         foreach($list_course as $value){
-          echo  "<a href='#' data-id='$value->id'  class='w3-bar-item w3-button course'>$value->subject</a>"; 
-          // echo "<a href='#' onclick='alert('Procede?')' >$value->subject</a>";   
+          echo  "<a href='#' data-id='$value->id'  class='w3-bar-item w3-button course'>$value->subject</a>";
+          // echo "<a href='#' onclick='alert('Procede?')' >$value->subject</a>";
         }
       ?>
     </div>
     <a onclick="myAccFunc()" href="javascript:void(0)" class="w3-button w3-block w3-white w3-left-align" id="myBtn">Current Courses <i class="fa fa-caret-down"></i></a>
     <a onclick="myAccFunc()" href="javascript:void(0)" class="w3-button w3-block w3-white w3-left-align" id="myBtn">Past Courses <i class="fa fa-caret-down"></i></a>
-    <a href="<?php echo base_url('user/changepass'); ?>" class="w3-bar-item w3-button">Change Password</a> 
-  </div>  
+    <a href="<?php echo base_url('user/changepass'); ?>" class="w3-bar-item w3-button">Change Password</a>
+  </div>
 </nav>
 
 <!-- Top menu on small screens -->
@@ -71,15 +95,16 @@ th, td {
 <!-- !PAGE CONTENT! -->
 <div class="w3-main" style="margin-left:250px">
 
+
   <!-- Push down content on small screens -->
   <div class="w3-hide-large" style="margin-top:83px"></div>
-  
+
   <!-- Top header -->
   <header class="w3-container w3-xlarge">
     <p class="w3-left">Signed in as <a href="<?php echo base_url('user/user_profile');?>" class="navbar-link"><?php echo $this->session->userdata('username'); ?></a></p>
     <p class="w3-right"><a href="<?php echo base_url('user/user_logout');?>" >  <button type="button" class="btn-primary">Logout</button></a></p>
   </header>
-  
+
   <!--Dashboard Header -->
   <header class="w3-container w3-xlarge" style="padding-top:22px">
     <h5><b><i class="fa fa-dashboard"></i> My Dashboard</b></h5>
@@ -89,7 +114,7 @@ th, td {
      <!-- Add an Exam -->
     <p class="w3-left">
     <!-- <input type="button" class="w3-button w3-green" value="Add Exam"> -->
-    <a href="javascript:void(0)" class="w3-bar-item w3-button w3-padding w3-green" onclick="document.getElementById('addexam').style.display='block'">Add Exam</a>     
+    <a href="javascript:void(0)" class="w3-bar-item w3-button w3-padding w3-green" onclick="document.getElementById('addexam').style.display='block'">Add Exam</a>
     <!-- Print Record -->
     <p class="w3-right">
     <input type="button" class="w3-button w3-brown" value="Print Record">
@@ -111,7 +136,7 @@ th, td {
           </form>
         <div id="imported_csv_data"></div>
       </div>
-  
+
 
 <!--     <div class="w3-responsive">
      <table class="w3-table-all">
@@ -123,7 +148,7 @@ th, td {
        <th>Finals</th>
        <th>Final Grade</th>
       </tr>
-     </table> 
+     </table>
       <tr>
        <td>John Doe</td>
        <td>1.0</td>
@@ -135,7 +160,7 @@ th, td {
     </table>
   </div>
   -->
- 
+
   <!-- Reports -->
   <footer class="w3-panel w3-padding-small w3-light-grey w3-small w3-center" id="reports" >
     <div class="w3-container">
@@ -236,7 +261,7 @@ th, td {
 
 
 <script>
-// Accordion 
+// Accordion
 function myAccFunc() {
     var x = document.getElementById("demoAcc");
     if (x.className.indexOf("w3-show") == -1) {
@@ -252,7 +277,7 @@ function w3_open() {
     document.getElementById("mySidebar").style.display = "block";
     document.getElementById("myOverlay").style.display = "block";
 }
- 
+
 function w3_close() {
     document.getElementById("mySidebar").style.display = "none";
     document.getElementById("myOverlay").style.display = "none";
@@ -279,7 +304,7 @@ $(document).on('click', '.course', function(){
 $(document).on('submit', '#user_form', function(event){
   event.preventDefault();
   var subject = $('#subject').val();
-  var description = $( '#description').val(); 
+  var description = $( '#description').val();
 
   var ajaxdata = {action: $(this).data('action'), psubject: subject, pdescription: description};
 
@@ -311,6 +336,10 @@ $(document).on('submit', '#user_form', function(event){
 // Ajax Import
 $(document).ready(function(){
 
+	$("#course-list").multiselect({
+		enableCaseInsensitiveFiltering: true
+	});
+
   load_data();
 
   function load_data()
@@ -338,7 +367,7 @@ $(document).ready(function(){
         $('#import_csv_btn').html('Importing...');
       },
       success:function(data)
-      { 
+      {
         $('#import_csv')[0].reset();
         $('#import_csv_btn').attr('disabled', false);
         $('#import_csv_btn').html('Import Done');
@@ -346,7 +375,7 @@ $(document).ready(function(){
       }
     })
   });
-  
+
 });
 
 

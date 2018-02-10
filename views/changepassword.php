@@ -10,8 +10,8 @@
   <body>
 
 
-<p class="w3-left" style="padding-left:450px" >Signed in as <a href="<?php echo base_url('user/user_profile');?>" class="navbar-link"><?php echo $this->session->userdata('username'); ?></a></p>
-<p class="w3-left" style="padding-left:180px"><a href="<?php echo base_url('user/user_logout');?>" >  <button type="button" class="btn-primary">Logout</button></a></p>
+<p class="w3-left" style="padding-left:450px" >Signed in as <a href="<?php echo base_url('auth/index');?>" class="navbar-link"><?php echo $this->session->userdata('username'); ?></a></p>
+<p class="w3-left" style="padding-left:180px"><a href="<?php echo base_url('auth/logout');?>" >  <button type="button" class="btn-primary">Logout</button></a></p>
 
     <div class="w3-container" style="margin-top:150px">
     <div class="w3-row">
@@ -41,9 +41,9 @@
                   ?>
 
 <!--  <?php echo validation_errors(); ?> -->
- 				<?php echo form_open('user/updatePwd'); ?>
+ 				<?php echo form_open('auth/updatePwd'); ?>
  				<div class="panel-body">
-            s<label>Current Password</label>
+            <label>Current Password</label>
                     <?php echo form_password(['name'=>'password', 'placeholder'=>'Password']); ?>
                     <?php echo form_error('password', '<div class="text-danger">', '</div>'); ?>
 				   <label>New Password</label>

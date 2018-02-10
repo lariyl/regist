@@ -68,7 +68,7 @@ th, td {
     </div>
     <a onclick="myAccFunc()" href="javascript:void(0)" class="w3-button w3-block w3-white w3-left-align" id="myBtn">Current Courses <i class="fa fa-caret-down"></i></a>
     <a onclick="myAccFunc()" href="javascript:void(0)" class="w3-button w3-block w3-white w3-left-align" id="myBtn">Past Courses <i class="fa fa-caret-down"></i></a>
-    <a href="<?php echo base_url('user/changepass'); ?>" class="w3-bar-item w3-button">Change Password</a>
+    <a href="<?php echo base_url('auth/changePass'); ?>" class="w3-bar-item w3-button">Change Password</a>
   </div>
 </nav>
 
@@ -90,7 +90,7 @@ th, td {
 
   <!-- Top header -->
   <header class="w3-container w3-xlarge">
-    <p class="w3-left">Signed in as <a href="<?php echo base_url('user/user_profile');?>" class="navbar-link"><?php echo $this->session->userdata('username'); ?></a></p>
+    <p class="w3-left">Signed in as <a href="<?php echo base_url('auth/index');?>" class="navbar-link"><?php echo $this->session->userdata('username'); ?></a></p>
     <p class="w3-right"><a href="<?php echo base_url('auth/logout');?>" >  <button type="button" class="btn-primary">Logout</button></a></p>
   </header>
 

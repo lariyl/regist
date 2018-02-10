@@ -9,7 +9,23 @@ public function register_user($user){
 $this->db->insert('users', $user);
  
 }
+
+public function fetch_data(){
+
+    $query = $this->db->get("users");
+    //select * from users
+    
+    //$query =$this->db->query("SELECT * FROM users ORDER BY id DESC");
+    // $this->db->select("*");
+    // $this->db->from("users");
+    // $query = $this->db->get();
+    return $query;
+  }
  
+  function delete_data($id){
+    $this->db->where("id", $id);
+    $this->db->delete("users");
+  } 
 public function login_user($username,$pass){
  
   $this->db->select('*');
@@ -69,5 +85,16 @@ public function fetch_course(){
       return $query;
 }
 
+public function select()
+  {
+    $this->db->order_by('id', 'DESC');
+    $query = $this->db->get('students');
+    return $query;
+  }
+
+public function insert($data)
+  {
+    $this->db->insert_batch('students', $data);
+  }
 } 
 ?>

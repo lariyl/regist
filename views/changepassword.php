@@ -43,7 +43,7 @@
 <!--  <?php echo validation_errors(); ?> -->
  				<?php echo form_open('user/updatePwd'); ?>
  				<div class="panel-body">
-            <label>Current Password</label>
+            s<label>Current Password</label>
                     <?php echo form_password(['name'=>'password', 'placeholder'=>'Password']); ?>
                     <?php echo form_error('password', '<div class="text-danger">', '</div>'); ?>
 				   <label>New Password</label>

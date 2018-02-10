@@ -44,7 +44,8 @@
                       <p><input class="form-control" placeholder="Password" name="password" type="password" required></p>
                       <p><input class="btn btn-lg btn-success btn-block" type="submit" value="login" name="login"></p>
                     </form>
-                <center><b>Not registered ?</b> <br></b><a href="<?php echo base_url('user/registration'); ?>">Register here</a></center><!--for centered text-->
+                <!-- <center><b>Not registered ?</b> <br></b><a href="<?php echo base_url('user/registration'); ?>">Register here</a></center>-->
+                <!--for centered text-->
                 </div>
                 </div>
             </div>

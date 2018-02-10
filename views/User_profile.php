@@ -1,11 +1,14 @@
 <?php
 $id=$this->session->userdata('id');
- 
-if(!$id){
- 
-  redirect('user/login_view');
-}
- 
+$username=$this->session->userdata('username'); 
+// if(!isset($_SESSION['username']) || $_SESSION['password'] !='admin'){
+//     redirect('user/user_profile');
+// } 
+if($username == 'admin')
+	{ 
+  redirect('user/admin_view');
+  }
+
  ?>
  
 <html>
@@ -45,11 +48,13 @@ th, td {
       <a href="javascript:void(0)" class="w3-bar-item w3-button w3-padding w3-blue" onclick="document.getElementById('createcourse').style.display='block'">Create a Course</a> 
       <?php
         foreach($list_course as $value){
-          echo  "<a href='#' data-id='$value->id' class='w3-bar-item w3-button'>$value->subject</a>";    
+          echo  "<a href='#' data-id='$value->id'  class='w3-bar-item w3-button course'>$value->subject</a>"; 
+          // echo "<a href='#' onclick='alert('Procede?')' >$value->subject</a>";   
         }
       ?>
-      <a href="#" class="w3-bar-item w3-button">A Course</a>
     </div>
+    <a onclick="myAccFunc()" href="javascript:void(0)" class="w3-button w3-block w3-white w3-left-align" id="myBtn">Current Courses <i class="fa fa-caret-down"></i></a>
+    <a onclick="myAccFunc()" href="javascript:void(0)" class="w3-button w3-block w3-white w3-left-align" id="myBtn">Past Courses <i class="fa fa-caret-down"></i></a>
     <a href="<?php echo base_url('user/changepass'); ?>" class="w3-bar-item w3-button">Change Password</a> 
   </div>  
 </nav>
@@ -80,25 +85,6 @@ th, td {
     <h5><b><i class="fa fa-dashboard"></i> My Dashboard</b></h5>
   </header>
 
-
-
- <!--  <div id="ajax-content">
-    <button type="button" onclick="loadDoc()">Press Button</button>
-  </div>
-
-  <script>
-function loadDoc() {
-  var xhttp = new XMLHttpRequest();
-  xhttp.onreadystatechange = function() {
-    if (this.readyState == 4 && this.status == 200) {
-      document.getElementById("ajax-content").innerHTML =
-      this.responseText;
-    }
-  };
-  xhttp.open("GET", "<?php echo base_url('user/helloworld');?>", true);
-  xhttp.send();
-}
-</script> -->
     <p class="w3-center"><b>Students Record</b></p>
      <!-- Add an Exam -->
     <p class="w3-left">
@@ -111,9 +97,24 @@ function loadDoc() {
 
 <!--Class Record -->
   <div class="w3-container">
-    <h5>A Course</h5>
-    <div class="w3-responsive">
-    <table class="w3-table-all">
+    <h5 id=coursename> <?php echo "$value->subject";?></h5>
+  </div>
+
+<!-- Import Class List -->
+      <div class="container box">
+          <form method="post" id="import_csv" enctype="multipart/form-data">
+            <div class="form-group">
+              <label>Select CSV File</label>
+              <input type="file" name="csv_file" id="csv_file" required accept=".csv" />
+            </div>
+              <button type="submit" name="import_csv" class="btn btn-info" id="import_csv_btn">Import CSV</button>
+          </form>
+        <div id="imported_csv_data"></div>
+      </div>
+  
+
+<!--     <div class="w3-responsive">
+     <table class="w3-table-all">
       <tr class="w3-cyan">
        <th>Student Name</th>
        <th>Pre-Mid</th>
@@ -122,6 +123,7 @@ function loadDoc() {
        <th>Finals</th>
        <th>Final Grade</th>
       </tr>
+     </table> 
       <tr>
        <td>John Doe</td>
        <td>1.0</td>
@@ -132,7 +134,7 @@ function loadDoc() {
       </tr>
     </table>
   </div>
- </div>
+  -->
  
   <!-- Reports -->
   <footer class="w3-panel w3-padding-small w3-light-grey w3-small w3-center" id="reports" >
@@ -225,7 +227,8 @@ function loadDoc() {
        <p><input class="w3-input w3-border" placeholder="Course Outcome" type="text" required></p>
        <p><input class="w3-input w3-border" placeholder="Description" type="text" required ></p>
        <p><input class="w3-input w3-border" placeholder="Weight" type="float" required ></p>
-       <button type="button" class="w3-button w3-padding-large w3-green w3-margin-bottom" onclick="document.getElementById('addexam').style.display='block'">Add Exam</button>
+        <input type="submit" class="btn btn-primary" name="action" value="Add Exam"/>
+       <!-- <button type="button" class="w3-button w3-padding-large w3-green w3-margin-bottom" onclick="document.getElementById('addexam').style.display='block'">Add Exam</button> -->
       </form>
     </div>
   </div>
@@ -255,6 +258,23 @@ function w3_close() {
     document.getElementById("myOverlay").style.display = "none";
 }
 
+//change course in the UI
+$(document).on('click', '.course', function(){
+  event.preventDefault();
+  $elementClicked = $(this);
+
+  $.ajax({
+    url: "<?php echo base_url(). 'user/user_profile'?>",
+    type: 'POST',
+    success: function(response){
+      // $('#coursename').remove();
+      // $("#coursename").text($("#8").text());
+      $("#coursename").text($elementClicked.text());
+    }
+
+  })
+})
+
 // ajax for creating a course
 $(document).on('submit', '#user_form', function(event){
   event.preventDefault();
@@ -277,7 +297,8 @@ $(document).on('submit', '#user_form', function(event){
         console.log(response);
         $('#user_form')[0].reset();
         $('#createcourse').hide();
-        $('#demoAcc').append("<a href='linkwhatsoever/"+$resp['id']+"' class='w3-bar-item w3-button'>"+$resp['subject']+"</a>");
+        $('#demoAcc').append( "<a href='#' data-id='"+$resp['id']+"' class='w3-bar-item w3-button'>"+$resp['subject']+"</a>");
+
       }
     });
   }
@@ -286,6 +307,50 @@ $(document).on('submit', '#user_form', function(event){
     alert("Both fields are required");
   }
 });
+
+// Ajax Import
+$(document).ready(function(){
+
+  load_data();
+
+  function load_data()
+  {
+    $.ajax({
+      url:"<?php echo base_url(); ?>user/load_data",
+      method:"POST",
+      success:function(data)
+      {
+        $('#imported_csv_data').html(data);
+      }
+    })
+  }
+
+  $('#import_csv').on('submit', function(event){
+    event.preventDefault();
+    $.ajax({
+      url:"<?php echo base_url(); ?>user/import",
+      method:"POST",
+      data:new FormData(this),
+      contentType:false,
+      cache:false,
+      processData:false,
+      beforeSend:function(){
+        $('#import_csv_btn').html('Importing...');
+      },
+      success:function(data)
+      { 
+        $('#import_csv')[0].reset();
+        $('#import_csv_btn').attr('disabled', false);
+        $('#import_csv_btn').html('Import Done');
+        load_data();
+      }
+    })
+  });
+  
+});
+
+
+
 </script>
 
 

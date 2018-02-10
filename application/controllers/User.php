@@ -35,7 +35,7 @@ public function register_user(){
   if($username_check){
     $this->user_model->register_user($user);
     $this->session->set_flashdata('success_msg', 'Registered successfully.Now login to your account.');
-    redirect('user/login_view');
+    redirect('user/admin_view');
   }
   else{
     $this->session->set_flashdata('error_msg', 'Error! Username has already been taken.');
@@ -46,7 +46,22 @@ public function register_user(){
 public function login_view(){
   $this->load->view("login.php");
   }
- 
+
+public function admin_view(){
+      $data["fetch_data"] = $this->user_model->fetch_data();
+      $this->load->view("admin.php", $data);
+}
+public function delete_data(){
+    $id = $this->uri->segment(3);
+    $this->load->model("user_model");
+    $this->user_model->delete_data($id);
+    redirect(base_url() . "user/deleted");
+  }
+
+public function deleted(){
+    $this->admin_view();
+  } 
+
 function login_user(){
   $user_login=array(
  
@@ -71,7 +86,7 @@ function login_user(){
       }
  }
  
-function user_profile(){
+public function user_profile(){
   
   $this->db->select('*');
   $this->db->from('courses');
@@ -82,7 +97,10 @@ function user_profile(){
   $data['list_course'] = $query->result();
 
   $this->load->view('user_profile.php',$data);
-  }
+}
+
+
+
 public function user_logout(){
   $this->session->sess_destroy();
   redirect('user/login_view', 'refresh');
@@ -147,5 +165,62 @@ public function updatePwd(){
       echo json_encode($result);
     }     
   }
+
+  function load_data()
+  {
+    $result = $this->user_model->select();
+    $output = '
+      <div class="w3-responsive table">
+        <table class="w3-table-all">
+          <tr class="w3-cyan">
+            <th>Student Name</th>
+            <th>Pre-Mid</th>
+            <th>Midterm</th>
+            <th>Pre-Fi</th>
+            <th>Finals</th>
+            <th>Final Grade</th>
+          </tr>
+
+    ';
+    $count = 0;
+    if($result->num_rows() > 0)
+    {
+      foreach($result->result() as $row)
+      {
+        $count = $count + 1;
+        $output .= '
+        <tr>
+          <td>'.$count.'</td>
+          <td>'.$row->name.'</td>
+        </tr>
+        ';
+      }
+    }
+    else
+    {
+      $output .= '
+      <tr>
+          <td colspan="5" align="center">Data not Available</td>
+        </tr>
+      ';
+    }
+    $output .= '</table></div>';
+    echo $output;
+  }
+
+  function import()
+  {
+    $file_data = $this->csvimport->get_array($_FILES["csv_file"]["tmp_name"]);
+    foreach($file_data as $row)
+    {
+      $data[] = array(
+        'name'  =>  $row["Student Name"],
+      );
+    }
+    $this->user_model->insert($data);
+  }
+
+  
+  
 }   
 ?>  

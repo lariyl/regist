@@ -10,7 +10,7 @@ Class PageManagement Extends CI_Controller
 
 	 public function secondFunc()
 	 {
-			echo "Hello World";
+			echo "test 123 456";
 	 }
 
 }

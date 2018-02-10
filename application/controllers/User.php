@@ -90,7 +90,7 @@ public function user_profile(){
   
   $this->db->select('*');
   $this->db->from('courses');
-  $this->db->where('user_id',$this->session->userdata('id'));
+  // $this->db->where('user_id',$this->session->userdata('id'));
 
   $query = $this->db->get();
 
@@ -156,7 +156,7 @@ public function updatePwd(){
       $insert_data = array(
         'subject' => $_POST['psubject'],
         'description' => $_POST['pdescription'],
-        'user_id' =>  $this->session->userdata('id'),
+        // 'user_id' =>  $this->session->userdata('id'),
       );
       $this->load->model('user_model');
       $result['id'] = $this->user_model->insert_course($insert_data);

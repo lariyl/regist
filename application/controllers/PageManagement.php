@@ -8,4 +8,9 @@ Class PageManagement Extends CI_Controller
 	 		$this->load->view('login');
 	 }
 
- }
+	 public function secondFunc()
+	 {
+			echo "test";
+	 }
+
+}

@@ -179,7 +179,7 @@ class User extends CI_Controller
   }
 
 
-  // Test Functions
+  // Test Functions as of Feb 10
   public function load_data()
   {
     $result = $this->user_model->select();

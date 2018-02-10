@@ -16,11 +16,11 @@ Class Auth Extends CI_Controller
 		{
 			if($this->session->userdata('role') == 'admin')
 			{
-				$this->load->view('Admin/');
+				redirect('Admin');
 			}
 			else
 			{
-				$this->load->view('User/');
+				redirect('User');
 			}
 		}
 		else
@@ -40,9 +40,9 @@ Class Auth Extends CI_Controller
 		$login = $this->AuthModel->loginCheck($credentials['username'],$credentials['password']);
 		if($login != false)
 		{
-			$this->session->set_userdata('id',$login->id);
-			$this->session->set_userdata('username',$login->username);
-			$this->session->set_userdata('role',$login->role);
+			$this->session->set_userdata('id',$login['id']);
+			$this->session->set_userdata('username',$login['username']);
+			$this->session->set_userdata('role',$login['role']);
 			$this->index();
 		}
 		else

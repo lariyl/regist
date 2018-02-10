@@ -6,16 +6,16 @@ class User extends CI_Controller
   public function __construct()
   {
     parent::__construct();
-    $this->load->helper('url','Tools');
+    $this->load->helper('url');    
+    $this->load->helper('Tools');
     $this->load->model('user_model');
     $this->load->library('session');
     $this->load->library('form_validation');
     $this->load->library('csvimport');
   }
-
   public function index()
   {
-    $this->load->view("User/index");
+    $this->load->view("user/index.php");
   }
 
   public function registration()

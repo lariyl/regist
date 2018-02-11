@@ -1,27 +1,22 @@
 <html>
 <html>
   <head>
-    <title>THESIS Admin Index Page</title>
-	   <?php echo getCSS(); ?>
-	   <?php echo getJS(); ?>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <link href="<?php echo base_url(); ?>assets/css/bootstrap.min.css" rel="stylesheet">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-    <script scr="<?php echo base_url(); ?>assets/css/bootstrap.min.js"></script> 
+    <title>THESIS - Admin Index Page</title>
+	   <?php echo getCSS(); ?>
+	   <?php echo getJS(); ?>
   </head>
 <body>
  
-<span style="background-color:red;">
-  <header class="w3-container w3-xlarge">
-    <p class="w3-left">Signed in as <a href="<?php echo base_url('admin/index');?>" class="navbar-link"><?php echo $this->session->userdata('username'); ?></a></p>
-    <p class="w3-right"><a href="<?php echo base_url('auth/logout');?>" >  <button type="button" class="btn-primary">Logout</button></a></p>
-  </header>
-  
+
+    <nav class="navbar navbar-default">
+      <div class="container-fluid">
+        <p class="navbar-text navbar-left">Signed in as <a href="<?php echo base_url('admin/index');?>" class="navbar-link"><?php echo $this->session->userdata('username'); ?></a></p>     
+        <a href="<?php echo base_url('auth/logout');?>"> <button type="button" class="btn btn-default navbar-btn pull-right">Logout</button>
+      </div>
+    </nav>
+
   <div class="w3-container"><!-- container class is used to centered  the body of the browser with some decent width-->
       <div class="w3-row"><!-- row class is used for grid system in Bootstrap-->
           <div class="col-md-4 col-md-offset-4"><!--col-md-4 is used to create the no of colums in the grid also use for medimum and large devices-->
@@ -116,7 +111,6 @@ $(document).ready(function(){
       });
     });
  </script>
-</span>
  
  
  

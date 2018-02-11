@@ -2,14 +2,13 @@
 
 Class Auth Extends CI_Controller
 {
-
 	public  function  __construct()
 	{
 		parent::__construct();
 		$this->load->helper('Tools');
 		$this->load->model('AuthModel');
-    	$this->load->library('session');
-    	$this->load->library('form_validation');		
+		$this->load->library('session');
+		$this->load->library('form_validation');
 	}
 
 	public function index()
@@ -30,7 +29,6 @@ Class Auth Extends CI_Controller
 			$this->load->view('LandingPage');
 		}
 	}
-
 
 	public function verifyLogin()
 	{
@@ -61,51 +59,52 @@ Class Auth Extends CI_Controller
 		}
 	}
 
-  	public function changePass()
-  	{
-    	$this->load->view("changepassword");
-   	}
+	public function changePassword()
+	{
+		$this->load->view("ChangePassword");
+	}
 
-  public function updatePwd()
-  {
-    $this->form_validation->set_rules('password', 'Current Password', 'required|alpha_numeric');
-    $this->form_validation->set_rules('newpass', 'New Password', 'required|alpha_numeric');
-    $this->form_validation->set_rules('confpassword', 'Password Confirmation', 'required|alpha_numeric');
-    if($this->form_validation->run())
-    {
-      $curr_password = md5($this->input->post('password'));
-      $new_password = md5($this->input->post('newpass'));
-      $conf_password = md5($this->input->post('confpassword'));
-      $this->load->model('AuthModel');
-      $userid= $this->session->userdata('id');
-      $passwd = $this->AuthModel->getCurrPassword($userid);
+	public function updatePassword()
+	{
+		$this->form_validation->set_rules('password', 'Current Password', 'required|alpha_numeric');
+		$this->form_validation->set_rules('new_password', 'New Password', 'required|alpha_numeric');
+		$this->form_validation->set_rules('confirm_password', 'Password Confirmation', 'required|alpha_numeric');
+		if($this->form_validation->run())
+		{
+			$current_password = md5($this->input->post('password'));
+			$new_password = md5($this->input->post('new_password'));
+			$confirm_password = md5($this->input->post('confirm_password'));
+			$this->load->model('AuthModel');
+			$user_id= $this->session->userdata('id');
+			$password = $this->AuthModel->getCurrentPassword($user_id);
 
-      if($passwd->password == $curr_password)
-      {
-        if($new_password == $conf_password)
-        {
-          if($this->AuthModel->updatePassword($new_password,$userid))
-          {
-            $this->index();
-          }
-          else
-          {
-            $this->session->set_flashdata('error_msg', 'Failed to update password.');
-          }
-        }
-        else
-        {
-          $this->session->set_flashdata('error_msg', 'New Password & Confirm Password dont match.');
-        }
-      }
-      else
-      {
-        $this->session->set_flashdata('error_msg', 'Sorry! Current Password dont match.');
-      }
-    }
+			if($password->password == $current_password)
+			{
+				if($new_password == $confirm_password)
+				{
+					if($this->AuthModel->updatePassword($new_password,$user_id))
+					{
+						$this->index();
+					}
+					else
+					{
+						$this->session->set_flashdata('error_msg', 'Failed to update password.');
+					}
+				}
+				else
+				{
+					$this->session->set_flashdata('error_msg', 'New Password & Confirm Password dont match.');
+				}
+			}
+			else
+			{
+				$this->session->set_flashdata('error_msg', 'Sorry! Current Password dont match.');
+			}
+		}
 
-    $this->load->view("changepassword");
-  }   	
+		$this->load->view("ChangePassword");
+	}
+
 	public function logout()
 	{
 		$this->session->sess_destroy();

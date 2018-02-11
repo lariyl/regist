@@ -39,15 +39,14 @@ Class Admin extends CI_Controller
     		}
   	}
 
- 	public function deleteData()
-  		{
-    		$id = $this->uri->segment(3);
-    		$this->load->model("AdminModel");
-    		$this->AdminModel->deleteData($id);
-    		redirect(base_url() . "Admin/deleted");
-  		}
+ 	public function deleteUser()
+	{
+		$id = $_POST['id'];
+		$this->AdminModel->deleteUser($id);
+		return;
+	}
 
-  	public function deleted()
+	public function deleted()
   		{
    			$this->index();
   		}

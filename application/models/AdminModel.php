@@ -14,10 +14,10 @@ class AdminModel extends CI_model
     return $query;
   }
 
-  public function deleteData($id)
-  {
-    $this->db->where("id", $id);
-    $this->db->delete("users");
+	public function deleteUser($id)
+	{
+		$this->db->where("id", $id);
+		$this->db->delete("users");
  	} 
 
 }

@@ -54,7 +54,7 @@
 									echo "<td>$row->email</td>";
 									echo "<td>$row->role</td>";
 									echo "<td>
-												<a href='#' data-id='$row->id' data-toggle='modal' data-target='#delete-user-modal'><i class='fa fa-trash'></i></a>
+												<a href='#' data-id='$row->id' data-toggle='modal' data-target='#delete-user-modal' class='delete-user'><i class='fa fa-trash'></i></a>
 										</td>";
 									echo "</tr>";
 								}
@@ -76,16 +76,14 @@
 						<h4 class="modal-title">Add User</h4>
 					</div>
 					<div class="modal-body">
-							<form role="form" method="post" action="<?php echo base_url('admin/registerUser'); ?>">
-							<p><input class="form-control" placeholder="Username" name="username" type="text" required></p>
-							<p><input class="form-control" placeholder="E-mail" name="email" type="email" required></p>
-							<p><input class="form-control" placeholder="Password" id="password" name="password" type="password" required></p>
-							<p><input class="form-control" placeholder="Confirm Password" id="confirmpassword" name="confirmpassword" type="password" required></p>
-							<span id="confirmMessage" class="confirmMessage"></span>
+							<p><input class="form-control" placeholder="Username" id="add-user-username" name="username" type="text" required></p>
+							<p><input class="form-control" placeholder="E-mail" id="add-user-email" name="email" type="email" required></p>
+							<p><input class="form-control" placeholder="Password" id="add-user-password" name="password" type="password" required></p>
+							<p><input class="form-control" placeholder="Confirm Password" id="add-user-confirmpassword" name="confirmpassword" type="password" required></p>
 					</div>
 					<div class="modal-footer">
 						<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-						<button type="button" class="btn btn-primary">Add as User</button>
+						<button type="button" class="btn btn-primary" >Add as User</button>
 						<button type="button" class="btn btn-primary">Add as Admin</button>
 					</div>
 				</div>
@@ -98,12 +96,65 @@
 					<div class="modal-body">
         		<h3>Are you sure?</h3>
 							<button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-							<button type="button" class="btn btn-danger">Delete</button>
+							<button type="button" class="btn btn-danger" data-dismiss="modal" id="confirm-delete-user">Delete</button>
 					</div>
 				</div>
 			</div>
 		</div>
 
+		<!-- TAIL JS -->
+		<script>
+			$doc = $(document);
+			currentUserID = null;
+			currentUserRowElement = null;
 
+			var pageApp = {
+				addUser: function(role){
+					ajaxData = {
+						username: $('#add-user-username').val(),
+						email: $('#add-user-email').val(),
+						password: $('#add-user-password').val(),
+						role: role
+					};
+
+					$.ajax({
+						url: '<?php echo base_url('Admin/registerUser')?>',
+						type: 'POST',
+						data: ajaxData,
+						success: function(response){
+
+						}
+					});
+				},
+				deleteUser: function(){
+					$.ajax({
+						url: '<?php echo base_url('Admin/deleteUser')?>',
+						type: 'POST',
+						data: {id: currentUserID},
+						success: function(response){
+							currentUserRowElement.parent().parent().remove();
+							currentUserRowElement = null;
+							currentUserID = null;
+						}
+					});
+				},
+				pageEvents: function() {
+					$doc.on('click', '.delete-user', function () {
+						currentUserID = $(this).data('id');
+						currentUserRowElement = $(this);
+						console.log(currentUserID);
+					});
+
+					$('#confirm-delete-user').on('click', function () {
+						pageApp.deleteUser();
+					});
+				},
+				init: function(){
+					pageApp.pageEvents();
+				}
+			};
+
+			pageApp.init();
+		</script>
 	</body>
 </html>

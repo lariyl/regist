@@ -34,7 +34,7 @@ Class AuthModel Extends CI_Model
 		}
 	}
 
-	public function getCurrPassword($userid)
+	public function getCurrentPassword($userid)
 	{
   		$query= $this->db->where(['id'=>$userid])
         		          ->get('users');

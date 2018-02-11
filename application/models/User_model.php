@@ -1,59 +1,17 @@
 <?php
 class User_model extends CI_model{
  
- 
- 
-public function register_user($user){
- 
- 
-$this->db->insert('users', $user);
- 
-}
+public function insert_course($data)
+  {
+    $this->db->insert('courses',$data);
+    return $this->db->insert_id();
+  }
 
-public function fetch_data(){
-
-    $query = $this->db->get("users");
-    //select * from users
-    
-    //$query =$this->db->query("SELECT * FROM users ORDER BY id DESC");
-    // $this->db->select("*");
-    // $this->db->from("users");
-    // $query = $this->db->get();
+public function fetch_course()
+  {
+    $query = $this->db->get("courses");
     return $query;
   }
- 
-  function delete_data($id){
-    $this->db->where("id", $id);
-    $this->db->delete("users");
-  } 
-
-
-public function getCurrPassword($userid){
-  $query= $this->db->where(['id'=>$userid])
-                  ->get('users');
-  if($query->num_rows() > 0){
-    return $query->row();
-  }                
-}
-
-public function updatePassword($new_password,$userid){
-  $data = array(
-    'password'=>$new_password
-  );
-  return $this->db->where('id',$userid)
-  ->update('users', $data);
-}
-
-public function insert_course($data)
-{
-  $this->db->insert('courses',$data);
-  return $this->db->insert_id();
-}
-
-public function fetch_course(){
-      $query = $this->db->get("courses");
-      return $query;
-}
 
 public function select()
   {

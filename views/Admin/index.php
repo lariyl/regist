@@ -73,32 +73,28 @@
 		</div>
 
 
-
 		<!-- MODALS AREA -->
-
 		<div class="modal fade" id="add-user-modal">
 			<div class="modal-dialog">
 				<div class="modal-content">
 					<div class="modal-header">
-
+						<button type="button" class="close" data-dismiss="modal"><span>&times;</span></button>
+						<h4 class="modal-title">Add User</h4>
 					</div>
 					<div class="modal-body">
-						<form action="#">
-
-						</form>
+							<form role="form" method="post" action="<?php echo base_url('admin/registerUser'); ?>">
+							<p><input class="form-control" placeholder="Username" name="username" type="text" required></p>
+							<p><input class="form-control" placeholder="E-mail" name="email" type="email" required></p>
+							<p><input class="form-control" placeholder="Password" id="password" name="password" type="password" required></p>
+							<p><input class="form-control" placeholder="Confirm Password" id="confirmpassword" name="confirmpassword" type="password" required></p>
+							<span id="confirmMessage" class="confirmMessage"></span>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+						<button type="button" class="btn btn-primary">Add</button>
 					</div>
 				</div>
 			</div>
 		</div>
-
-		<div class="modal fade" id="edit-user-modal">
-
-		</div>
-
-		<div class="modal fade" id="delete-user-modal">
-
-		</div>
-
-
 	</body>
 </html>

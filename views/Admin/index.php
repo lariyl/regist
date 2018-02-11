@@ -23,7 +23,7 @@
 						<table id="system-users-table" class="table">
 							<thead>
 								<tr>
-									<th colspan="5"><a href="#"><i class="fa fa-plus-square"></i></a> System Users</th>
+									<th colspan="5"><a href="#"><i class="fa fa-plus-square" data-toggle="modal" data-target="#add-user-modal"> </i></a> System Users</th>
 								</tr>
 								<tr>
 									<th>#</th>
@@ -56,7 +56,29 @@
 
 
 		<!-- MODALS AREA -->
+<!-- Add User Modal -->
+<div class="modal fade" id="add-user-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">Add User</h4>
+      </div>
+      <div class="modal-body">
+          <form role="form" method="post" action="<?php echo base_url('admin/registerUser'); ?>">
+          <p><input class="form-control" placeholder="Username" name="username" type="text" required></p>
+          <p><input class="form-control" placeholder="E-mail" name="email" type="email" required></p>
+          <p><input class="form-control" placeholder="Password" id="password" name="password" type="password" required></p>
+          <p><input class="form-control" placeholder="Confirm Password" id="confirmpassword" name="confirmpassword" type="password" required></p>
+          <span id="confirmMessage" class="confirmMessage"></span>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Add</button>
+      </div>
+    </div>
+  </div>
+</div>
 
-		
 	</body>
 </html>

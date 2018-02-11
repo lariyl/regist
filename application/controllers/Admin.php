@@ -6,8 +6,9 @@ Class Admin extends CI_Controller
 	{
 		parent::__construct();
     	$this->load->helper('url');		
-		$this->load->helper('Tools');
-		$this->load->model('AdminModel');
+		  $this->load->helper('Tools');
+		  $this->load->model('AdminModel');
+      $this->load->model('AuthModel');
     	$this->load->library('session');
 	}
 	public function  index(){
@@ -23,7 +24,7 @@ Class Admin extends CI_Controller
         	'password'=>md5($this->input->post('password')),
     );
     	print_r($user);
-    	$checkUser=$this->AdminModel->checkUser($user['username']);
+    	$checkUser=$this->AuthModel->checkUser($user['username']);
 
     	if($checkUser)
     		{

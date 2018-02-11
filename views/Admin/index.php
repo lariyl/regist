@@ -54,13 +54,7 @@
 									echo "<td>$row->email</td>";
 									echo "<td>$row->role</td>";
 									echo "<td>
-											<div class='dropdown'>
-												<a href='#' data-toggle='dropdown'><i class='fa fa-cog'></i></a>
-												<ul class='dropdown-menu'>
-													<li class='user-edit' data-id='$row->id'><i class='fa fa-pencil'></i> Edit</li>
-													<li class='user-delete' data-id='$row->id'><i class='fa fa-trash'></i> Delete</li>
-												</ul>
-											</div>
+												<a href='#' data-id='$row->id' data-toggle='modal' data-target='#delete-user-modal'><i class='fa fa-trash'></i></a>
 										</td>";
 									echo "</tr>";
 								}
@@ -91,10 +85,25 @@
 					</div>
 					<div class="modal-footer">
 						<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-						<button type="button" class="btn btn-primary">Add</button>
+						<button type="button" class="btn btn-primary">Add as User</button>
+						<button type="button" class="btn btn-primary">Add as Admin</button>
 					</div>
 				</div>
 			</div>
 		</div>
+
+		<div class="modal fade" id="delete-user-modal">
+			<div class="modal-dialog modal-sm">
+				<div class="modal-content">
+					<div class="modal-body">
+        		<h3>Are you sure?</h3>
+							<button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+							<button type="button" class="btn btn-danger">Delete</button>
+					</div>
+				</div>
+			</div>
+		</div>
+
+
 	</body>
 </html>

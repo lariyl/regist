@@ -89,7 +89,7 @@
 								<p><input class="form-control" placeholder="Confirm Password" id="add-user-confirmpassword" data-match="#add-user-password" data-match-error="Password Don't Match" name="confirmpassword" type="password" required></p>
 								<div class="help-block with-errors"></div>
 							</div>
-						</div>	
+						</div>
 						<div class="modal-footer">
 							<button type="submit" class="btn btn-default" data-dismiss="modal">Close</button>
 							<button type="submit" class="btn btn-primary confirm-add" data-role='user'>Add as User</button>
@@ -137,7 +137,7 @@
 							console.log(responseData);
 							if(responseData.isOk)
 							{
-								deleteButton = "<a href='#' data-id='"+responseData.id+"' data-toggle='modal' data-target='#delete-user-modal' class='delete-user'><i class='fa fa-trash'></i></a>"
+								deleteButton = "<a href='#' data-id='"+responseData.id+"' data-toggle='modal' data-target='#delete-user-modal' class='delete-user'><i class='fa fa-trash'></i></a>";
 								$('#system-users-table').append("<tr>" +
 									"<td>"+ajaxData.username+"</td>" +
 									"<td>"+ajaxData.email+"</td>" +
@@ -190,11 +190,16 @@
 							pageApp.addUser();
 						}
 					});
-					$('#add-user-form').on('hide.bs.modal', function(){
+
+					$('#add-user-modal').on('hide.bs.modal', function(){
+						$('#add-user-form').validator('destroy');
+
 						$('#add-user-username').val('');
 						$('#add-user-email').val('');
 						$('#add-user-password').val('');
 						$('#add-user-confirmpassword').val('');
+
+						$('#add-user-form').validator();
 					});
 				},
 

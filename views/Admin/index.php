@@ -72,17 +72,19 @@
 						<button type="button" class="close" data-dismiss="modal"><span>&times;</span></button>
 						<h4 class="modal-title">Add User</h4>
 					</div>
-					<form data-toggle="validator" role="form" data-disable="false">
+					<form id="add-user-form"  data-toggle="validator" role="form">
 						<div class="modal-body">
-							<p><input class="form-control" placeholder="Username" id="add-user-username" name="username" type="text" required></p>
+							<div class="form-group">
+								<p><input class="form-control" placeholder="Username" id="add-user-username" name="username" type="text" required ></p>
+							</div>
 							<p><input class="form-control" placeholder="E-mail" id="add-user-email" name="email" type="email" required></p>
 							<p><input class="form-control" placeholder="Password" id="add-user-password" name="password" type="password" required></p>
 							<p><input class="form-control" placeholder="Confirm Password" id="add-user-confirmpassword" name="confirmpassword" type="password" required></p>
 						</div>	
 						<div class="modal-footer">
 							<button type="submit" class="btn btn-default" data-dismiss="modal">Close</button>
-							<button type="submit" class="btn btn-primary confirm-add" data-role='user' data-dismiss="modal">Add as User</button>
-							<button type="submit" class="btn btn-primary confirm-add" data-role='admin' data-dismiss="modal">Add as Admin</button>
+							<button type="submit" class="btn btn-primary confirm-add" data-role='user'>Add as User</button>
+							<button type="submit" class="btn btn-primary confirm-add" data-role='admin'>Add as Admin</button>
 						</div>
 					</form>
 				</div>
@@ -106,16 +108,15 @@
 			var $doc = $(document);
 			var currentUserID = null;
 			var currentUserRowElement = null;
-
-			$dummy = null;
+			var addMode = null;
 
 			var pageApp = {
-				addUser: function(role){
+				addUser: function(){
 					ajaxData = {
 						username: $('#add-user-username').val(),
 						email: $('#add-user-email').val(),
 						password: $('#add-user-password').val(),
-						role: role
+						role: addMode
 					};
 
 					$.ajax({
@@ -165,16 +166,26 @@
 					});
 
 					$doc.on('click', '.confirm-add', function()	{
-						pageApp.addUser($(this).data('role'));
+						addMode = $(this).data('role');
 					});
 
 					$('#confirm-delete-user').on('click',	function () {
 						pageApp.deleteUser();
 					});
+
+					$('#add-user-form').validator().on('submit', function (e) {
+						if (e.isDefaultPrevented()) {
+							//Do nothing on invalid form
+						} else {
+							$('#add-user-modal').modal('hide');
+							pageApp.addUser();
+						}
+					})
 				},
 
 				init: function(){
 					pageApp.pageEvents();
+					$('#add-user-form').validator();
 				}
 			};
 

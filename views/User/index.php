@@ -30,7 +30,6 @@
                 foreach($list_course as $idx => $lc)
                 {
                   echo "<option value='$lc->id'>$lc->subject</option>";
-                  
                 }
                 ?>
               </select>

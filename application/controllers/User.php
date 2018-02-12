@@ -19,7 +19,7 @@ class User extends CI_Controller
     $this->db->from('courses');
     //$this->db->where('user_id',$this->session->userdata('id'));
 
-    $query = $this->db->get();
+    $query = $this->db->where('is_approve',1)->get();
 
     $data['list_course'] = $query->result();
 

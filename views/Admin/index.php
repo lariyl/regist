@@ -6,7 +6,7 @@
 		<title>THESIS - Admin Index Page</title>
 		<?php echo getCSS(); ?>
 		<?php echo getJS(); ?>
-
+<script src="https://cdnjs.cloudflare.com/ajax/libs/1000hz-bootstrap-validator/0.11.5/validator.min.js"></script>
 		<style>
 			.dropdown-menu li{
 				padding: 5px;
@@ -72,17 +72,19 @@
 						<button type="button" class="close" data-dismiss="modal"><span>&times;</span></button>
 						<h4 class="modal-title">Add User</h4>
 					</div>
-					<div class="modal-body">
+					<form data-toggle="validator" role="form" data-disable="false">
+						<div class="modal-body">
 							<p><input class="form-control" placeholder="Username" id="add-user-username" name="username" type="text" required></p>
 							<p><input class="form-control" placeholder="E-mail" id="add-user-email" name="email" type="email" required></p>
 							<p><input class="form-control" placeholder="Password" id="add-user-password" name="password" type="password" required></p>
 							<p><input class="form-control" placeholder="Confirm Password" id="add-user-confirmpassword" name="confirmpassword" type="password" required></p>
-					</div>
-					<div class="modal-footer">
-						<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-						<button type="button" class="btn btn-primary confirm-add" data-role='user' data-dismiss="modal">Add as User</button>
-						<button type="button" class="btn btn-primary confirm-add" data-role='admin' data-dismiss="modal">Add as Admin</button>
-					</div>
+						</div>	
+						<div class="modal-footer">
+							<button type="submit" class="btn btn-default" data-dismiss="modal">Close</button>
+							<button type="submit" class="btn btn-primary confirm-add" data-role='user' data-dismiss="modal">Add as User</button>
+							<button type="submit" class="btn btn-primary confirm-add" data-role='admin' data-dismiss="modal">Add as Admin</button>
+						</div>
+					</form>
 				</div>
 			</div>
 		</div>
@@ -136,6 +138,7 @@
 							else
 							{
 								console.log('Failed to Register.');
+								alert("Username is already taken");
 							}
 						}
 					});

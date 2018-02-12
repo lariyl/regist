@@ -14,7 +14,7 @@
 <!-- Sidebar/menu -->
       <nav class="navbar navbar-default">
         <div class="container-fluid">
-          <p class="navbar-text navbar-left">Signed in as <a href="<?php echo base_url('admin/index');?>" class="navbar-link"><?php echo $this->session->userdata('username'); ?></a></p>
+          <p class="navbar-text navbar-left">Signed in as <a href="<?php echo base_url('auth/index');?>" class="navbar-link"><?php echo $this->session->userdata('username'); ?></a></p>
           <a href="<?php echo base_url('auth/logout');?>"> <button type="button" class="btn btn-default navbar-btn pull-right">Logout</button></a>
           <a href="<?php echo base_url('auth/changePassword');?>"> <button type="button" class="btn btn-default navbar-btn pull-right">Change Password</button></a>
         </div>
@@ -24,7 +24,7 @@
         <div class="col-sm-3 col-md-2 sidebar">
           <ul class="nav nav-sidebar">
             <div>
-              <h3>Approved</h3>
+              <h5>Approved</h5>
               <select id="course-list" >
                 <?php
                 foreach($list_course as $idx => $lc)

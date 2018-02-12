@@ -13,15 +13,15 @@
 
       <nav class="navbar navbar-default">
         <div class="container-fluid">
-          <p class="navbar-text navbar-left">Signed in as <a href="<?php echo base_url('admin/index');?>" class="navbar-link"><?php echo $this->session->userdata('username'); ?></a></p>
+          <p class="navbar-text navbar-left">Signed in as <a href="<?php echo base_url('auth/index');?>" class="navbar-link"><?php echo $this->session->userdata('username'); ?></a></p>
           <a href="<?php echo base_url('auth/logout');?>"> <button type="button" class="btn btn-default navbar-btn pull-right">Logout</button></a>
           <a href="<?php echo base_url('auth/changePassword');?>"> <button type="button" class="btn btn-default navbar-btn pull-right">Change Password</button></a>
         </div>
       </nav>
 
 
-    <div class="w3-container" style="margin-top:150px">
-    <div class="w3-row">
+    <div class="container">
+    <div class="row">
         <div class="col-md-4 col-md-offset-4">
             <div class="login-panel panel panel-success">
                 <div class="panel-heading">
@@ -48,19 +48,19 @@
                   ?>
 
 <!--  <?php echo validation_errors(); ?> -->
- 				<?php echo form_open('auth/updatePassword'); ?>
- 				<div class="panel-body">
-          <div class="form-group">
-            <?php echo form_password(['name'=>'password', 'placeholder'=>'Password']); ?>
-            <?php echo form_error('password', '<div class="text-danger">', '</div>'); ?>
+        <form role="form" method="post" action="<?php echo base_url('auth/updatePassword'); ?>"> 				
+          <div class="panel-body">
+            <div class="form-group">
+              <?php echo form_password(['name'=>'password', 'placeholder'=>'Password']); ?>
+              <?php echo form_error('password', '<div class="text-danger">', '</div>'); ?>
+				    </div>
+           <div class="form-group">
+            <?php echo form_password(['name'=>'new_password','placeholder'=>'New Password']); ?>
+            <?php echo form_error('new_password', '<div class="text-danger">', '</div>'); ?>
 				   </div>
            <div class="form-group">
-            <?php echo form_password(['name'=>'newpass','placeholder'=>'New Password']); ?>
-            <?php echo form_error('newpass', '<div class="text-danger">', '</div>'); ?>
-				   </div>
-           <div class="form-group">
-            <?php echo form_password(['name'=>'confpassword', 'placeholder'=>'Password Confirmation']); ?>
-            <?php echo form_error('confpassword', '<div class="text-danger">', '</div>'); ?>
+            <?php echo form_password(['name'=>'confirm_password', 'placeholder'=>'Password Confirmation']); ?>
+            <?php echo form_error('confirm_password', '<div class="text-danger">', '</div>'); ?>
            </div>
             <?php echo form_submit(['name'=>'submit', 'value'=>'Update Password']); ?> 
             <?php echo form_close(); ?>	

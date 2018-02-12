@@ -34,36 +34,31 @@
                   <?php
                   foreach($list_course as $idx => $lc)
                   {
-                    echo "<option value='$lc->id'>$lc->subject</option>";
+                    echo "<option class='add-group-course' value='$lc->id'>$lc->subject</option>";
                   }
                   ?>
                 </select>
-             </div>
+              </div>
 
-        <div class="dropdown">
-         <h5>Current Course</h5>
-         <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">Select Course<span class="caret"></span></button>
-          <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-            <li><a href="#">Action</a></li>
-            <li><a href="#">Another action</a></li>
-            <li><a href="#">Something else here</a></li>
-            <li role="separator" class="divider"></li>
-            <li><a href="#">Separated link</a></li>
-          </ul>
-        </div>
+              <div class="dropdown">
+               <h5>Current Subject</h5>
+               <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">Select Subject<span class="caret"></span></button>
+                <ul class="dropdown-menu">
+                  <li><a href="#">Action</a></li>
+                  <li><a href="#">Another action</a></li>
+                  <li><a href="#">Something else here</a></li>
+                </ul>
+              </div>
 
-        <div class="dropdown">
-         <h5>Past Course</h5>
-         <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">History Course<span class="caret"></span></button>
-          <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-            <li><a href="#">Action</a></li>
-            <li><a href="#">Another action</a></li>
-            <li><a href="#">Something else here</a></li>
-            <li role="separator" class="divider"></li>
-            <li><a href="#">Separated link</a></li>
-          </ul>
-        </div>
-
+              <div class="dropdown">
+               <h5>Past Subject</h5>
+               <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">Past Subject<span class="caret"></span></button>
+                <ul class="dropdown-menu">
+                  <li><a href="#">Action</a></li>
+                  <li><a href="#">Another action</a></li>
+                  <li><a href="#">Something else here</a></li>
+                </ul>
+              </div>
            </ul>
          </div>
         </div>
@@ -72,9 +67,18 @@
   <script>
     $(document).ready(function(){
       $("#course-list").multiselect({
-        enableCaseInsensitiveFiltering: true
+        enableCaseInsensitiveFiltering: true,
+        buttonWidth: '100%'
       });
     });
+
+    var courseApp = {
+        pageEvents: function() {
+          $doc.on('click', '.add-group-course', function () {
+            alert('hi');;
+          });
+        },
+       } 
 
   </script>
 

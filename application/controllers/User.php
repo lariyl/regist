@@ -15,64 +15,6 @@ class User extends CI_Controller
   }
   public function index()
   {
-    $this->load->view("user/index.php");
-  }
-
-  // public function registration()
-  // {
-  //   $this->load->view('register.php');
-  // }
-
-  public function register_user()
-  {
-    $user=array(
-        'username'=>$this->input->post('username'),
-        'email'=>$this->input->post('email'),
-        'password'=>md5($this->input->post('password')),
-    );
-    // print_r($user);
-    $username_check=$this->user_model->username_check($user['username']);
-
-    if($username_check)
-    {
-      $this->user_model->register_user($user);
-      $this->session->set_flashdata('success_msg', 'Registered successfully.Now login to your account.');
-      redirect('user/admin_view');
-    }
-    else
-    {
-      $this->session->set_flashdata('error_msg', 'Error! Username has already been taken.');
-      redirect('user');
-    }
-  }
-
-  public function login_view()
-  {
-    $this->load->view("login.php");
-  }
-
-  public function admin_view()
-  {
-    $data["fetch_data"] = $this->user_model->fetch_data();
-    $this->load->view("admin.php", $data);
-  }
-
-  public function delete_data()
-  {
-    $id = $this->uri->segment(3);
-    $this->load->model("user_model");
-    $this->user_model->delete_data($id);
-    redirect(base_url() . "user/deleted");
-  }
-
-  public function deleted()
-  {
-    $this->admin_view();
-  }
-
-
-  public function user_profile()
-  {
     $this->db->select('*');
     $this->db->from('courses');
     //$this->db->where('user_id',$this->session->userdata('id'));
@@ -81,67 +23,54 @@ class User extends CI_Controller
 
     $data['list_course'] = $query->result();
 
-    $this->load->view('user_profile.php',$data);
+    $this->load->view("user/index.php",$data);
   }
 
-	public function sample()
-	{
-		$this->db->select('*');
-		$this->db->from('courses');
-		//$this->db->where('user_id',$this->session->userdata('id'));
+  // public function changePass()
+  // {
+  //   $this->load->view("ChangePassword");
+  //  }
 
-		$query = $this->db->get();
+  // public function updatePwd()
+  // {
+  //   $this->form_validation->set_rules('password', 'Current Password', 'required|alpha_numeric');
+  //   $this->form_validation->set_rules('newpass', 'New Password', 'required|alpha_numeric');
+  //   $this->form_validation->set_rules('confpassword', 'Password Confirmation', 'required|alpha_numeric');
+  //   if($this->form_validation->run())
+  //   {
+  //     $curr_password = md5($this->input->post('password'));
+  //     $new_password = md5($this->input->post('newpass'));
+  //     $conf_password = md5($this->input->post('confpassword'));
+  //     $this->load->model('user_model');
+  //     $userid= $this->session->userdata('id');
+  //     $passwd = $this->user_model->getCurrPassword($userid);
 
-		$data['list_course'] = $query->result();
+  //     if($passwd->password == $curr_password)
+  //     {
+  //       if($new_password == $conf_password)
+  //       {
+  //         if($this->user_model->updatePassword($new_password,$userid))
+  //         {
+  //           $this->user_profile();
+  //         }
+  //         else
+  //         {
+  //           $this->session->set_flashdata('error_msg', 'Failed to update password.');
+  //         }
+  //       }
+  //       else
+  //       {
+  //         $this->session->set_flashdata('error_msg', 'New Password & Confirm Password dont match.');
+  //       }
+  //     }
+  //     else
+  //     {
+  //       $this->session->set_flashdata('error_msg', 'Sorry! Current Password dont match.');
+  //     }
+  //   }
 
-		$this->load->view('sample.php',$data);
-	}
-
-  public function changepass()
-  {
-    $this->load->view("changepassword");
-   }
-
-  public function updatePwd()
-  {
-    $this->form_validation->set_rules('password', 'Current Password', 'required|alpha_numeric');
-    $this->form_validation->set_rules('newpass', 'New Password', 'required|alpha_numeric');
-    $this->form_validation->set_rules('confpassword', 'Password Confirmation', 'required|alpha_numeric');
-    if($this->form_validation->run())
-    {
-      $curr_password = md5($this->input->post('password'));
-      $new_password = md5($this->input->post('newpass'));
-      $conf_password = md5($this->input->post('confpassword'));
-      $this->load->model('user_model');
-      $userid= $this->session->userdata('id');
-      $passwd = $this->user_model->getCurrPassword($userid);
-
-      if($passwd->password == $curr_password)
-      {
-        if($new_password == $conf_password)
-        {
-          if($this->user_model->updatePassword($new_password,$userid))
-          {
-            $this->user_profile();
-          }
-          else
-          {
-            $this->session->set_flashdata('error_msg', 'Failed to update password.');
-          }
-        }
-        else
-        {
-          $this->session->set_flashdata('error_msg', 'New Password & Confirm Password dont match.');
-        }
-      }
-      else
-      {
-        $this->session->set_flashdata('error_msg', 'Sorry! Current Password dont match.');
-      }
-    }
-
-    $this->load->view("changepassword");
-  }
+  //   $this->load->view("changepassword");
+  // }
 
   public function formfour()
   {

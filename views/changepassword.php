@@ -1,17 +1,24 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <meta charset="utf-8">
-    <title>THESIS</title>
-<link rel="stylesheet" href="<?php echo base_url(); ?>assets/css/bootstrap.min.css" media="screen" title="no title">
-<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
-<link href="<?php echo base_url(); ?>assets/css/bootstrap.min.css" rel="stylesheet">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Change PAssword</title>
+    <?php echo getCSS(); ?>
+    <?php echo getJS(); ?>
   </head>
+
   <body>
 
 
-<p class="w3-left" style="padding-left:450px" >Signed in as <a href="<?php echo base_url('auth/index');?>" class="navbar-link"><?php echo $this->session->userdata('username'); ?></a></p>
-<p class="w3-left" style="padding-left:180px"><a href="<?php echo base_url('auth/logout');?>" >  <button type="button" class="btn-primary">Logout</button></a></p>
+      <nav class="navbar navbar-default">
+        <div class="container-fluid">
+          <p class="navbar-text navbar-left">Signed in as <a href="<?php echo base_url('admin/index');?>" class="navbar-link"><?php echo $this->session->userdata('username'); ?></a></p>
+          <a href="<?php echo base_url('auth/logout');?>"> <button type="button" class="btn btn-default navbar-btn pull-right">Logout</button></a>
+          <a href="<?php echo base_url('auth/changePassword');?>"> <button type="button" class="btn btn-default navbar-btn pull-right">Change Password</button></a>
+        </div>
+      </nav>
+
 
     <div class="w3-container" style="margin-top:150px">
     <div class="w3-row">
@@ -41,20 +48,22 @@
                   ?>
 
 <!--  <?php echo validation_errors(); ?> -->
- 				<?php echo form_open('auth/updatePwd'); ?>
+ 				<?php echo form_open('auth/updatePassword'); ?>
  				<div class="panel-body">
-            <label>Current Password</label>
-                    <?php echo form_password(['name'=>'password', 'placeholder'=>'Password']); ?>
-                    <?php echo form_error('password', '<div class="text-danger">', '</div>'); ?>
-				   <label>New Password</label>
-                    <?php echo form_password(['name'=>'newpass','placeholder'=>'New Password']); ?>
-                    <?php echo form_error('newpass', '<div class="text-danger">', '</div>'); ?>
-				   <label>Confirm Password</label>
-                    <?php echo form_password(['name'=>'confpassword', 'placeholder'=>'Password Confirmation']); ?>
-                    <?php echo form_error('confpassword', '<div class="text-danger">', '</div>'); ?>
-
-                   <?php echo form_submit(['name'=>'submit', 'value'=>'Update Password']); ?> 
-                   <?php echo form_close(); ?>	
+          <div class="form-group">
+            <?php echo form_password(['name'=>'password', 'placeholder'=>'Password']); ?>
+            <?php echo form_error('password', '<div class="text-danger">', '</div>'); ?>
+				   </div>
+           <div class="form-group">
+            <?php echo form_password(['name'=>'newpass','placeholder'=>'New Password']); ?>
+            <?php echo form_error('newpass', '<div class="text-danger">', '</div>'); ?>
+				   </div>
+           <div class="form-group">
+            <?php echo form_password(['name'=>'confpassword', 'placeholder'=>'Password Confirmation']); ?>
+            <?php echo form_error('confpassword', '<div class="text-danger">', '</div>'); ?>
+           </div>
+            <?php echo form_submit(['name'=>'submit', 'value'=>'Update Password']); ?> 
+            <?php echo form_close(); ?>	
         </div>
    </body>
 </html>

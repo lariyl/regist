@@ -34,10 +34,9 @@
 						<table id="system-users-table" class="table">
 							<thead >
 								<tr>
-									<th colspan="5"><a href="#" data-toggle="modal" data-target="#add-user-modal"><i class="fa fa-plus-square"></i></a> System Users</th>
+									<th colspan="4"><a href="#" data-toggle="modal" data-target="#add-user-modal"><i class="fa fa-plus-square"></i></a> System Users</th>
 								</tr>
 								<tr class="success">
-									<th>#</th>
 									<th>Usernamne</th>
 									<th>Email</th>
 									<th>Role</th>
@@ -46,10 +45,8 @@
 							</thead>
 							<tbody>
 								<?php
-								foreach($fetchData->result() as $idx => $row){
-									$n = $idx+1;
+								foreach($fetchData->result() as $row){
 									echo "<tr>";
-									echo "<td>$n</td>";
 									echo "<td>$row->username</td>";
 									echo "<td>$row->email</td>";
 									echo "<td>$row->role</td>";
@@ -83,8 +80,8 @@
 					</div>
 					<div class="modal-footer">
 						<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-						<button type="button" class="btn btn-primary" >Add as User</button>
-						<button type="button" class="btn btn-primary">Add as Admin</button>
+						<button type="button" class="btn btn-primary confirm-add" data-role='user'>Add as User</button>
+						<button type="button" class="btn btn-primary confirm-add" data-role='admin'>Add as Admin</button>
 					</div>
 				</div>
 			</div>
@@ -122,7 +119,7 @@
 						type: 'POST',
 						data: ajaxData,
 						success: function(response){
-
+							$('#system-users-table').append("<tr> <td>$row->username</td> <td>$row->email</td> <td>$row->role</td>   </tr>");
 						}
 					});
 				},
@@ -132,7 +129,7 @@
 						type: 'POST',
 						data: {id: currentUserID},
 						success: function(response){
-							currentUserRowElement.parent().parent().remove();
+							currentUserRowElement.remove();
 							currentUserRowElement = null;
 							currentUserID = null;
 						}
@@ -141,12 +138,15 @@
 				pageEvents: function() {
 					$doc.on('click', '.delete-user', function () {
 						currentUserID = $(this).data('id');
-						currentUserRowElement = $(this);
+						currentUserRowElement = $(this).parent().parent();
 						console.log(currentUserID);
 					});
 
-					$('#confirm-delete-user').on('click', function () {
-						pageApp.deleteUser();
+					$('#confirm-delete-user').on('click',	function () {
+						pageApp.deleteUser();	
+					});
+					$doc.on('click', '.confirm-add', function()	{	
+						pageApp.addUser($(this).data('role'));
 					});
 				},
 				init: function(){

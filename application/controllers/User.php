@@ -26,51 +26,6 @@ class User extends CI_Controller
     $this->load->view("user/index.php",$data);
   }
 
-  // public function changePass()
-  // {
-  //   $this->load->view("ChangePassword");
-  //  }
-
-  // public function updatePwd()
-  // {
-  //   $this->form_validation->set_rules('password', 'Current Password', 'required|alpha_numeric');
-  //   $this->form_validation->set_rules('newpass', 'New Password', 'required|alpha_numeric');
-  //   $this->form_validation->set_rules('confpassword', 'Password Confirmation', 'required|alpha_numeric');
-  //   if($this->form_validation->run())
-  //   {
-  //     $curr_password = md5($this->input->post('password'));
-  //     $new_password = md5($this->input->post('newpass'));
-  //     $conf_password = md5($this->input->post('confpassword'));
-  //     $this->load->model('user_model');
-  //     $userid= $this->session->userdata('id');
-  //     $passwd = $this->user_model->getCurrPassword($userid);
-
-  //     if($passwd->password == $curr_password)
-  //     {
-  //       if($new_password == $conf_password)
-  //       {
-  //         if($this->user_model->updatePassword($new_password,$userid))
-  //         {
-  //           $this->user_profile();
-  //         }
-  //         else
-  //         {
-  //           $this->session->set_flashdata('error_msg', 'Failed to update password.');
-  //         }
-  //       }
-  //       else
-  //       {
-  //         $this->session->set_flashdata('error_msg', 'New Password & Confirm Password dont match.');
-  //       }
-  //     }
-  //     else
-  //     {
-  //       $this->session->set_flashdata('error_msg', 'Sorry! Current Password dont match.');
-  //     }
-  //   }
-
-  //   $this->load->view("changepassword");
-  // }
 
   public function formfour()
   {

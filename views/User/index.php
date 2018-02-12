@@ -42,7 +42,7 @@
 
               <div class="dropdown">
                <h5>Current Subject</h5>
-               <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">Select Subject<span class="caret"></span></button>
+               <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">Select Subject<span class="caret"></span></button>
                 <ul class="dropdown-menu">
                   <li><a href="#">Action</a></li>
                   <li><a href="#">Another action</a></li>
@@ -65,6 +65,8 @@
     </div>
 
   <script>
+    var $doc = $(document);
+    
     $(document).ready(function(){
       $("#course-list").multiselect({
         enableCaseInsensitiveFiltering: true,
@@ -72,14 +74,13 @@
       });
     });
 
-    var courseApp = {
-        pageEvents: function() {
-          $doc.on('click', '.add-group-course', function () {
-            alert('hi');;
-          });
-        },
-       } 
-
+    $doc.on('change', '#course-list', function () {
+      alert('hi');
+    });
+        
+          // $('#dropdownMenu1').on('click', function () {
+          //   alert('hi');
+          // });
   </script>
 
 </body>

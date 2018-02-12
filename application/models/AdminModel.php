@@ -5,10 +5,10 @@ class AdminModel extends CI_model
 
 	public function registerUser($user)
 	{
-  	$this->db->insert('users', $user);
+  	return $this->db->insert('users', $user);
 	}
 
-	public function fetchData()
+	public function fetchUsers()
 	{
     $query = $this->db->get("users");
     return $query;

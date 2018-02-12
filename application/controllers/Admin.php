@@ -12,32 +12,28 @@ Class Admin extends CI_Controller
     	$this->load->library('session');
 	}
 	public function  index(){
-		$data["fetchData"] = $this->AdminModel->fetchData();
-    	$this->load->view("Admin/index", $data);
+		$data["users"] = $this->AdminModel->fetchUsers();
+		$this->load->view("Admin/index", $data);
 	}
 
 	public function registerUser()
-  	{	
-    	$user=array(
-        	'username'=>$this->input->post('username'),
-        	'email'=>$this->input->post('email'),
-        	'password'=>md5($this->input->post('password')),
-    );
-    	print_r($user);
-    	$checkUser=$this->AuthModel->checkUser($user['username']);
+	{
+		$user=array(
+			'username'=>$this->input->post('username'),
+			'email'=>$this->input->post('email'),
+			'password'=>md5($this->input->post('password')),
+			'role'=>$this->input->post('role'),
+		);
 
-    	if($checkUser)
-    		{
-      			$this->AdminModel->registerUser($user);
-      			$this->session->set_flashdata('success_msg', 'Registered successfully.Now login to your account.');
-      			redirect('Admin/index');
-    		}
-    	else
-    		{
-      			$this->session->set_flashdata('error_msg', 'Error! Username has already been taken.');
-      			redirect('Admin/index');
-    		}
-  	}
+		if($this->AuthModel->checkUser($user['username']))
+		{
+			echo json_encode(array('isOk' => true, 'id' => $this->AdminModel->registerUser($user)));
+		}
+		else
+		{
+			echo json_encode(array('isOk' => false));
+		}
+	}
 
  	public function deleteUser()
 	{
@@ -45,9 +41,4 @@ Class Admin extends CI_Controller
 		$this->AdminModel->deleteUser($id);
 		return;
 	}
-
-	public function deleted()
-  		{
-   			$this->index();
-  		}
 }

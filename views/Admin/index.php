@@ -45,7 +45,7 @@
 							</thead>
 							<tbody>
 								<?php
-								foreach($fetchData->result() as $row){
+								foreach($users->result() as $row){
 									echo "<tr>";
 									echo "<td>$row->username</td>";
 									echo "<td>$row->email</td>";
@@ -80,8 +80,8 @@
 					</div>
 					<div class="modal-footer">
 						<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-						<button type="button" class="btn btn-primary confirm-add" data-role='user'>Add as User</button>
-						<button type="button" class="btn btn-primary confirm-add" data-role='admin'>Add as Admin</button>
+						<button type="button" class="btn btn-primary confirm-add" data-role='user' data-dismiss="modal">Add as User</button>
+						<button type="button" class="btn btn-primary confirm-add" data-role='admin' data-dismiss="modal">Add as Admin</button>
 					</div>
 				</div>
 			</div>
@@ -101,9 +101,11 @@
 
 		<!-- TAIL JS -->
 		<script>
-			$doc = $(document);
-			currentUserID = null;
-			currentUserRowElement = null;
+			var $doc = $(document);
+			var currentUserID = null;
+			var currentUserRowElement = null;
+
+			$dummy = null;
 
 			var pageApp = {
 				addUser: function(role){
@@ -119,10 +121,26 @@
 						type: 'POST',
 						data: ajaxData,
 						success: function(response){
-							$('#system-users-table').append("<tr> <td>$row->username</td> <td>$row->email</td> <td>$row->role</td>   </tr>");
+							var responseData = JSON.parse(response);
+							console.log(responseData);
+							if(responseData.isOk)
+							{
+								deleteButton = "<a href='#' data-id='"+responseData.id+"' data-toggle='modal' data-target='#delete-user-modal' class='delete-user'><i class='fa fa-trash'></i></a>"
+								$('#system-users-table').append("<tr>" +
+									"<td>"+ajaxData.username+"</td>" +
+									"<td>"+ajaxData.email+"</td>" +
+									"<td>"+ajaxData.role+"</td>" +
+									"<td>"+deleteButton+"</td> " +
+									"</tr>");
+							}
+							else
+							{
+								console.log('Failed to Register.');
+							}
 						}
 					});
 				},
+
 				deleteUser: function(){
 					$.ajax({
 						url: '<?php echo base_url('Admin/deleteUser')?>',
@@ -135,6 +153,7 @@
 						}
 					});
 				},
+
 				pageEvents: function() {
 					$doc.on('click', '.delete-user', function () {
 						currentUserID = $(this).data('id');
@@ -142,13 +161,15 @@
 						console.log(currentUserID);
 					});
 
-					$('#confirm-delete-user').on('click',	function () {
-						pageApp.deleteUser();	
-					});
-					$doc.on('click', '.confirm-add', function()	{	
+					$doc.on('click', '.confirm-add', function()	{
 						pageApp.addUser($(this).data('role'));
 					});
+
+					$('#confirm-delete-user').on('click',	function () {
+						pageApp.deleteUser();
+					});
 				},
+
 				init: function(){
 					pageApp.pageEvents();
 				}

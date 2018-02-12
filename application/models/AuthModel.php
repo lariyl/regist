@@ -17,7 +17,6 @@ Class AuthModel Extends CI_Model
 		}
 	}
 
-
 	public  function loginCheck($username, $pass)
 	{
 		$this->db->select('*');
@@ -36,19 +35,17 @@ Class AuthModel Extends CI_Model
 
 	public function getCurrentPassword($userid)
 	{
-  		$query= $this->db->where(['id'=>$userid])
-        		          ->get('users');
-  		if($query->num_rows() > 0)
-  		{
-    		return $query->row();
-  		}                
+		$query= $this->db->where(['id'=>$userid])->get('users');
+		if($query->num_rows() > 0)
+		{
+			return $query->row();
+		}
 	}
 
 	public function updatePassword($new_password,$userid)
 	{
- 		 $data = array('password'=>$new_password);
-  			return $this->db->where('id',$userid)
-  			->update('users', $data);
-	}		
+		$data = array('password'=>$new_password);
+		return $this->db->where('id',$userid)->update('users', $data);
+	}
 
 }

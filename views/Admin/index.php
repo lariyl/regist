@@ -3,7 +3,7 @@
 	<head>
 		<meta charset="UTF-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
-		<title>THESIS - Admin Index Page</title>
+		<title>THESIS - Admin</title>
 		<?php echo getCSS(); ?>
 		<?php echo getJS(); ?>
 		<style>
@@ -50,8 +50,8 @@
 									echo "<td>$row->email</td>";
 									echo "<td>$row->role</td>";
 									echo "<td>
-												<a href='#' data-id='$row->id' data-toggle='modal' data-target='#delete-user-modal' class='delete-user'><i class='fa fa-trash'></i></a>
-										</td>";
+													<a href='#' data-id='$row->id' data-toggle='modal' data-target='#delete-user-modal' class='delete-user'><i class='fa fa-trash'></i></a>
+												</td>";
 									echo "</tr>";
 								}
 								?>
@@ -147,8 +147,8 @@
 							}
 							else
 							{
-								console.log('Failed to Register.');
-								alert("Username is already taken");
+								console.log(responseData.error);
+								alert(responseData.error);
 							}
 						}
 					});
@@ -190,11 +190,16 @@
 							pageApp.addUser();
 						}
 					});
-					$('#add-user-form').on('hide.bs.modal', function(){
+					$('#add-user-modal').on('show.bs.modal', function(){
 						$('#add-user-username').val('');
 						$('#add-user-email').val('');
 						$('#add-user-password').val('');
 						$('#add-user-confirmpassword').val('');
+					});
+
+					$('#add-user-modal').on('hide.bs.modal', function(){
+						$('#add-user-form').validator('destroy');
+						$('#add-user-form').validator();
 					});
 				},
 

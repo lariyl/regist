@@ -5,11 +5,10 @@ Class Admin extends CI_Controller
 	public  function  __construct()
 	{
 		parent::__construct();
-    	$this->load->helper('url');		
-		  $this->load->helper('Tools');
-		  $this->load->model('AdminModel');
-      $this->load->model('AuthModel');
-    	$this->load->library('session');
+			$this->load->helper('Tools');
+			$this->load->model('AdminModel');
+			$this->load->model('AuthModel');
+			$this->load->library('session');
 
 		if($this->session->userdata('role') != 'admin')
 		{
@@ -32,11 +31,19 @@ Class Admin extends CI_Controller
 
 		if($this->AuthModel->checkUser($user['username']))
 		{
-			echo json_encode(array('isOk' => true, 'id' => $this->AdminModel->registerUser($user)));
+			$id = $this->AdminModel->registerUser($user);
+			if($id)
+			{
+				echo json_encode(array('isOk' => true, 'id' => $id));
+			}
+			else
+			{
+				echo json_encode(array('isOk' => false, 'error' => 'Unknown error. Please try again.'));
+			}
 		}
 		else
 		{
-			echo json_encode(array('isOk' => false));
+			echo json_encode(array('isOk' => false, 'error' => 'Username is already Taken.'));
 		}
 	}
 

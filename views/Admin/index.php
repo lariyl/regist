@@ -3,9 +3,10 @@
 	<head>
 		<meta charset="UTF-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
-		<title>THESIS - Admin Index Page</title>
+		<title>THESIS - Admin</title>
 		<?php echo getCSS(); ?>
 		<?php echo getJS(); ?>
+		<?php $this->load->view('Partials/styles'); ?>
 		<style>
 			.dropdown-menu li{
 				padding: 5px;
@@ -19,14 +20,8 @@
 	</head>
 
 	<body>
+		<?php $this->load->view('Partials/navBar'); ?>
 		<div class="container-fluid">
-			<nav class="navbar navbar-default">
-				<div class="container-fluid">
-					<p class="navbar-text navbar-left">Signed in as <a href="<?php echo base_url('admin/index');?>" class="navbar-link"><?php echo $this->session->userdata('username'); ?></a></p>
-					<a href="<?php echo base_url('auth/logout');?>"> <button type="button" class="btn btn-default navbar-btn pull-right">Logout</button></a>
-				</div>
-			</nav>
-
 			<div class="container">
 				<div class="row">
 					<div class="col-md-8 col-md-offset-2">
@@ -50,8 +45,8 @@
 									echo "<td>$row->email</td>";
 									echo "<td>$row->role</td>";
 									echo "<td>
-												<a href='#' data-id='$row->id' data-toggle='modal' data-target='#delete-user-modal' class='delete-user'><i class='fa fa-trash'></i></a>
-										</td>";
+													<a href='#' data-id='$row->id' data-toggle='modal' data-target='#delete-user-modal' class='delete-user'><i class='fa fa-trash'></i></a>
+												</td>";
 									echo "</tr>";
 								}
 								?>
@@ -147,8 +142,8 @@
 							}
 							else
 							{
-								console.log('Failed to Register.');
-								alert("Username is already taken");
+								console.log(responseData.error);
+								alert(responseData.error);
 							}
 						}
 					});
@@ -190,11 +185,16 @@
 							pageApp.addUser();
 						}
 					});
-					$('#add-user-form').on('hide.bs.modal', function(){
+					$('#add-user-modal').on('show.bs.modal', function(){
 						$('#add-user-username').val('');
 						$('#add-user-email').val('');
 						$('#add-user-password').val('');
 						$('#add-user-confirmpassword').val('');
+					});
+
+					$('#add-user-modal').on('hide.bs.modal', function(){
+						$('#add-user-form').validator('destroy');
+						$('#add-user-form').validator();
 					});
 				},
 

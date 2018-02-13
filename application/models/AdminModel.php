@@ -10,8 +10,8 @@ class AdminModel extends CI_model
 
 	public function fetchUsers()
 	{
-    $query = $this->db->get("users");
-    return $query;
+		$query = $this->db->get("users");
+		return $query;
   }
 
 	public function deleteUser($id)
@@ -21,4 +21,3 @@ class AdminModel extends CI_model
  	} 
 
 }
-?>

@@ -12,6 +12,11 @@ class User extends CI_Controller
     $this->load->library('session');
     $this->load->library('form_validation');
     $this->load->library('csvimport');
+
+		if($this->session->userdata('role') != 'user')
+		{
+			redirect('Auth');
+		}
   }
   public function index()
   {

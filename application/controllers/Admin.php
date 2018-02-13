@@ -10,6 +10,11 @@ Class Admin extends CI_Controller
 		  $this->load->model('AdminModel');
       $this->load->model('AuthModel');
     	$this->load->library('session');
+
+		if($this->session->userdata('role') != 'admin')
+		{
+			redirect('Auth');
+		}
 	}
 	public function  index(){
 		$data["users"] = $this->AdminModel->fetchUsers();

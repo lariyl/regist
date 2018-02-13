@@ -26,7 +26,7 @@ Class Auth Extends CI_Controller
 		}
 		else
 		{
-			$this->load->view('LandingPage');
+			$this->load->view('landingPage');
 		}
 	}
 
@@ -57,52 +57,6 @@ Class Auth Extends CI_Controller
 		{
 			redirect('Auth');
 		}
-	}
-
-	public function changePassword()
-	{
-		$this->load->view("ChangePassword");
-	}
-
-	public function updatePassword()
-	{
-		$this->form_validation->set_rules('password', 'Current Password', 'required|alpha_numeric');
-		$this->form_validation->set_rules('new_password', 'New Password', 'required|alpha_numeric');
-		$this->form_validation->set_rules('confirm_password', 'Password Confirmation', 'required|alpha_numeric');
-		if($this->form_validation->run())
-		{
-			$current_password = md5($this->input->post('password'));
-			$new_password = md5($this->input->post('new_password'));
-			$confirm_password = md5($this->input->post('confirm_password'));
-			$this->load->model('AuthModel');
-			$user_id= $this->session->userdata('id');
-			$password = $this->AuthModel->getCurrentPassword($user_id);
-
-			if($password->password == $current_password)
-			{
-				if($new_password == $confirm_password)
-				{
-					if($this->AuthModel->updatePassword($new_password,$user_id))
-					{
-						$this->index();
-					}
-					else
-					{
-						$this->session->set_flashdata('error_msg', 'Failed to update password.');
-					}
-				}
-				else
-				{
-					$this->session->set_flashdata('error_msg', 'New Password & Confirm Password dont match.');
-				}
-			}
-			else
-			{
-				$this->session->set_flashdata('error_msg', 'Sorry! Current Password dont match.');
-			}
-		}
-
-		$this->load->view("ChangePassword");
 	}
 
 	public function logout()

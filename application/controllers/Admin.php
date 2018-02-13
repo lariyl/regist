@@ -15,7 +15,8 @@ Class Admin extends CI_Controller
 			redirect('Auth');
 		}
 	}
-	public function  index(){
+
+	public function index(){
 		$data["users"] = $this->AdminModel->fetchUsers();
 		$this->load->view("Admin/index", $data);
 	}

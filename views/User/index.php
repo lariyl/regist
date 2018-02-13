@@ -66,7 +66,7 @@
 
           <h2 class="sub-header">Section title</h2>
           <div class="table-responsive">
-            <table class="table table-striped">
+            <table class="table table-hover table-bordered">
               <thead>
                 <tr>
                   <th>#ID Number</th>
@@ -87,6 +87,29 @@
               </tbody>
             </table>
           </div>
+
+
+          <h2 class="sub-header">Reports</h2>
+          <div class="table-responsive col-md-6col-xs-6 col-md-4 ">
+            <table class="table table-bordered">
+              <thead>
+                <tr>
+                  <th>Course Outcome</th>
+                  <th>Attained?</th>
+                  <th>Comment</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>1,001</td>
+                  <td>Lorem</td>
+                  <td>ipsum</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+
     </div>
 
 

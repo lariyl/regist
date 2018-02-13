@@ -34,7 +34,7 @@
                   <?php
                   foreach($list_course as $idx => $lc)
                   {
-                    echo "<option class='add-group-course' value='$lc->id'>$lc->subject</option>";
+                    echo "<option class='add-group-course' data-toggle='modal' data-target='#add-group-modal' value='$lc->id'>$lc->subject</option>";
                   }
                   ?>
                 </select>
@@ -90,6 +90,35 @@
     </div>
 
 
+    <!-- MODALS AREA -->
+    <div class="modal fade" id="add-group-modal">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal"><span>&times;</span></button>
+            <h4 class="modal-title">Add User</h4>
+          </div>
+          <form id="add-group-form"  data-toggle="validator" role="form">
+            <div class="modal-body">
+              <div class="form-group">
+                <p><input class="form-control" placeholder="Group Name" id="add-group-username" name="groupname" type="text" required ></p>
+                <div class="help-block with-errors"></div>
+              </div>
+              <div class="form-group">
+                <p><input class="form-control" id="add-group-file" name="importfile" type="file" required></p>
+                <div class="help-block with-errors"></div>
+              </div>
+            </div>  
+            <div class="modal-footer">
+              <button type="submit" class="btn btn-default" data-dismiss="modal">Close</button>
+              <button type="submit" class="btn btn-primary" >Add Subject</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+
+
 
   <script>
     var $doc = $(document);
@@ -105,6 +134,8 @@
       alert('hi');
     });
         
+
+  
           // $('#dropdownMenu1').on('click', function () {
           //   alert('hi');
           // });

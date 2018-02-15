@@ -3,6 +3,10 @@
 Class UserModel extends CI_model
 {
 
+	public function getCourses(){
+		return $this->db->get("courses");
+	}
+
 	public function insert_course($data)
 	{
 		$this->db->insert('courses',$data);

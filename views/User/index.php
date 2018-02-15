@@ -11,33 +11,9 @@
 		<?php $this->load->view('Partials/navBar'); ?>
 		<div class="container-fluid">
 			<div class="row">
-<<<<<<< HEAD
-				<div class="col-md-2 sidebar">
-					<ul class="nav nav-sidebar">
-						<li class="active"><a href="#">Manage Class</span></a></li>
-						<li><a href="#">Input Grades</span></a></li>
-						<li><a href="#">View Reports</span></a></li>
-					</ul>
-				</div>
-				<div class="col-md-10 col-md-offset-2 main">
-					<table class="table table-danger">
-						<thead>
-							<tr>
-								<th>test</th>
-							</tr>
-						</thead>
-						<tbody>
-							<tr>
-								<td>ioadjasljdoai</td>
-							</tr>
-						</tbody>
-					</table>
-=======
-				<?php $this->load->view('Partials/sidebar'); ?>
-
+				<?php $this->load->view('Partials/sideBar'); ?>
 				<div class="col-md-10 col-md-offset-2 main">
 					<h1>Nothing to show here.</h1>
->>>>>>> prince
 				</div>
 			</div>
 		</div>

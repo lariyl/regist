@@ -2,16 +2,15 @@
  
 class User extends CI_Controller
 {
- 
-  public function __construct()
-  {
-    parent::__construct();
-    $this->load->helper('url');    
-    $this->load->helper('Tools');
-    $this->load->model('user_model');
-    $this->load->library('session');
-    $this->load->library('form_validation');
-    $this->load->library('csvimport');
+	public function __construct()
+	{
+		parent::__construct();
+		$this->load->helper('url');
+		$this->load->helper('Tools');
+		$this->load->model('user_model');
+		$this->load->library('session');
+		$this->load->library('form_validation');
+		$this->load->library('csvimport');
 
 		if($this->session->userdata('role') != 'user')
 		{
@@ -143,12 +142,12 @@ class User extends CI_Controller
 				}
 				else
 				{
-					$this->session->set_flashdata('error_msg', 'New Password & Confirm Password dont match.');
+					$this->session->set_flashdata('error_msg', "New Password & Confirm Password don't match.");
 				}
 			}
 			else
 			{
-				$this->session->set_flashdata('error_msg', 'Sorry! Current Password dont match.');
+				$this->session->set_flashdata('error_msg', "Sorry! Current Password don't match.");
 			}
 		}
 

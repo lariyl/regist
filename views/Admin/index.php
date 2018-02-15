@@ -22,37 +22,35 @@
 	<body>
 		<?php $this->load->view('Partials/navBar'); ?>
 		<div class="container-fluid">
-			<div class="container">
-				<div class="row">
-					<div class="col-md-8 col-md-offset-2">
-						<table id="system-users-table" class="table">
-							<thead >
-								<tr>
-									<th colspan="4"><a href="#" data-toggle="modal" data-target="#add-user-modal"><i class="fa fa-plus-square"></i></a> System Users</th>
-								</tr>
-								<tr class="success">
-									<th>Usernamne</th>
-									<th>Email</th>
-									<th>Role</th>
-									<th></th>
-								</tr>
-							</thead>
-							<tbody>
-								<?php
-								foreach($users->result() as $row){
-									echo "<tr>";
-									echo "<td>$row->username</td>";
-									echo "<td>$row->email</td>";
-									echo "<td>$row->role</td>";
-									echo "<td>
-													<a href='#' data-id='$row->id' data-toggle='modal' data-target='#delete-user-modal' class='delete-user'><i class='fa fa-trash'></i></a>
-												</td>";
-									echo "</tr>";
-								}
-								?>
-							</tbody>
-						</table>
-					</div>
+			<div class="row">
+				<div class="col-md-8 col-md-offset-2 main">
+					<table id="system-users-table" class="table">
+						<thead >
+							<tr>
+								<th colspan="4"><a href="#" data-toggle="modal" data-target="#add-user-modal"><i class="fa fa-plus-square"></i></a> System Users</th>
+							</tr>
+							<tr class="success">
+								<th>Usernamne</th>
+								<th>Email</th>
+								<th>Role</th>
+								<th></th>
+							</tr>
+						</thead>
+						<tbody>
+							<?php
+							foreach($users->result() as $row){
+								echo "<tr>";
+								echo "<td>$row->username</td>";
+								echo "<td>$row->email</td>";
+								echo "<td>$row->role</td>";
+								echo "<td>
+												<a href='#' data-id='$row->id' data-toggle='modal' data-target='#delete-user-modal' class='delete-user'><i class='fa fa-trash'></i></a>
+											</td>";
+								echo "</tr>";
+							}
+							?>
+						</tbody>
+					</table>
 				</div>
 			</div>
 		</div>

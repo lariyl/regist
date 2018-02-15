@@ -32,13 +32,12 @@ body {
 			<div class="row">
 				<div class="col-md-2 sidebar">
 					<ul class="nav nav-sidebar">
-						<li class="active"><a href="#">Manage Class</span></a></li>
+						<li><a href="#">Manage Class</span></a></li>
 						<li><a href="#">Input Grades</span></a></li>
-						<li><a href="#">View Reports</span></a></li>
 					</ul>
 				</div>
 
-				<div class="col-md-10 col-md-offset-2 main">
+				<div class="col-md-8">
 					<table class="table table-danger">
 						<thead>
 							<tr>

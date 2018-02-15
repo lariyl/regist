@@ -42,7 +42,7 @@
                   ?>
 
 <!--  <?php echo validation_errors(); ?> -->
-        <form role="form" method="post" action="<?php echo base_url('auth/updatePassword'); ?>"> 				
+        <form role="form" method="post" action="<?php echo base_url('User/updatePassword'); ?>"> 				
           <div class="panel-body">
             <div class="form-group">
               <?php echo form_password(['class' => 'form-control', 'name'=>'password', 'placeholder'=>'Password']); ?>

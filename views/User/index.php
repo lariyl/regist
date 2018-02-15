@@ -43,7 +43,6 @@ body {
 							<tr>
 								<th>test</th>
 							</tr>
-
 						</thead>
 						<tbody>
 							<tr>

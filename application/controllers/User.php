@@ -82,7 +82,8 @@ class User extends CI_Controller
 		}
 		else
 		{
-			redirect('User');
+			$this->session->set_flashdata('error_msg', 'Password is required.');
+			$this->load->view("User/changePassword");
 		}
 	}
 }

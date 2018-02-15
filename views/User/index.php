@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html>
-          <p class="navbar-text navbar-left">Signed in as <a href="<?php echo base_url('auth/index');?>" class="navbar-link"><?php echo $this->session->userdata('username'); ?></a></p>
+<p class="navbar-text navbar-left">Signed in as <a href="<?php echo base_url('auth/index');?>" class="navbar-link"><?php echo $this->session->userdata('username'); ?></a></p>
 	<head>
 		<meta charset="UTF-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
@@ -10,21 +10,7 @@
 		<?php $this->load->view('Partials/styles'); ?>
 	</head>
 
-<style>
-body {
-  margin: 0;
-  background-color: #f1f1f1;
-}
 
-.sidebar {
-    height: 100%;
-    width: 200px;
-    position: fixed;
-    background-color: #111;
-    padding-top: 100px;
-}
-
-</style>
 
 	<body>
 		<?php $this->load->view('Partials/navBar'); ?>
@@ -32,12 +18,12 @@ body {
 			<div class="row">
 				<div class="col-md-2 sidebar">
 					<ul class="nav nav-sidebar">
-						<li><a href="#">Manage Class</span></a></li>
+						<li class="active"><a href="#">Manage Class</span></a></li>
 						<li><a href="#">Input Grades</span></a></li>
+						<li><a href="#">View Reports</span></a></li>
 					</ul>
 				</div>
-
-				<div class="col-md-8">
+				<div class="col-md-10 col-md-offset-2 main">
 					<table class="table table-danger">
 						<thead>
 							<tr>

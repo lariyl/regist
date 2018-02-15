@@ -3,24 +3,18 @@
   <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Change PAssword</title>
+    <title>Change Password</title>
     <?php echo getCSS(); ?>
     <?php echo getJS(); ?>
+    <?php $this->load->view('Partials/styles'); ?>    
   </head>
 
   <body>
 
 
-      <nav class="navbar navbar-default">
-        <div class="container-fluid">
-          <p class="navbar-text navbar-left">Signed in as <a href="<?php echo base_url('auth/index');?>" class="navbar-link"><?php echo $this->session->userdata('username'); ?></a></p>
-          <a href="<?php echo base_url('auth/logout');?>"> <button type="button" class="btn btn-default navbar-btn pull-right">Logout</button></a>
-          <a href="<?php echo base_url('auth/changePassword');?>"> <button type="button" class="btn btn-default navbar-btn pull-right">Change Password</button></a>
-        </div>
-      </nav>
+  <?php $this->load->view('Partials/navBar'); ?>
 
-
-    <div class="container">
+    <div class="container-fluid" style="padding-top: 100px;" >
     <div class="row">
         <div class="col-md-4 col-md-offset-4">
             <div class="login-panel panel panel-success">

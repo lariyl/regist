@@ -1,22 +1,7 @@
 <!DOCTYPE html>
 <html>
 	<head>
-		<meta charset="UTF-8">
-		<meta name="viewport" content="width=device-width, initial-scale=1">
-		<title>THESIS - Admin</title>
-		<?php echo getCSS(); ?>
-		<?php echo getJS(); ?>
-		<?php $this->load->view('Partials/styles'); ?>
-		<style>
-			.dropdown-menu li{
-				padding: 5px;
-				width: auto;
-				cursor: pointer;
-			}
-			.dropdown-menu li:hover{
-				background-color: rgb(248,248,248);
-			}
-		</style>
+		<?php $this->load->view('Partials/globalHead', array('title' => 'THESIS - Admin')); ?>
 	</head>
 
 	<body>

@@ -5,10 +5,10 @@ Class Admin extends CI_Controller
 	public  function  __construct()
 	{
 		parent::__construct();
-			$this->load->helper('Tools');
-			$this->load->model('AdminModel');
-			$this->load->model('AuthModel');
-			$this->load->library('session');
+		$this->load->helper('Tools');
+		$this->load->model('AdminModel');
+		$this->load->model('AuthModel');
+		$this->load->library('session');
 
 		if($this->session->userdata('role') != 'admin')
 		{

@@ -1,11 +1,11 @@
 <?php
 
-class AdminModel extends CI_model
+Class AdminModel extends CI_model
 {
 
 	public function registerUser($user)
 	{
-  	return $this->db->insert('users', $user);
+		return $this->db->insert('users', $user);
 	}
 
 	public function fetchUsers()

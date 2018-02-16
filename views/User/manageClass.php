@@ -62,10 +62,24 @@
 							<p><input class="form-control" id="add-file-groupname" name="filename" type="file" required ></p>
 							<div class="help-block with-errors"></div>
 						</div>
+						<table class="table table-hover">
+							<thead>
+							    <tr>
+        							<th>ID Number</th>
+							        <th>Student Name</th>
+							    </tr>
+							</thead>
+							<tbody>
+							    <tr>
+							    	<td>111111</td>
+							    	<td>Doe</td>
+							    </tr>
+							</tbody>
+						</table>
 						<div class="modal-footer">
 							<button type="submit" class="btn btn-default" data-dismiss="modal">Close</button>
-							<button type="submit" class="btn btn-primary confirm-add">Create Class</button>
-						</div>
+							<button type="submit" class="btn btn-primary confirm-add">Create Class</button>   
+						</div>	 
 					</div>
 				</div>
 			</div>

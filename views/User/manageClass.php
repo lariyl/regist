@@ -46,8 +46,8 @@
 				<div class="modal-content">
 					<div class="modal-header">
 						<button type="button" class="close" data-dismiss="modal"><span>&times;</span></button>
-						<h4 class="modal-title code">Add Class</h4>
-						<h4 class="modal-title title">Title</h4>							
+						<h4 class="modal-title code" name="coursecode">Add Class</h4>
+						<h4 class="modal-title title" name="title">Title</h4>							
 					</div>
 					<div class="modal-body">
         				<div class="form-group">
@@ -72,17 +72,17 @@
 		</div>
 
 
-<!-- <script>
+<script>
 	var $doc = $(document);	
 
 $(document).ready(function(){
     $("#change").click(function(){
-        $(".code").text("<?php echo $c->code?>");
+        $(".code").text("val");
         $(".title").text("<?php echo $c->title?>");
 
     });
 });
-</script> -->
+</script>
 
 	</body>
 </html>

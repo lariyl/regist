@@ -29,7 +29,7 @@
 							echo "<div class='panel-heading'><div class='panel-title Title'>$c->code</div></div>";
 							echo "<div class='panel-body'>
 											<p><b>Title: </b> <span>$c->title</span></p>";
-							echo $c->is_approved ? "<p><button class='btn btn-primary' id='change' data-toggle='modal' data-target='#add-class-modal'>Schedule a Class</button></p>": "<p class='text-danger'>This course is not approved yet.</p>";
+							echo $c->is_approved ? "<p><button class='btn btn-primary schedule-class-btn' id='change' data-toggle='modal' data-target='#add-class-modal' data-code='$c->code' data-title='$c->title'>Schedule a Class</button></p>": "<p class='text-danger'>This course is not approved yet.</p>";
 							echo "</div>";
 							echo "</div>";
 							echo "</div>";
@@ -47,10 +47,10 @@
 					<div class="modal-header">
 						<button type="button" class="close" data-dismiss="modal"><span>&times;</span></button>
 						<h4 class="modal-title code" name="coursecode">Add Class</h4>
-						<h4 class="modal-title title" name="title">Title</h4>							
+						<h4 class="modal-title title" name="title">Title</h4>
 					</div>
 					<div class="modal-body">
-        				<div class="form-group">
+						<div class="form-group">
 							<p><input class="form-control" placeholder="Groupname" id="add-class-groupname" name="groupname" type="text" required ></p>
 							<div class="help-block with-errors"></div>
 						</div>
@@ -59,21 +59,22 @@
 							<div class="help-block with-errors"></div>
 						</div>
 						<div class="form-group">
-							<p><input class="form-control" id="add-file-groupname" name="filename" type="file" required ></p>
+							<button id="import-csv-btn" class="form-control btn-sm btn-success"><i class="fa fa-upload"></i> Import Students List CSV</button>
 							<div class="help-block with-errors"></div>
 						</div>
-						<table class="table table-hover">
+						<div class="form-group" style="display: none">
+							<p><input class="form-control" id="import-students-csv" name="filename" type="file" required ></p>
+							<div class="help-block with-errors"></div>
+						</div>
+
+						<table id="class-student-table" class="table table-hover" style="display: none;">
 							<thead>
-							    <tr>
-        							<th>ID Number</th>
-							        <th>Student Name</th>
-							    </tr>
+								<tr>
+									<th>ID Number</th>
+									<th>Student Name</th>
+								</tr>
 							</thead>
 							<tbody>
-							    <tr>
-							    	<td>111111</td>
-							    	<td>Doe</td>
-							    </tr>
 							</tbody>
 						</table>
 						<div class="modal-footer">
@@ -86,17 +87,58 @@
 		</div>
 
 
-<script>
-	var $doc = $(document);	
+	<script>
+		var $doc = $(document);
 
-$(document).ready(function(){
-    $("#change").click(function(){
-        $(".code").text("val");
-        $(".title").text("<?php echo $c->title?>");
+		$doc.ready(function(){
+			$(".schedule-class-btn").click(function(){
+					$(".code").text($(this).data('code'));
+					$(".title").text($(this).data('title'));
+			});
+		});
 
-    });
-});
-</script>
+		$('#import-csv-btn').on('click',function(){
+			$('#import-students-csv').click();
+		});
+
+		$('#import-students-csv').on('change',function(){
+			var tempFile = $('#import-students-csv')[0].files[0];
+
+			console.log(tempFile);
+			if(window.FileReader){
+				var fReader = new FileReader();
+				fReader.readAsText(tempFile);
+				fReader.onload = csvLoader;
+			}else{
+				console.log('FileReader not supported');
+			}
+		});
+
+		function csvLoader(event){
+			var fileArr = csvJSON(event.target.result.replace(/"/g,''));
+
+			$("#class-student-table > tbody tr").remove();
+			for(var x=0; x < fileArr.length; x++){
+				$("#class-student-table > tbody").append("<tr>" +
+					"<td>"+fileArr[x][0]+"</td>" +
+					"<td>"+fileArr[x][2]+" "+fileArr[x][1]+"</td>" +
+					"</tr>");
+			}
+
+			$("#class-student-table").show();
+		}
+
+		function csvJSON(csv){
+			var lines=csv.split("\n");
+			var result = [];
+
+			lines.forEach(function(element){
+				result.push(element.split(','));
+			});
+			 return result;
+		}
+
+	</script>
 
 	</body>
 </html>

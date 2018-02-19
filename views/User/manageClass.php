@@ -29,7 +29,7 @@
 							echo "<div class='panel-heading'><div class='panel-title Title'>$c->code</div></div>";
 							echo "<div class='panel-body'>
 											<p><b>Title: </b> <span>$c->title</span></p>";
-							echo $c->is_approved ? "<p><button class='btn btn-primary schedule-class-btn' id='change' data-toggle='modal' data-target='#add-class-modal' data-code='$c->code' data-title='$c->title'>Schedule a Class</button></p>": "<p class='text-danger'>This course is not approved yet.</p>";
+							echo $c->is_approved ? "<p><button class='btn btn-primary schedule-class-btn' data-toggle='modal' data-target='#add-class-modal' data-code='$c->code' data-title='$c->title' data-id='$c->id'>Schedule a Class</button></p>": "<p class='text-danger'>This course is not approved yet.</p>";
 							echo "</div>";
 							echo "</div>";
 							echo "</div>";
@@ -46,16 +46,16 @@
 				<div class="modal-content">
 					<div class="modal-header">
 						<button type="button" class="close" data-dismiss="modal"><span>&times;</span></button>
-						<h4 class="modal-title code" name="coursecode">Add Class</h4>
-						<h4 class="modal-title title" name="title">Title</h4>
+						<h4 class="modal-title" id="class-modal-code">Add Class</h4>
+						<h4 class="modal-title" id="class-modal-title">Title</h4>
 					</div>
 					<div class="modal-body">
 						<div class="form-group">
-							<p><input class="form-control" placeholder="Groupname" id="add-class-groupname" name="groupname" type="text" required ></p>
+							<p><input class="form-control" placeholder="Groupname" id="add-class-group" name="group" type="text" required ></p>
 							<div class="help-block with-errors"></div>
 						</div>
 						<div class="form-group">
-							<p><input class="form-control" placeholder="Schedule" id="add-schedule-groupname" name="schedule" type="text" required ></p>
+							<p><input class="form-control" placeholder="Schedule" id="add-class-schedule" name="schedule" type="text" required ></p>
 							<div class="help-block with-errors"></div>
 						</div>
 						<div class="form-group">
@@ -79,7 +79,7 @@
 						</table>
 						<div class="modal-footer">
 							<button type="submit" class="btn btn-default" data-dismiss="modal">Close</button>
-							<button type="submit" class="btn btn-primary confirm-add">Create Class</button>   
+							<button type="submit" class="btn btn-primary confirm-add" id="modal-confirm-add">Create Class</button>
 						</div>	 
 					</div>
 				</div>
@@ -90,54 +90,87 @@
 	<script>
 		var $doc = $(document);
 
+		var pageApp = {
+
+			plotCSV: function(event){
+				var fileArr = csvToArray(event.target.result.replace(/"/g,''));
+
+				$("#class-student-table > tbody tr").remove();
+				for(var x=0; x < fileArr.length; x++){
+					$("#class-student-table > tbody").append("<tr>" +
+						"<td>"+fileArr[x][0]+"</td>" +
+						"<td>"+fileArr[x][2]+" "+fileArr[x][1]+"</td>" +
+						"</tr>");
+				}
+
+				$("#class-student-table").show();
+			},
+
+			csvToArray: function(csv){
+				var lines=csv.split("\n");
+				var result = [];
+
+				lines.forEach(function(element){
+					result.push(element.split(','));
+				});
+				return result;
+			},
+
+			events: function(){
+				$('#import-csv-btn').on('click',function(){
+					$('#import-students-csv').click();
+				});
+
+				$('#import-students-csv').on('change',function(){
+					var tempFile = $('#import-students-csv')[0].files[0];
+
+					console.log(tempFile);
+					if(window.FileReader){
+						var fReader = new FileReader();
+						fReader.readAsText(tempFile);
+						fReader.onload = pageApp.plotCSV;
+					}else{
+						console.log('FileReader not supported');
+					}
+				});
+
+				$('#modal-confirm-add').on('click',function(){
+					var ajaxData = {
+						course_id: $(this).data('id'),
+						group: $('#add-class-group').val(),
+						schedule: $('#add-class-schedule').val(),
+						user_id: '<?php echo $this->session->userdata('id'); ?>'
+					};
+
+					$.ajax({
+						url: '<?php echo base_url('User/addClassSchedule'); ?>',
+						type: 'POST',
+						data: ajaxData,
+						beforeSend: function(xhr){
+							console.log(ajaxData);
+						},
+						success:function(response){
+							console.log(response);
+						}
+					});
+				});
+
+				$doc.on('click','.schedule-class-btn', function(){
+					$('#class-modal-code').text($(this).data('code'));
+					$('#class-modal-title').text($(this).data('title'));
+					$('#modal-confirm-add').data('id',$(this).data('id'));
+				});
+
+			},
+
+			init: function(){
+				pageApp.events();
+			}
+		};
+
 		$doc.ready(function(){
-			$(".schedule-class-btn").click(function(){
-					$(".code").text($(this).data('code'));
-					$(".title").text($(this).data('title'));
-			});
+			pageApp.init();
 		});
-
-		$('#import-csv-btn').on('click',function(){
-			$('#import-students-csv').click();
-		});
-
-		$('#import-students-csv').on('change',function(){
-			var tempFile = $('#import-students-csv')[0].files[0];
-
-			console.log(tempFile);
-			if(window.FileReader){
-				var fReader = new FileReader();
-				fReader.readAsText(tempFile);
-				fReader.onload = csvLoader;
-			}else{
-				console.log('FileReader not supported');
-			}
-		});
-
-		function csvLoader(event){
-			var fileArr = csvJSON(event.target.result.replace(/"/g,''));
-
-			$("#class-student-table > tbody tr").remove();
-			for(var x=0; x < fileArr.length; x++){
-				$("#class-student-table > tbody").append("<tr>" +
-					"<td>"+fileArr[x][0]+"</td>" +
-					"<td>"+fileArr[x][2]+" "+fileArr[x][1]+"</td>" +
-					"</tr>");
-			}
-
-			$("#class-student-table").show();
-		}
-
-		function csvJSON(csv){
-			var lines=csv.split("\n");
-			var result = [];
-
-			lines.forEach(function(element){
-				result.push(element.split(','));
-			});
-			 return result;
-		}
-
 	</script>
 
 	</body>

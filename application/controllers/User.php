@@ -37,6 +37,25 @@ class User extends CI_Controller
 		$this->load->view("User/viewReports");
 	}
 
+	public function addClassSchedule(){
+
+		$class = array(
+			'course_id' => $this->input->post('course_id'),
+			'group' =>  $this->input->post('group'),
+			'schedule' =>  $this->input->post('schedule'),
+			'user_id' =>  $this->input->post('user_id')
+		);
+
+		$classid = $this->UserModel->createCourseClass($class);
+
+		if($classid){
+			echo json_encode(array('isOk' => true, 'id' => $classid));
+		}
+		else{
+			echo json_encode(array('isOk' => false, 'error' => 'Unknown error. Please try again.'));
+		}
+	}
+
 	public function changePassword()
 	{
 		$this->load->view("User/changePassword");

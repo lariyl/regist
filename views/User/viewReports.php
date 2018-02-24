@@ -77,14 +77,14 @@ th{
 										<h3 class="panel-title">Continuos Quality Improvement</h3>
 									</div>
 									<div class="panel-body">
-										<h5><u>Data Interpretation</u></h5>
 										<div class="form-group">
-										  <textarea class="form-control" rows="5" id="comment"></textarea>
+											<label for="data_interpretation"><u>Data Interpretation</u></label>
+											<textarea class="form-control" rows="5" id="data_interpretation"></textarea>
 										</div>
-										<h5><u>Proposed Improvement Actions</u></h5>
+										<label for="improvement_action"><u>Propose Improvement Action</u></label>
 										<h6>In order to increase the course's performance improvement actions are recommended:</h6>
 										<div class="form-group">
-										  <textarea class="form-control" rows="5" id="comment"></textarea>
+										  <textarea class="form-control" rows="5" id="improvement_action"></textarea>
 										</div>
 									  	<div class="col-xs-4 pull-right">
 											<label for="received_by">Received By:</label>

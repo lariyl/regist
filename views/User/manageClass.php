@@ -93,7 +93,7 @@
 		var pageApp = {
 
 			plotCSV: function(event){
-				var fileArr = csvToArray(event.target.result.replace(/"/g,''));
+				var fileArr = pageApp.csvToArray(event.target.result.replace(/"/g,''));
 
 				$("#class-student-table > tbody tr").remove();
 				for(var x=0; x < fileArr.length; x++){
@@ -160,6 +160,8 @@
 					$('#class-modal-title').text($(this).data('title'));
 					$('#modal-confirm-add').data('id',$(this).data('id'));
 				});
+
+				
 
 			},
 

@@ -21,7 +21,7 @@ th{
 					<h3 align="center">OBTL Form 4</h3>
 					<h5 align="center">Course Assessment Report</h5>
 					<p class="pull-left"><b>Course Code & Title:</b> CPE 01TN |  COMPUTER HARDWARE FUNDAMENTALS | Grp.1</p>
-					<p class="pull-right"><b>Name of Faculty: </b>Juan De La Cruz</p>
+					<p class="pull-right" style="padding-right: 147px;"><b>Name of Faculty: </b><a href="#" class="navbar-link"><?php echo $this->session->userdata('username'); ?></a></p><br>
 					<p class="pull-right"><b>Term & AY: </b>Second Semester, AY 2016-2017</p>
 					<p class="pull-left"><b>Name of Program: </b>BS Computer Engineering</p>
 					<table class="table table-bordered">

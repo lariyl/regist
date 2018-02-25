@@ -20,22 +20,37 @@
 				<?php $this->load->view('Partials/sideBar',array('isManageClass' => 'active')); ?>
 
 				<div class="col-md-10 col-md-offset-2 main">
+					<div class="row">
+						<ul class="nav nav-tabs">
+							<li><a data-toggle="tab" href="#your_classes">Your Classes</a></li>
+							<li class="active"><a data-toggle="tab" href="#course_list">Course List</a></li>
+						</ul>
+					</div>
 
-					<?php
-						foreach($courses->result() as $i => $c)
-						{
-							echo "<div class='col-md-4'>";
-							echo "<div id='$c->code' class='panel course-panel ".($c->is_approved ? 'panel-info' : 'panel-default')."'>";
-							echo "<div class='panel-heading'><div class='panel-title Title'>$c->code</div></div>";
-							echo "<div class='panel-body'>
-											<p><b>Title: </b> <span>$c->title</span></p>";
-							echo $c->is_approved ? "<p><button class='btn btn-primary schedule-class-btn' data-toggle='modal' data-target='#add-class-modal' data-code='$c->code' data-title='$c->title' data-id='$c->id'>Schedule a Class</button></p>": "<p class='text-danger'>This course is not approved yet.</p>";
-							echo "</div>";
-							echo "</div>";
-							echo "</div>";
-						}
-					?>
+					<div class="row">
+						<div class="tab-content">
+							<div id="your_classes" class="tab-pane fade">
+								
+							</div>
+							<div id="course_list" class="tab-pane fade in active">
+								<?php
+								foreach($courses->result() as $i => $c)
+								{
+									echo "<div class='col-md-4'>";
+									echo "<div id='$c->code' class='panel course-panel ".($c->is_approved ? 'panel-info' : 'panel-default')."'>";
+									echo "<div class='panel-heading'><div class='panel-title Title'>$c->code</div></div>";
+									echo "<div class='panel-body'>
+												<p><b>Title: </b> <span>$c->title</span></p>";
+									echo $c->is_approved ? "<p><button class='btn btn-primary schedule-class-btn' data-toggle='modal' data-target='#add-class-modal' data-code='$c->code' data-title='$c->title' data-id='$c->id'>Schedule a Class</button></p>": "<p class='text-danger'>This course is not approved yet.</p>";
+									echo "</div>";
+									echo "</div>";
+									echo "</div>";
+								}
+								?>
+							</div>
+						</div>
 
+					</div>
 				</div>
 			</div>
 		</div>
@@ -63,13 +78,14 @@
 							<div class="help-block with-errors"></div>
 						</div>
 						<div class="form-group" style="display: none">
-							<p><input class="form-control" id="import-students-csv" name="filename" type="file" required ></p>
+							<p><input class="form-control" id="import-students-csv" name="filename" type="file" accept=".csv" required ></p>
 							<div class="help-block with-errors"></div>
 						</div>
 
 						<table id="class-student-table" class="table table-hover" style="display: none;">
 							<thead>
 								<tr>
+									<th>#</th>
 									<th>ID Number</th>
 									<th>Student Name</th>
 								</tr>
@@ -89,6 +105,8 @@
 
 	<script>
 		var $doc = $(document);
+		var studentList_id = [];
+		var studentList_name = [];
 
 		var pageApp = {
 
@@ -97,7 +115,10 @@
 
 				$("#class-student-table > tbody tr").remove();
 				for(var x=0; x < fileArr.length; x++){
+					studentList_id.push(fileArr[x][0]);
+					studentList_name.push(fileArr[x][2]+" "+fileArr[x][1]);
 					$("#class-student-table > tbody").append("<tr>" +
+						"<td>"+(x+1)+"</td>" +
 						"<td>"+fileArr[x][0]+"</td>" +
 						"<td>"+fileArr[x][2]+" "+fileArr[x][1]+"</td>" +
 						"</tr>");
@@ -139,7 +160,9 @@
 						course_id: $(this).data('id'),
 						group: $('#add-class-group').val(),
 						schedule: $('#add-class-schedule').val(),
-						user_id: '<?php echo $this->session->userdata('id'); ?>'
+						user_id: '<?php echo $this->session->userdata('id'); ?>',
+						student_ids: studentList_id,
+						student_names: studentList_name,
 					};
 
 					$.ajax({

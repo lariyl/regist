@@ -49,7 +49,24 @@ class User extends CI_Controller
 		$classid = $this->UserModel->createCourseClass($class);
 
 		if($classid){
-			echo json_encode(array('isOk' => true, 'id' => $classid));
+			//first or new students, loop thru insernting students to class
+			$test = 0;
+			$test2 = 0;
+			foreach ($this->input->post('student_ids') as $idx=>$si){
+				$si = intval($si);
+				$test = $si;
+				$student = $this->UserModel->getStudent($si);
+				$test = $student;
+				if(!isset($student)){
+					$new_id = $this->UserModel->registerSutdent(array('id'=> $si, 'name' => $this->input->post('student_names')[$idx]));
+					$test2 = $new_id;
+					$this->UserModel->enrolStudent($classid,$new_id);
+				}else{
+					$this->UserModel->enrolStudent($classid,$si);
+				}
+			}
+
+			echo json_encode(array('isOk' => true, 'id' => $classid, 'test' => $test, 'test2'=>$test2,'student_ids' => $this->input->post('student_ids'), 'student_names' => $this->input->post('student_names')));
 		}
 		else{
 			echo json_encode(array('isOk' => false, 'error' => 'Unknown error. Please try again.'));

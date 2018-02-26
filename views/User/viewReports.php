@@ -24,7 +24,7 @@ th{
 					<p align="right"><b>Name of Faculty: </b><a href="#" class="navbar-link"><?php echo $this->session->userdata('username'); ?></a></p>
 					<p class="pull-left"><b>Name of Program: </b>BS Computer Engineering</p>	
 					<p align="right"><b>Term & AY: </b>Second Semester, AY 2016-2017</p>
-					<table class="table table-bordered">
+					<table class="table table-bordered table table-responsive">
 						<thead class="table">
 							<tr>
 								<th scope="col">Course Outcome</th>
@@ -43,6 +43,36 @@ th{
 						    	<td>3.0</td>
 						    	<td>4.0</td>			      
 						    	<td></td>
+						    	<td></td>			      
+						    </tr>
+						    <tr align="center">
+						    	<td></td>
+						    	<td></td>			      
+						    	<td>1.0</td>
+						    	<td>2.0</td>			      
+						    	<td>3.0</td>
+						    	<td>4.0</td>			      
+						    	<td>80% of cohort with rating of 2.0 or better</td>
+						    	<td></td>			      
+						    </tr>						
+						        <tr align="center">
+						    	<td></td>
+						    	<td></td>			      
+						    	<td>1.0</td>
+						    	<td>2.0</td>			      
+						    	<td>3.0</td>
+						    	<td>4.0</td>			      
+						    	<td>80% of cohort with rating of 2.0 or better</td>
+						    	<td></td>			      
+						    </tr>				
+						    <tr align="center">
+						    	<td></td>
+						    	<td></td>			      
+						    	<td>1.0</td>
+						    	<td>2.0</td>			      
+						    	<td>3.0</td>
+						    	<td>4.0</td>			      
+						    	<td>80% of cohort with rating of 2.0 or better</td>
 						    	<td></td>			      
 						    </tr>
 						</tbody>   
@@ -88,11 +118,11 @@ th{
 										</div>
 									  	<div class="col-xs-4 pull-right">
 											<label for="received_by">Received By:</label>
-									    	<input class="form-control" id="received_by" type="text">
+									    	<input class="form-control" id="received_by" class="submit_comments" type="text">
 									  	</div>
 										<div class="col-xs-2 pull-right">
 											<label for="date_submitted">Date Submitted:</label>
-									    	<input class="form-control" id="date_submitted" type="time">	
+									    	<input class="form-control" id="date_submitted" class="submit_comments" type="time">	
 									  	</div>	  	
 									</div>
 								<button type="submit" class="btn btn-primary pull-right">Submit Report</button>	

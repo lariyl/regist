@@ -12,6 +12,25 @@ Class UserModel extends CI_model
 		return $this->db->get("courses");
 	}
 
+	public function getClasses(){
+		$user = $this->session->userdata("id");
+		return $this->db->query("
+				SELECT *, 
+				(SELECT count(id) FROM students_in_class AS sic WHERE cc.int = sic.class_id) AS student_count 
+				FROM course_classes AS cc JOIN courses AS c ON c.id =  cc.course_id
+				WHERE cc.user_id = $user
+			");
+	}
+
+	public function getStudentsInClass(){
+		$user = $this->session->userdata("id");
+		return $this->db->query("
+				SELECT * FROM students_in_class AS sic 
+					JOIN students AS s ON s.id= sic.student_id
+					WHERE sic.class_id IN (SELECT cc.int FROM course_classes AS cc WHERE user_id = $user) ORDER BY s.name ASC
+			");
+	}
+
 	public function getStudent($id){
 		return $this->db->query("SELECT * FROM students WHERE id = $id")->row();
 //		return $this->db->from('students')->where('id',$id)->get()->row();

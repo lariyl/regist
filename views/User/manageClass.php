@@ -22,17 +22,33 @@
 				<div class="col-md-10 col-md-offset-2 main">
 					<div class="row">
 						<ul class="nav nav-tabs">
-							<li><a data-toggle="tab" href="#your_classes">Your Classes</a></li>
-							<li class="active"><a data-toggle="tab" href="#course_list">Course List</a></li>
+							<li class="active"><a data-toggle="tab" href="#your_classes">Your Classes</a></li>
+							<li><a data-toggle="tab" href="#course_list">Course List</a></li>
 						</ul>
 					</div>
 
 					<div class="row">
 						<div class="tab-content">
-							<div id="your_classes" class="tab-pane fade">
-								
+							<div id="your_classes" class="tab-pane fade in active">
+								<?php
+									foreach($classes->result() as $i => $c)
+									{
+										echo "<div class='col-md-12'>";
+										echo "<div class='panel course-panel panel-info'>";
+										echo "<div class='panel-heading'>
+														<div class='panel-title Title'>[$c->code] $c->title </div>
+														<div><b>Students Enrolled: </b><span class='badge badge-warning'>$c->student_count</span></div>
+													</div>";
+										echo "<div class='panel-body'>
+												<p><b>Group: </b> <span>$c->group</span></p>
+												<p><b>Schedule: </b> <span>$c->schedule</span></p>";
+										echo "</div>";
+										echo "</div>";
+										echo "</div>";
+									}
+								?>
 							</div>
-							<div id="course_list" class="tab-pane fade in active">
+							<div id="course_list" class="tab-pane fade ">
 								<?php
 								foreach($courses->result() as $i => $c)
 								{

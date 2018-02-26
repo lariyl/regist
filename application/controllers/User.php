@@ -24,12 +24,17 @@ class User extends CI_Controller
 	public function manageClass()
 	{
 		$data['courses'] = $this->UserModel->getCourses();
+		$data['classes'] = $this->UserModel->getClasses();
 		$this->load->view("User/manageClass",$data);
 	}
 
+
 	public function inputGrades()
 	{
-		$this->load->view("User/inputGrades");
+
+		$data['classes'] = $this->UserModel->getClasses();
+		$data['students'] = $this->UserModel->getStudentsInClass();
+		$this->load->view("User/inputGrades",$data);
 	}
 
 	public function viewReports()

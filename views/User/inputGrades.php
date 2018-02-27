@@ -22,6 +22,7 @@
 									echo "<div class='panel-heading'>";
 									echo "<h4 class='panel-title'>";
 									echo "<a data-toggle='collapse' data-parent='#inputGradeAccordion' id='$c->int' data-target='#collapse$c->int'>[$c->code] $c->title <span class='badge'>$c->group</span></a>";
+									echo "<a href='inputGrades' class='btn btn-success pull-right'>Save Grade</a>";
 									echo "</h4>";
 									echo "</div>";
 

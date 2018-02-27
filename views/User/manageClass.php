@@ -41,7 +41,8 @@
 													</div>";
 										echo "<div class='panel-body'>
 												<p><b>Group: </b> <span>$c->group</span></p>
-												<p><b>Schedule: </b> <span>$c->schedule</span></p>";
+												<p><b>Schedule: </b> <span>$c->schedule</span></p>
+												<a href='inputGrades' class='btn btn-success'>Input Grade</a>";
 										echo "</div>";
 										echo "</div>";
 										echo "</div>";

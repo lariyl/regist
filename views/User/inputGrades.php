@@ -35,17 +35,10 @@
 									echo "<div class='panel panel-info'>";
 
 									echo "<div class='panel-heading'>";
-<<<<<<< HEAD
 									echo "<div class='row'>";
 									echo "<div class='col-md-10 courses-heading'><h4 data-toggle='collapse' data-parent='#inputGradeAccordion' id='$c->int' data-target='#collapse$c->int'>[$c->code] $c->title <span class='badge'>$c->group</span></h4></div>";
 									echo "<div class='col-md-2'><div class='pull-right'><a href='inputGrades' class='btn btn-primary'>Save Grade</a></div></div>";
 									echo "</div>";
-=======
-									echo "<h4 class='panel-title'>";
-									echo "<a data-toggle='collapse' data-parent='#inputGradeAccordion' id='$c->int' data-target='#collapse$c->int'>[$c->code] $c->title <span class='badge'>$c->group</span></a>";
-									echo "<a href='inputGrades' style='margin-left: 465px;' class='btn btn-success'>Save Grade</a>";
-									echo "</h4>";
->>>>>>> d96aa08843430af45120fe5e5cbb8afe5fa1c214
 									echo "</div>";
 
 									echo "<div id='collapse$c->int' class='panel-collapse collapse'>";

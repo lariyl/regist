@@ -17,6 +17,33 @@
 				cursor: pointer;
 			}
 		</style>
+
+		<script>
+			var $doc = $(document);
+
+			var pageApp = {
+				events: function(){
+					$doc.on('submit','.course-grades',function(e){
+						e.preventDefault();
+
+						$.ajax({
+							url: '<?php echo base_url('User/saveGrades')?>',
+							type: 'POST',
+							data: $(this).serialize(),
+							success: function(response){
+								alert('Grades Saved!');
+								console.log(response);
+							}
+						});
+					});
+				},
+				init: function(){
+					pageApp.events();
+				}
+			};
+
+			pageApp.init();
+		</script>
 	</head>
 
 	<body>
@@ -32,7 +59,8 @@
 
 							<?php
 								foreach($classes->result() AS $i => $c){
-									echo "<form method='post' class='course-grades-$c->int' >";
+									echo "<form method='post' class='course-grades' id='cg-$c->int' data-id='$c->int'>";
+									echo "<input type='hidden' name='courseClass' value='$c->int' />";
 									echo "<div class='panel panel-info'>";
 
 									echo "<div class='panel-heading'>";

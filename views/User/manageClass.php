@@ -39,10 +39,15 @@
 														<div class='panel-title Title'>[$c->code] $c->title </div>
 														<div><b>Students Enrolled: </b><span class='badge badge-warning'>$c->student_count</span></div>
 													</div>";
-										echo "<div class='panel-body'>
-												<p><b>Group: </b> <span>$c->group</span></p>
-												<p><b>Schedule: </b> <span>$c->schedule</span></p>
-												<a href='inputGrades' class='btn btn-success'>Input Grade</a>";
+										echo "<div class='panel-body'><div class='row'>
+												<div class='col-md-6'>
+													<p><b>Group: </b> <span>$c->group</span></p>
+													<p><b>Schedule: </b> <span>$c->schedule</span></p>
+												</div>												
+												<div class='col-md-6'>
+													<div class='pull-right'><a href='inputGrades' class='btn btn-primary btn-md'>INPUT GRADES</a></div>
+												</div>
+												</div>";
 										echo "</div>";
 										echo "</div>";
 										echo "</div>";

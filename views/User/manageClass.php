@@ -81,40 +81,42 @@
 						<h4 class="modal-title" id="class-modal-code">Add Class</h4>
 						<h4 class="modal-title" id="class-modal-title">Title</h4>
 					</div>
-					<div class="modal-body">
-						<div class="form-group">
-							<p><input class="form-control" placeholder="Groupname" id="add-class-group" name="group" type="text" required ></p>
-							<div class="help-block with-errors"></div>
-						</div>
-						<div class="form-group">
-							<p><input class="form-control" placeholder="Schedule" id="add-class-schedule" name="schedule" type="text" required ></p>
-							<div class="help-block with-errors"></div>
-						</div>
-						<div class="form-group">
-							<button id="import-csv-btn" class="form-control btn-sm btn-success"><i class="fa fa-upload"></i> Import Students List CSV</button>
-							<div class="help-block with-errors"></div>
-						</div>
-						<div class="form-group" style="display: none">
-							<p><input class="form-control" id="import-students-csv" name="filename" type="file" accept=".csv" required ></p>
-							<div class="help-block with-errors"></div>
-						</div>
+					<form id="add-class-form"  data-toggle="validator" role="form">					
+						<div class="modal-body">
+							<div class="form-group">
+								<p><input class="form-control" placeholder="Groupnumber" id="add-class-group" name="group" type="number" required ></p>
+								<div class="help-block with-errors"></div>
+							</div>
+							<div class="form-group">
+								<p><input class="form-control" placeholder="Schedule" id="add-class-schedule"  name="schedule" type="text" required ></p>
+								<div class="help-block with-errors"></div>
+							</div>
+							<div class="form-group">
+								<button id="import-csv-btn" class="form-control btn-sm btn-success"><i class="fa fa-upload"></i> Import Students List CSV</button>
+								<div class="help-block with-errors"></div>
+							</div>
+							<div class="form-group" style="display: none">
+								<p><input class="form-control" id="import-students-csv" name="filename" type="file" accept=".csv" required ></p>
+								<div class="help-block with-errors"></div>
+							</div>
 
-						<table id="class-student-table" class="table table-hover" style="display: none;">
-							<thead>
-								<tr>
-									<th>#</th>
-									<th>ID Number</th>
-									<th>Student Name</th>
-								</tr>
-							</thead>
-							<tbody>
-							</tbody>
-						</table>
-						<div class="modal-footer">
-							<button type="submit" class="btn btn-default" data-dismiss="modal">Close</button>
-							<button type="submit" class="btn btn-primary confirm-add" id="modal-confirm-add">Create Class</button>
-						</div>	 
-					</div>
+							<table id="class-student-table" class="table table-hover" style="display: none;">
+								<thead>
+									<tr>
+										<th>#</th>
+										<th>ID Number</th>
+										<th>Student Name</th>
+									</tr>
+								</thead>
+								<tbody>
+								</tbody>
+							</table>
+							<div class="modal-footer">
+								<button type="submit" class="btn btn-default" data-dismiss="modal">Close</button>
+								<button type="submit" class="btn btn-primary confirm-add" id="modal-confirm-add">Create Class</button>
+							</div>	 
+						</div>
+					</form>
 				</div>
 			</div>
 		</div>
@@ -195,13 +197,25 @@
 					});
 				});
 
+					$('#add-class-form').validator().on('submit', function (e) {
+						if (e.isDefaultPrevented()) {
+							//Do nothing on invalid form
+						} else {
+							$('#add-class-modal').modal('hide');
+							pageApp.addUser();
+						}
+					});				
+
 				$doc.on('click','.schedule-class-btn', function(){
 					$('#class-modal-code').text($(this).data('code'));
 					$('#class-modal-title').text($(this).data('title'));
 					$('#modal-confirm-add').data('id',$(this).data('id'));
 				});
 
-				
+					$('#add-class-modal').on('hide.bs.modal', function(){
+						$('#add-class-form').validator('destroy');
+						$('#add-class-form').validator();
+					});				
 
 			},
 

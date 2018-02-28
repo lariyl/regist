@@ -16,7 +16,8 @@ Class UserModel extends CI_model
 		$user = $this->session->userdata("id");
 		return $this->db->query("
 				SELECT *, 
-				(SELECT count(id) FROM students_in_class AS sic WHERE cc.int = sic.class_id) AS student_count 
+				(SELECT count(id) FROM students_in_class AS sic WHERE cc.int = sic.class_id) AS student_count,
+				cc.int AS cc_id
 				FROM course_classes AS cc JOIN courses AS c ON c.id =  cc.course_id
 				WHERE cc.user_id = $user
 			");
@@ -25,7 +26,7 @@ Class UserModel extends CI_model
 	public function getStudentsInClass(){
 		$user = $this->session->userdata("id");
 		return $this->db->query("
-				SELECT * FROM students_in_class AS sic 
+				SELECT *, sic.class_id AS cc_id FROM students_in_class AS sic 
 					JOIN students AS s ON s.id= sic.student_id
 					WHERE sic.class_id IN (SELECT cc.int FROM course_classes AS cc WHERE user_id = $user) ORDER BY s.name ASC
 			");

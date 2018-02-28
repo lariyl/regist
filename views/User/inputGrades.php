@@ -2,6 +2,21 @@
 <html>
 	<head>
 		<?php $this->load->view('Partials/globalHead', array('title' => 'THESIS - Input Grades')); ?>
+
+		<style>
+			.grades-table > thead{
+				font-weight: bold;
+				background-color: lightgrey;
+				text-align: center;
+				vertical-align: middle;
+			}
+			.grades-table > tbody{
+				font-size: .8em;
+			}
+			.courses-heading{
+				cursor: pointer;
+			}
+		</style>
 	</head>
 
 	<body>
@@ -17,45 +32,58 @@
 
 							<?php
 								foreach($classes->result() AS $i => $c){
-									echo "<div class='panel panel-primary'>";
+									echo "<div class='panel panel-info'>";
 
 									echo "<div class='panel-heading'>";
+<<<<<<< HEAD
+									echo "<div class='row'>";
+									echo "<div class='col-md-10 courses-heading'><h4 data-toggle='collapse' data-parent='#inputGradeAccordion' id='$c->int' data-target='#collapse$c->int'>[$c->code] $c->title <span class='badge'>$c->group</span></h4></div>";
+									echo "<div class='col-md-2'><div class='pull-right'><a href='inputGrades' class='btn btn-primary'>Save Grade</a></div></div>";
+									echo "</div>";
+=======
 									echo "<h4 class='panel-title'>";
 									echo "<a data-toggle='collapse' data-parent='#inputGradeAccordion' id='$c->int' data-target='#collapse$c->int'>[$c->code] $c->title <span class='badge'>$c->group</span></a>";
-									echo "<a href='inputGrades' class='btn btn-success pull-right'>Save Grade</a>";
+									echo "<a href='inputGrades' style='margin-left: 465px;' class='btn btn-success'>Save Grade</a>";
 									echo "</h4>";
+>>>>>>> d96aa08843430af45120fe5e5cbb8afe5fa1c214
 									echo "</div>";
 
 									echo "<div id='collapse$c->int' class='panel-collapse collapse'>";
 									echo "<div class='panel-body'>";
 
-									echo "<table class='table'>";
+									echo "<table class='table table-striped table-bordered grades-table'>";
 									echo "<thead>
 													<tr>
-														<td>#</td>
-														<td>ID Number</td>
-														<td>Student Name</td>
-														<td>Pre-Midterms</td>
-														<td>Midterms</td>
-														<td>Pre-Finals</td>
-														<td>Finals</td>
-														<td>Practicals</td>
-														<td>Others</td>
+														<td></td>
+														<td>ID #</td>
+														<td>STUDENT NAME</td>
+														<td>PRE-MIDTERMS</td>
+														<td>MIDTERMS</td>
+														<td>PRE-FINALS</td>
+														<td>FINALS</td>
+														<td>PRACTICALS</td>
+														<td>OTHERS</td>
 													</tr>
 												</thead>";
 									echo "<tbody>";
+									$xi = 0;
 									foreach($students->result() AS $x => $s){
-										echo "<tr>
-												<td>".($x+1)."</td>
-												<td>$s->id</td>
-												<td>$s->name</td>
-												<td><input type='number' class='form-control' name='premidterms' value='$s->grade_premidterms' /></td>
-												<td><input type='number' class='form-control' name='midterms' value='$s->grade_midterms' /></td>
-												<td><input type='number' class='form-control' name='prefinals' value='$s->grade_prefinals' /></td>
-												<td><input type='number' class='form-control' name='finals' value='$s->grade_finals' /></td>
-												<td><input type='number' class='form-control' name='practicals' value='$s->grade_practicals' /></td>
-												<td><input type='number' class='form-control' name='others' value='$s->grade_others' /></td>
-											</tr>";
+										if($s->cc_id == $c->cc_id)
+										{
+											$xi += 1;
+
+											echo "<tr>
+													<td>$xi</td>
+													<td>$s->id</td>
+													<td>$s->name</td>
+													<td><input type='number' class='form-control' name='premidterms' value='$s->grade_premidterms' /></td>
+													<td><input type='number' class='form-control' name='midterms' value='$s->grade_midterms' /></td>
+													<td><input type='number' class='form-control' name='prefinals' value='$s->grade_prefinals' /></td>
+													<td><input type='number' class='form-control' name='finals' value='$s->grade_finals' /></td>
+													<td><input type='number' class='form-control' name='practicals' value='$s->grade_practicals' /></td>
+													<td><input type='number' class='form-control' name='others' value='$s->grade_others' /></td>
+												</tr>";
+										}
 									}
 									echo "</tbody>";
 									echo "</table>";

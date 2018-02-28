@@ -28,13 +28,16 @@ class User extends CI_Controller
 		$this->load->view("User/manageClass",$data);
 	}
 
-
 	public function inputGrades()
 	{
 
 		$data['classes'] = $this->UserModel->getClasses();
 		$data['students'] = $this->UserModel->getStudentsInClass();
 		$this->load->view("User/inputGrades",$data);
+	}
+
+	public function saveGrades(){
+		var_dump($_POST);
 	}
 
 	public function viewReports()

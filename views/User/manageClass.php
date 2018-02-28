@@ -93,7 +93,7 @@
 								<div class="help-block with-errors"></div>
 							</div>
 							<div class="form-group">
-								<p><input class="form-control" placeholder="Schedule" id="add-class-schedule"  name="schedule" pattern="[M,W,F,T,T,H,S]{1,3}[\-]([0-9]){1,4}[\-]([0-9]){1,4}" type="text" required ></p>
+								<p><input class="form-control" placeholder="Schedule" id="add-class-schedule"  name="schedule" pattern="[M,W,F,T,T,H,S]{1,3}[\-]([0-9]){1,4}(^|:)([0-9]){1,4}[\-]([0-9]){1,4}(^|:)([0-9]){1,4}" type="text" required ></p>
 								<div class="help-block with-errors"></div>
 							</div>
 							<div class="form-group">

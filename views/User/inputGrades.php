@@ -33,10 +33,10 @@
 							type: 'POST',
 							data: $(this).serialize(),
 							success: function(response){
-//								saveButton.html("Saved");
+								saveButton.html("Saved");
 								saveButton.switchClass('btn-primary','btn-success');
 								saveButton.attr('disabled','disabled');
-								pageApp.restoreSaveButton(3,saveButton)
+//								pageApp.restoreSaveButton(3,saveButton)
 								console.log(response);
 							}
 						});
@@ -46,12 +46,12 @@
 						$(this).html("<i class='fa fa-spinner fa-spin'></i>");
 					});
 
-//					$doc.on('change','.grade-field',function(){
-//						var saveButton = $("#"+$(this).data('bid'));
-//						saveButton.html("Save Grade");
-//						saveButton.switchClass('btn-success','btn-primary');
-//						saveButton.removeAttr('disabled');
-//					});
+					$doc.on('change','.grade-field',function(){
+						var saveButton = $("#"+$(this).data('bid'));
+						saveButton.html("Save Grade");
+						saveButton.switchClass('btn-success','btn-primary');
+						saveButton.removeAttr('disabled');
+					});
 				},
 				restoreSaveButton: function(secs, button){
 					button.html("Saved ("+secs+")");
@@ -66,6 +66,17 @@
 				},
 				init: function(){
 					pageApp.events();
+					$doc.ready(function () {
+						<?php
+							if(isset($_GET['cid'])){
+								$cid = $_GET['cid'];
+								echo "$('#$cid').trigger('click');";
+								echo "$('html, body').animate({scrollTop: $('$cid').offset().top - 40}, 500);";
+
+							}
+
+						?>
+					});
 				}
 			};
 
@@ -86,13 +97,15 @@
 
 							<?php
 								foreach($classes->result() AS $i => $c){
+									echo "<div class='row' id='p$c->int'>";
+									echo "<br />";
 									echo "<form method='post' class='course-grades' id='cg-$c->int' data-id='$c->int' data-bid='gsb-$c->int'>";
 									echo "<input type='hidden' name='courseClass' value='$c->int' />";
 									echo "<div class='panel panel-info'>";
 
 									echo "<div class='panel-heading'>";
 									echo "<div class='row'>";
-									echo "<div class='col-md-10 courses-heading' data-toggle='collapse' data-parent='#inputGradeAccordion' id='$c->int' data-target='#collapse$c->int'><h4>[$c->code] $c->title <span class='badge'>$c->group</span></h4></div>";
+									echo "<div class='col-md-10 courses-heading' data-toggle='collapse' data-parent='#inputGradeAccordion' id='$c->int' data-target='#collapse$c->int'><h4><span class='badge'>Group #$c->group</span> [$c->code] $c->title</h4></div>";
 									echo "<div class='col-md-2'><div class='pull-right'><button type='submit' data-id='$c->int' id='gsb-$c->int' data-saved='0' class='btn btn-primary save-grade-btn'>Save Grade</button></div></div>";
 									echo "</div>";
 									echo "</div>";
@@ -113,6 +126,7 @@
 														<td>FINALS</td>
 														<td>PRACTICALS</td>
 														<td>OTHERS</td>
+														<td>TOTAL</td>
 													</tr>
 												</thead>";
 									echo "<tbody>";
@@ -134,6 +148,9 @@
 													<td><input type='number' class='form-control grade-field' data-bid='gsb-$c->int' step='.01' min='0.00' max='5.00' name='finals[]' value='$s->grade_finals' /></td>
 													<td><input type='number' class='form-control grade-field' data-bid='gsb-$c->int' step='.01' min='0.00' max='5.00' name='practicals[]' value='$s->grade_practicals' /></td>
 													<td><input type='number' class='form-control grade-field' data-bid='gsb-$c->int' step='.01' min='0.00' max='5.00' name='others[]' value='$s->grade_others' /></td>
+													<td><b data-wpm='$c->weight_premidterms' data-wm=$c->weight_midterms'' data-wpf='$c->weight_prefinals' data-wf='$c->weight_finals' data-wp='$c->weight_practicals' data-wo='$c->weight_others'>
+														".(($s->grade_premidterms * $c->weight_premidterms) + ($s->grade_midterms * $c->weight_midterms) + ($s->grade_prefinals * $c->weight_prefinals) + ($s->grade_finals * $c->weight_finals) +($s->grade_practicals * $c->weight_practicals) +($s->grade_others * $c->weight_others))."
+													</b></td>
 												</tr>";
 										}
 									}
@@ -145,7 +162,7 @@
 
 									echo "</div>";
 									echo "</form>";
-									echo "<br />";
+									echo "</div>";
 								}
 							?>
 

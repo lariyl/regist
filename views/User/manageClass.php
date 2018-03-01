@@ -43,9 +43,9 @@
 												<div class='col-md-6'>
 													<p><b>Group: </b> <span>$c->group</span></p>
 													<p><b>Schedule: </b> <span>$c->schedule</span></p>
-												</div>												
+												</div>
 												<div class='col-md-6'>
-													<div class='pull-right'><a href='inputGrades' class='btn btn-primary btn-md'>INPUT GRADES</a></div>
+													<div class='pull-right'><a href='".base_url("User/inputGrades?cid=$c->int")."' class='btn btn-primary btn-md'>INPUT GRADES</a></div>
 												</div>
 												</div>";
 										echo "</div>";
@@ -86,10 +86,10 @@
 						<h4 class="modal-title" id="class-modal-code">Add Class</h4>
 						<h4 class="modal-title" id="class-modal-title">Title</h4>
 					</div>
-					<form id="add-class-form"  data-toggle="validator" role="form">					
+					<form id="add-class-form"  data-toggle="validator" role="form">
 						<div class="modal-body">
 							<div class="form-group">
-								<p><input class="form-control" placeholder="Groupnumber" id="add-class-group" name="group" type="number" required ></p>
+								<p><input class="form-control" placeholder="Groupnumber" id="add-class-group" min="1" max="99" step="1" name="group" type="number" required ></p>
 								<div class="help-block with-errors"></div>
 							</div>
 							<div class="form-group">

@@ -34,7 +34,7 @@
 									foreach($classes->result() as $i => $c)
 									{
 										echo "<div class='col-md-12'>";
-										echo "<div class='panel course-panel panel-info'>";
+										echo "<div class='panel course-panel ".($c->student_count == 0 ? 'panel-warning': 'panel-info')."'>";
 										echo "<div class='panel-heading'>
 														<div class='panel-title Title'>[$c->code] $c->title </div>
 														<div><b>Students Enrolled: </b><span class='badge badge-warning'>$c->student_count</span></div>
@@ -45,7 +45,11 @@
 													<p><b>Schedule: </b> <span>$c->schedule</span></p>
 												</div>
 												<div class='col-md-6'>
-													<div class='pull-right'><a href='".base_url("User/inputGrades?cid=$c->int")."' class='btn btn-primary btn-md'>INPUT GRADES</a></div>
+													<div class='pull-right'>";
+									if($c->student_count > 0){
+										echo "<a href='".base_url("User/inputGrades?cid=$c->int")."' class='btn btn-primary btn-md'>INPUT GRADES</a>";
+									}
+									echo "</div>
 												</div>
 												</div>";
 										echo "</div>";

@@ -16,6 +16,9 @@
 			.courses-heading{
 				cursor: pointer;
 			}
+			.grades-table thead tr td, .grades-table tbody tr td{
+				vertical-align:middle;
+			}
 		</style>
 
 		<script>
@@ -71,10 +74,8 @@
 							if(isset($_GET['cid'])){
 								$cid = $_GET['cid'];
 								echo "$('#$cid').trigger('click');";
-								echo "$('html, body').animate({scrollTop: $('$cid').offset().top - 40}, 500);";
-
+								echo "$('html, body').animate({scrollTop: $('#p$cid').offset().top - 40}, 500);";
 							}
-
 						?>
 					});
 				}
@@ -97,16 +98,34 @@
 
 							<?php
 								foreach($classes->result() AS $i => $c){
+									$wpm = $c->weight_premidterms;
+									$wm = $c->weight_midterms;
+									$wpf = $c->weight_prefinals;
+									$wf = $c->weight_finals;
+									$wp = $c->weight_practicals;
+									$wo = $c->weight_others;
+
+									$pwpm = number_format($wpm*100,2);
+									$pwm = number_format($wm*100,2);
+									$pwpf = number_format($wpf*100,2);
+									$pwf = number_format($wf*100,2);
+									$pwp = number_format($wp*100,2);
+									$pwo = number_format($wo*100,2);
+
 									echo "<div class='row' id='p$c->int'>";
 									echo "<br />";
 									echo "<form method='post' class='course-grades' id='cg-$c->int' data-id='$c->int' data-bid='gsb-$c->int'>";
 									echo "<input type='hidden' name='courseClass' value='$c->int' />";
-									echo "<div class='panel panel-info'>";
+									echo "<div class='panel ".($c->student_count == 0 ? 'panel-warning': 'panel-info')."'>";
 
 									echo "<div class='panel-heading'>";
 									echo "<div class='row'>";
 									echo "<div class='col-md-10 courses-heading' data-toggle='collapse' data-parent='#inputGradeAccordion' id='$c->int' data-target='#collapse$c->int'><h4><span class='badge'>Group #$c->group</span> [$c->code] $c->title</h4></div>";
-									echo "<div class='col-md-2'><div class='pull-right'><button type='submit' data-id='$c->int' id='gsb-$c->int' data-saved='0' class='btn btn-primary save-grade-btn'>Save Grade</button></div></div>";
+
+									if($c->student_count > 0){
+										echo "<div class='col-md-2'><div class='pull-right'><button type='submit' data-id='$c->int' id='gsb-$c->int' data-saved='0' class='btn btn-primary save-grade-btn'>Save Grade</button></div></div>";
+									}
+
 									echo "</div>";
 									echo "</div>";
 
@@ -120,12 +139,12 @@
 														<td></td>
 														<td>ID #</td>
 														<td>STUDENT NAME</td>
-														<td>PRE-MIDTERMS</td>
-														<td>MIDTERMS</td>
-														<td>PRE-FINALS</td>
-														<td>FINALS</td>
-														<td>PRACTICALS</td>
-														<td>OTHERS</td>
+														<td>PRE-MIDTERMS <br /> ($pwpm%)</td>
+														<td>MIDTERMS <br /> ($pwm%)</td>
+														<td>PRE-FINALS <br /> ($pwpf%)</td>
+														<td>FINALS <br /> ($pwf%)</td>
+														<td>PRACTICALS <br /> ($pwp%)</td>
+														<td>OTHERS <br /> ($pwo%)</td>
 														<td>TOTAL</td>
 													</tr>
 												</thead>";
@@ -142,12 +161,12 @@
 														<input type='hidden' class='form-control' name='studentid[]' value='$s->id' />
 													</td>
 													<td>$s->name</td>
-													<td><input type='number' class='form-control grade-field' data-bid='gsb-$c->int' step='.01' min='0.00' max='5.00' name='premidterms[]' value='$s->grade_premidterms' /></td>
-													<td><input type='number' class='form-control grade-field' data-bid='gsb-$c->int' step='.01' min='0.00' max='5.00' name='midterms[]' value='$s->grade_midterms' /></td>
-													<td><input type='number' class='form-control grade-field' data-bid='gsb-$c->int' step='.01' min='0.00' max='5.00' name='prefinals[]' value='$s->grade_prefinals' /></td>
-													<td><input type='number' class='form-control grade-field' data-bid='gsb-$c->int' step='.01' min='0.00' max='5.00' name='finals[]' value='$s->grade_finals' /></td>
-													<td><input type='number' class='form-control grade-field' data-bid='gsb-$c->int' step='.01' min='0.00' max='5.00' name='practicals[]' value='$s->grade_practicals' /></td>
-													<td><input type='number' class='form-control grade-field' data-bid='gsb-$c->int' step='.01' min='0.00' max='5.00' name='others[]' value='$s->grade_others' /></td>
+													<td><input type='number' class='form-control grade-field' data-bid='gsb-$c->int' step='.01' min='1.00' max='5.00' name='premidterms[]' value='$s->grade_premidterms' /></td>
+													<td><input type='number' class='form-control grade-field' data-bid='gsb-$c->int' step='.01' min='1.00' max='5.00' name='midterms[]' value='$s->grade_midterms' /></td>
+													<td><input type='number' class='form-control grade-field' data-bid='gsb-$c->int' step='.01' min='1.00' max='5.00' name='prefinals[]' value='$s->grade_prefinals' /></td>
+													<td><input type='number' class='form-control grade-field' data-bid='gsb-$c->int' step='.01' min='1.00' max='5.00' name='finals[]' value='$s->grade_finals' /></td>
+													<td><input type='number' class='form-control grade-field' data-bid='gsb-$c->int' step='.01' min='1.00' max='5.00' name='practicals[]' value='$s->grade_practicals' /></td>
+													<td><input type='number' class='form-control grade-field' data-bid='gsb-$c->int' step='.01' min='1.00' max='5.00' name='others[]' value='$s->grade_others' /></td>
 													<td><b data-wpm='$c->weight_premidterms' data-wm=$c->weight_midterms'' data-wpf='$c->weight_prefinals' data-wf='$c->weight_finals' data-wp='$c->weight_practicals' data-wo='$c->weight_others'>
 														".(($s->grade_premidterms * $c->weight_premidterms) + ($s->grade_midterms * $c->weight_midterms) + ($s->grade_prefinals * $c->weight_prefinals) + ($s->grade_finals * $c->weight_finals) +($s->grade_practicals * $c->weight_practicals) +($s->grade_others * $c->weight_others))."
 													</b></td>

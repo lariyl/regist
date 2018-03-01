@@ -11,6 +11,10 @@ th{
 }
 </style>
 
+	<div>
+		<?php var_dump($evaluation); ?>
+	</div>
+
 	<body>
 		<?php $this->load->view('Partials/navBar'); ?>
 		<div class="container-fluid">
@@ -38,43 +42,63 @@ th{
 						    <tr align="center">
 						    	<td></td>
 						    	<td></td>			      
-						    	<td>1.0</td>
-						    	<td>2.0</td>			      
-						    	<td>3.0</td>
-						    	<td>4.0</td>			      
+						    	<td><?php echo $evaluation['ranks']->pmr1; ?></td>
+									<td><?php echo $evaluation['ranks']->pmr2; ?></td>
+									<td><?php echo $evaluation['ranks']->pmr3; ?></td>
+									<td><?php echo $evaluation['ranks']->pmr4; ?></td>
 						    	<td></td>
 						    	<td></td>			      
 						    </tr>
 						    <tr align="center">
 						    	<td></td>
-						    	<td></td>			      
-						    	<td>1.0</td>
-						    	<td>2.0</td>			      
-						    	<td>3.0</td>
-						    	<td>4.0</td>			      
+						    	<td></td>
+									<td><?php echo $evaluation['ranks']->mr1; ?></td>
+									<td><?php echo $evaluation['ranks']->mr2; ?></td>
+									<td><?php echo $evaluation['ranks']->mr3; ?></td>
+									<td><?php echo $evaluation['ranks']->mr4; ?></td>
 						    	<td>80% of cohort with rating of 2.0 or better</td>
 						    	<td></td>			      
 						    </tr>						
 						        <tr align="center">
 						    	<td></td>
-						    	<td></td>			      
-						    	<td>1.0</td>
-						    	<td>2.0</td>			      
-						    	<td>3.0</td>
-						    	<td>4.0</td>			      
+						    	<td></td>
+											<td><?php echo $evaluation['ranks']->pfr1; ?></td>
+											<td><?php echo $evaluation['ranks']->pfr2; ?></td>
+											<td><?php echo $evaluation['ranks']->pfr3; ?></td>
+											<td><?php echo $evaluation['ranks']->pfr4; ?></td>
 						    	<td>80% of cohort with rating of 2.0 or better</td>
 						    	<td></td>			      
 						    </tr>				
 						    <tr align="center">
 						    	<td></td>
-						    	<td></td>			      
-						    	<td>1.0</td>
-						    	<td>2.0</td>			      
-						    	<td>3.0</td>
-						    	<td>4.0</td>			      
+						    	<td></td>
+									<td><?php echo $evaluation['ranks']->fr1; ?></td>
+									<td><?php echo $evaluation['ranks']->fr2; ?></td>
+									<td><?php echo $evaluation['ranks']->fr3; ?></td>
+									<td><?php echo $evaluation['ranks']->fr4; ?></td>
 						    	<td>80% of cohort with rating of 2.0 or better</td>
 						    	<td></td>			      
 						    </tr>
+								<tr align="center">
+									<td></td>
+									<td></td>
+									<td><?php echo $evaluation['ranks']->pr1; ?></td>
+									<td><?php echo $evaluation['ranks']->pr2; ?></td>
+									<td><?php echo $evaluation['ranks']->pr3; ?></td>
+									<td><?php echo $evaluation['ranks']->pr4; ?></td>
+									<td>80% of cohort with rating of 2.0 or better</td>
+									<td></td>
+								</tr>
+								<tr align="center">
+									<td></td>
+									<td></td>
+									<td><?php echo $evaluation['ranks']->or1; ?></td>
+									<td><?php echo $evaluation['ranks']->or2; ?></td>
+									<td><?php echo $evaluation['ranks']->or3; ?></td>
+									<td><?php echo $evaluation['ranks']->or4; ?></td>
+									<td>80% of cohort with rating of 2.0 or better</td>
+									<td></td>
+								</tr>
 						</tbody>   
 					</table>	 
 
@@ -93,7 +117,7 @@ th{
 						</thead>
 						<tbody>
 							<tr>
-								<td>Number of Students Passed:</td>
+								<td>Number of Students Passed: <?php echo $evaluation['psc']; ?></td>
 							</tr>
 						</tbody>
 					</table>

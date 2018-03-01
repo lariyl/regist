@@ -10,6 +10,9 @@
 				display: inline-block;
 				margin: 5px;
 			}
+			.btn-md{
+				margin-left: 5px; 
+			}
 		</style>
 	</head>
 
@@ -47,7 +50,8 @@
 												<div class='col-md-6'>
 													<div class='pull-right'>";
 									if($c->student_count > 0){
-										echo "<a href='".base_url("User/inputGrades?cid=$c->int")."' class='btn btn-primary btn-md'>INPUT GRADES</a>";
+										echo "<a href='".base_url("User/viewReports?cid=$c->int")."' class='btn btn-success btn-md '>VIEW REPORTS</a>";
+										echo "<a href='".base_url("User/inputGrades?cid=$c->int")."' class='btn btn-primary btn-md'>INPUT GRADES</a>";										
 									}
 									echo "</div>
 												</div>
@@ -97,7 +101,7 @@
 								<div class="help-block with-errors"></div>
 							</div>
 							<div class="form-group">
-								<p><input class="form-control" placeholder="Schedule" id="add-class-schedule"  name="schedule" pattern="[M,W,F,T,T,H,S]{1,4}[\-]([0-9]){1,4}(^|:)([0-9]){1,4}[\-]([0-9]){1,4}(^|:)([0-9]){1,4}" type="text"  data-error="Example Format: MW-7:30-10:30" required ></p>
+								<p><input class="form-control" placeholder="Schedule" id="add-class-schedule"  name="schedule" pattern="[M,W,F,T,T,H,S]{1,4}[\-]([0-9]){1,4}(^|:)([0-9]){1,4}[\-]([0-9]){1,4}(^|:)([0-9]){1,4}" type="text"  data-error="Format Example: MW-7:30-10:30" required ></p>
 								<div class="help-block with-errors"></div>
 							</div>
 							<div class="form-group">

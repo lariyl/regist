@@ -30,14 +30,41 @@ class User extends CI_Controller
 
 	public function inputGrades()
 	{
-
 		$data['classes'] = $this->UserModel->getClasses();
 		$data['students'] = $this->UserModel->getStudentsInClass();
 		$this->load->view("User/inputGrades",$data);
 	}
 
 	public function saveGrades(){
-		var_dump($_POST);
+
+		$gradeTable = array();
+
+		if(isset($_POST['courseClass'])){
+			$cid = $_POST['courseClass'];
+
+			foreach ($_POST['studentid'] as $idx => $sid ){
+				$studentGrades = array(
+					"class_id" => $cid,
+					"student_id" => $sid,
+					"grade_premidterms" => $_POST['premidterms'][$idx],
+					"grade_midterms" => $_POST['midterms'][$idx],
+					"grade_prefinals" => $_POST['finals'][$idx],
+					"grade_finals" => $_POST['prefinals'][$idx],
+					"grade_others" => $_POST['others'][$idx],
+					"grade_practicals" => $_POST['practicals'][$idx]
+				);
+
+				array_push($gradeTable, $studentGrades);
+			}
+
+			$response['insert_status']  = $this->UserModel->saveGradesTable($gradeTable,$cid);
+			$response['isOk'] = true;
+		}else{
+			$response['isOk'] = false;
+			$response['error'] = 'Course class not set.';
+		}
+
+		echo json_encode($response);
 	}
 
 	public function viewReports()

@@ -54,4 +54,10 @@ Class UserModel extends CI_model
 
 		return $enrollment_id;
 	}
+
+	public function saveGradesTable($table,$class_id){
+		$this->db->delete('students_in_class', array('class_id' => $class_id));
+
+		return $this->db->insert_batch('students_in_class', $table);
+	}
 }

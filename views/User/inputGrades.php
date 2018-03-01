@@ -19,6 +19,10 @@
 			.grades-table thead tr td, .grades-table tbody tr td{
 				vertical-align:middle;
 			}
+			.up{
+				margin-left: 25px; 
+			}
+
 		</style>
 
 		<script>
@@ -41,6 +45,7 @@
 								saveButton.attr('disabled','disabled');
 //								pageApp.restoreSaveButton(3,saveButton)
 								console.log(response);
+								location.reload();
 							}
 						});
 					});
@@ -120,10 +125,13 @@
 
 									echo "<div class='panel-heading'>";
 									echo "<div class='row'>";
-									echo "<div class='col-md-10 courses-heading' data-toggle='collapse' data-parent='#inputGradeAccordion' id='$c->int' data-target='#collapse$c->int'><h4><span class='badge'>Group #$c->group</span> [$c->code] $c->title</h4></div>";
+									echo "<div class='col-md-9 courses-heading' data-toggle='collapse' data-parent='#inputGradeAccordion' id='$c->int' data-target='#collapse$c->int'><h4><span class='badge'>Group #$c->group</span> [$c->code] $c->title</h4></div>";
 
 									if($c->student_count > 0){
-										echo "<div class='col-md-2'><div class='pull-right'><button type='submit' data-id='$c->int' id='gsb-$c->int' data-saved='0' class='btn btn-primary save-grade-btn'>Save Grade</button></div></div>";
+										echo "<div class='col-md-3'>
+												<div class='pull-right'><button type='submit' data-id='$c->int' id='gsb-$c->int' data-saved='0' class='btn btn-primary save-grade-btn'>Save Grade</button></div>
+												<button type='submit' class='btn btn-success save-grade-btn up'>View Reports</button>
+											  </div>";
 									}
 
 									echo "</div>";

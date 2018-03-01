@@ -79,10 +79,10 @@ th{
 					</table>	 
 
 					<div class="container-fluid">
-						<p class="pull-left"><b>1.0 - Exceeds Expections</b> (evaluation of output may range from 1.0 to 1.4)</p>
-						<p class="pull-right"><b>3.0 - Partially Meet Expecttions</b> (evaluation of output may range from 2.5 to 3.0)</p>
-						<p class="pull-right"><b>4.0 - Does Not Meet Expecttions</b> (evaluation of output with a rating 3.0 or lower)</p>
-						<p class="pull-left"><b>2.0 - Meets Expections</b> (evaluation of output may range from 1.5 to 2.4)</p>
+						<p class="pull-left"><b>1.0 - Exceeds Expectations</b> (evaluation of output may range from 1.0 to 1.4)</p>
+						<p class="pull-right"><b>3.0 - Partially Meet Expectations</b> (evaluation of output may range from 2.5 to 3.0)</p>
+						<p class="pull-right"><b>4.0 - Does Not Meet Expectations</b> (evaluation of output with a rating 3.0 or lower)</p>
+						<p class="pull-left"><b>2.0 - Meets Expectations</b> (evaluation of output may range from 1.5 to 2.4)</p>
 					</div>
 
 					<table class="table table-bordered" style="width: 25%;">
@@ -109,12 +109,12 @@ th{
 									<div class="panel-body">
 										<div class="form-group">
 											<label for="data_interpretation"><u>Data Interpretation</u></label>
-											<textarea class="form-control" rows="5" id="data_interpretation"></textarea>
+											<textarea class="form-control" rows="5" id="data_interpretation" style="resize: vertical;"></textarea>
 										</div>
 										<label for="improvement_action"><u>Propose Improvement Action</u></label>
 										<h6>In order to increase the course's performance improvement actions are recommended:</h6>
 										<div class="form-group">
-										  <textarea class="form-control" rows="5" id="improvement_action"></textarea>
+										  <textarea class="form-control" rows="5" id="improvement_action" style="resize: vertical;"></textarea>
 										</div>
 									  	<div class="col-xs-4 pull-right">
 											<label for="received_by">Received By:</label>

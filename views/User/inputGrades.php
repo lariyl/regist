@@ -130,7 +130,7 @@
 									if($c->student_count > 0){
 										echo "<div class='col-md-3'>
 												<div class='pull-right'><button type='submit' data-id='$c->int' id='gsb-$c->int' data-saved='0' class='btn btn-primary save-grade-btn'>Save Grade</button></div>
-												<button type='submit' class='btn btn-success save-grade-btn up'>View Reports</button>
+												<a href='".base_url("User/viewReports?cid=$c->int")."' class='btn btn-success save-grade-btn up'>View Reports</a>
 											  </div>";
 									}
 

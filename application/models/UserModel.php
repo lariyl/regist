@@ -60,4 +60,62 @@ Class UserModel extends CI_model
 
 		return $this->db->insert_batch('students_in_class', $table);
 	}
+
+	public function evaluateClass($class_id){
+		$passed_qs = "SELECT 
+			@total:=(
+				sic.grade_premidterms * c.weight_premidterms +
+				sic.grade_midterms * c.weight_midterms +
+				sic.grade_prefinals * c.weight_prefinals +
+				sic.grade_finals * c.weight_finals +
+				sic.grade_prefinals * c.weight_prefinals +
+				sic.grade_practicals *c.weight_practicals +
+				sic.grade_others * c.weight_others
+			) AS `total`
+			FROM students_in_class  AS sic 
+			JOIN course_classes AS cc ON sic.class_id = cc.int
+			JOIN courses AS c ON cc.course_id = c.id
+			WHERE @total < 3.0 AND sic.class_id = $class_id";
+		
+		$ranks_qs = "
+			SELECT 
+				count(id) AS sc ,
+				(SELECT count(id) FROM students_in_class WHERE grade_premidterms >= 1 AND grade_premidterms <= 1.4 AND class_id = $class_id) AS pmr1,
+				(SELECT count(id) FROM students_in_class WHERE grade_premidterms > 1.4 AND grade_premidterms <= 2.4 AND class_id = $class_id) AS pmr2,
+				(SELECT count(id) FROM students_in_class WHERE grade_premidterms > 2.4 AND grade_premidterms <= 3 AND class_id = $class_id) AS pmr3,
+				(SELECT count(id) FROM students_in_class WHERE grade_premidterms > 3 AND class_id = $class_id) AS pmr4,
+				
+				(SELECT count(id) FROM students_in_class WHERE grade_midterms >= 1 AND grade_midterms <= 1.4 AND class_id = $class_id) AS mr1,
+				(SELECT count(id) FROM students_in_class WHERE grade_midterms > 1.4 AND grade_midterms <= 2.4 AND class_id = $class_id) AS mr2,
+				(SELECT count(id) FROM students_in_class WHERE grade_midterms > 2.4 AND grade_midterms <= 3 AND class_id = $class_id) AS mr3,
+				(SELECT count(id) FROM students_in_class WHERE grade_midterms > 3 AND class_id = $class_id) AS mr4,
+				
+				(SELECT count(id) FROM students_in_class WHERE grade_prefinals >= 1 AND grade_prefinals <= 1.4 AND class_id = $class_id) AS pfr1,
+				(SELECT count(id) FROM students_in_class WHERE grade_prefinals > 1.4 AND grade_prefinals <= 2.4 AND class_id = $class_id) AS pfr2,
+				(SELECT count(id) FROM students_in_class WHERE grade_prefinals > 2.4 AND grade_prefinals <= 3 AND class_id = $class_id) AS pfr3,
+				(SELECT count(id) FROM students_in_class WHERE grade_prefinals > 3 AND class_id = $class_id) AS pfr4,
+				
+				(SELECT count(id) FROM students_in_class WHERE grade_finals >= 1 AND grade_finals <= 1.4 AND class_id = $class_id) AS fr1,
+				(SELECT count(id) FROM students_in_class WHERE grade_finals > 1.4 AND grade_finals <= 2.4 AND class_id = $class_id) AS fr2,
+				(SELECT count(id) FROM students_in_class WHERE grade_finals > 2.4 AND grade_finals <= 3 AND class_id = $class_id) AS fr3,
+				(SELECT count(id) FROM students_in_class WHERE grade_finals > 3 AND class_id = $class_id) AS fr4,
+				
+				(SELECT count(id) FROM students_in_class WHERE grade_practicals >= 1 AND grade_practicals <= 1.4 AND class_id = $class_id) AS pr1,
+				(SELECT count(id) FROM students_in_class WHERE grade_practicals > 1.4 AND grade_practicals <= 2.4 AND class_id = $class_id) AS pr2,
+				(SELECT count(id) FROM students_in_class WHERE grade_practicals > 2.4 AND grade_practicals <= 3 AND class_id = $class_id) AS pr3,
+				(SELECT count(id) FROM students_in_class WHERE grade_practicals > 3 AND class_id = $class_id) AS pr4,
+				
+				(SELECT count(id) FROM students_in_class WHERE grade_others >= 1 AND grade_others <= 1.4 AND class_id = $class_id) AS or1,
+				(SELECT count(id) FROM students_in_class WHERE grade_others > 1.4 AND grade_others <= 2.4 AND class_id = $class_id) AS or2,
+				(SELECT count(id) FROM students_in_class WHERE grade_others > 2.4 AND grade_others <= 3 AND class_id = $class_id) AS or3,
+				(SELECT count(id) FROM students_in_class WHERE grade_others > 3 AND class_id = $class_id) AS or4
+
+				FROM students_in_class AS sic 
+				WHERE sic.class_id = $class_id";
+
+		$data['ranks'] = $this->db->query($ranks_qs)->row();
+		$data['psc'] = $this->db->query($passed_qs)->num_rows();
+
+		return $data;
+	}
 }

@@ -67,6 +67,20 @@
 					button.switchClass('btn-success','btn-primary');
 					button.removeAttr('disabled');
 				},
+				evaluateGrades: function(){
+					$.each($('.total-grade'), function(idx,element){
+						var grade = (Number($(this).text() == 'NaN')) ? 0 :  Number($(this).text());
+						if(grade >= 1 && grade <= 1.4){
+							$(element).parent().parent().css('background-color','rgb(224,240,217)');
+						}else if(grade > 1.4 && grade <= 2.4) {
+							$(element).parent().parent().css('background-color','rgb(218,237,247)');
+						}else if(grade > 2.4 && grade <= 3) {
+							$(element).parent().parent().css('background-color','rgb(252,248,228)');
+						}else if(grade > 3) {
+							$(element).parent().parent().css('background-color','rgb(242,222,222)');
+						}
+					});
+				},
 				init: function(){
 					pageApp.events();
 					$doc.ready(function () {
@@ -77,6 +91,7 @@
 								echo "$('html, body').animate({scrollTop: $('#p$cid').offset().top - 40}, 500);";
 							}
 						?>
+						pageApp.evaluateGrades();
 					});
 				}
 			};
@@ -167,7 +182,7 @@
 													<td><input type='number' class='form-control grade-field' data-bid='gsb-$c->int' step='.01' min='1.00' max='5.00' name='finals[]' value='$s->grade_finals' /></td>
 													<td><input type='number' class='form-control grade-field' data-bid='gsb-$c->int' step='.01' min='1.00' max='5.00' name='practicals[]' value='$s->grade_practicals' /></td>
 													<td><input type='number' class='form-control grade-field' data-bid='gsb-$c->int' step='.01' min='1.00' max='5.00' name='others[]' value='$s->grade_others' /></td>
-													<td><b data-wpm='$c->weight_premidterms' data-wm=$c->weight_midterms'' data-wpf='$c->weight_prefinals' data-wf='$c->weight_finals' data-wp='$c->weight_practicals' data-wo='$c->weight_others'>
+													<td><b class='total-grade' data-wpm='$c->weight_premidterms' data-wm=$c->weight_midterms'' data-wpf='$c->weight_prefinals' data-wf='$c->weight_finals' data-wp='$c->weight_practicals' data-wo='$c->weight_others'>
 														".(($s->grade_premidterms * $c->weight_premidterms) + ($s->grade_midterms * $c->weight_midterms) + ($s->grade_prefinals * $c->weight_prefinals) + ($s->grade_finals * $c->weight_finals) +($s->grade_practicals * $c->weight_practicals) +($s->grade_others * $c->weight_others))."
 													</b></td>
 												</tr>";

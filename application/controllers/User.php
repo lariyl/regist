@@ -69,7 +69,14 @@ class User extends CI_Controller
 
 	public function viewReports()
 	{
-		$this->load->view("User/viewReports");
+		$class_id = 0;
+		if(isset($_GET['cid'])) {
+			$class_id = $_GET['cid'];
+		}
+
+		$data['evaluation'] = $this->UserModel->evaluateClass($class_id);
+
+		$this->load->view("User/viewReports",$data);
 	}
 
 	public function addClassSchedule(){

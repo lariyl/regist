@@ -10,11 +10,6 @@ th{
 	background-color: slategrey;
 }
 </style>
-
-	<div>
-		<?php var_dump($evaluation); ?>
-	</div>
-
 	<body>
 		<?php $this->load->view('Partials/navBar'); ?>
 		<div class="container-fluid">
@@ -24,7 +19,7 @@ th{
 				<div class="col-md-10 col-md-offset-2 main">
 					<h3 align="center">OBTL Form 4</h3>
 					<h5 align="center">Course Assessment Report</h5>
-					<p class="pull-left"><b>Course Code & Title:</b> CPE 01TN |  COMPUTER HARDWARE FUNDAMENTALS | Grp.1</p>
+					<p class="pull-left"><b>Course Code & Title:</b> <?php echo $evaluation['tc']->course_code; ?> |  <?php echo $evaluation['tc']->course_title; ?> | Group# <?php echo $evaluation['tc']->class_group; ?></p>
 					<p align="right"><b>Name of Faculty: </b><a href="#" class="navbar-link"><?php echo $this->session->userdata('username'); ?></a></p>
 					<p class="pull-left"><b>Name of Program: </b>BS Computer Engineering</p>	
 					<p align="right"><b>Term & AY: </b>Second Semester, AY 2016-2017</p>
@@ -41,7 +36,7 @@ th{
 						<tbody>
 						    <tr align="center">
 						    	<td></td>
-						    	<td></td>			      
+						    	<td>Pre-Midterms Exam</td>
 						    	<td><?php echo $evaluation['ranks']->pmr1; ?></td>
 									<td><?php echo $evaluation['ranks']->pmr2; ?></td>
 									<td><?php echo $evaluation['ranks']->pmr3; ?></td>
@@ -51,7 +46,7 @@ th{
 						    </tr>
 						    <tr align="center">
 						    	<td></td>
-						    	<td></td>
+									<td>Midterms Exam</td>
 									<td><?php echo $evaluation['ranks']->mr1; ?></td>
 									<td><?php echo $evaluation['ranks']->mr2; ?></td>
 									<td><?php echo $evaluation['ranks']->mr3; ?></td>
@@ -60,8 +55,8 @@ th{
 						    	<td></td>			      
 						    </tr>						
 						        <tr align="center">
-						    	<td></td>
-						    	<td></td>
+						    		<td></td>
+											<td>Pre-Finals Exam</td>
 											<td><?php echo $evaluation['ranks']->pfr1; ?></td>
 											<td><?php echo $evaluation['ranks']->pfr2; ?></td>
 											<td><?php echo $evaluation['ranks']->pfr3; ?></td>
@@ -71,7 +66,7 @@ th{
 						    </tr>				
 						    <tr align="center">
 						    	<td></td>
-						    	<td></td>
+									<td>Finals Exam</td>
 									<td><?php echo $evaluation['ranks']->fr1; ?></td>
 									<td><?php echo $evaluation['ranks']->fr2; ?></td>
 									<td><?php echo $evaluation['ranks']->fr3; ?></td>
@@ -81,7 +76,7 @@ th{
 						    </tr>
 								<tr align="center">
 									<td></td>
-									<td></td>
+									<td>Practicals</td>
 									<td><?php echo $evaluation['ranks']->pr1; ?></td>
 									<td><?php echo $evaluation['ranks']->pr2; ?></td>
 									<td><?php echo $evaluation['ranks']->pr3; ?></td>
@@ -91,7 +86,7 @@ th{
 								</tr>
 								<tr align="center">
 									<td></td>
-									<td></td>
+									<td>Others</td>
 									<td><?php echo $evaluation['ranks']->or1; ?></td>
 									<td><?php echo $evaluation['ranks']->or2; ?></td>
 									<td><?php echo $evaluation['ranks']->or3; ?></td>
@@ -112,12 +107,12 @@ th{
 					<table class="table table-bordered" style="width: 25%;">
 						<thead class="table">
 							<tr>
-								<td>Total No. of Students Enrolled:</td>
+								<td>Total No. of Students Enrolled: <?php echo $evaluation['ranks']->sc; ?></td>
 							</tr>
 						</thead>
 						<tbody>
 							<tr>
-								<td>Number of Students Passed: <?php echo $evaluation['psc']; ?></td>
+								<td>Number of Students Passed: <?php echo $evaluation['tc']->passed; ?></td>
 							</tr>
 						</tbody>
 					</table>

@@ -51,7 +51,7 @@
 													<div class='pull-right'>";
 									if($c->student_count > 0){
 										echo "<a href='".base_url("User/viewReports?cid=$c->int")."' class='btn btn-success btn-md '>VIEW REPORTS</a>";
-										echo "<a href='".base_url("User/inputGrades?cid=$c->int")."' class='btn btn-primary btn-md'>INPUT GRADES</a>";										
+										echo "<a href='".base_url("User/inputGrades?cid=$c->int")."' class='btn btn-primary btn-md'>INPUT GRADES</a>";
 									}
 									echo "</div>
 												</div>

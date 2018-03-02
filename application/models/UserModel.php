@@ -63,7 +63,14 @@ Class UserModel extends CI_model
 
 	public function evaluateClass($class_id){
 		$passed_qs = "SELECT 
-			@total:=(
+			count(sic.student_id) AS `passed`,
+			c.code AS `course_code`,
+			c.title AS `course_title`,
+			cc.group AS `class_group`
+			FROM students_in_class  AS sic 
+			JOIN course_classes AS cc ON sic.class_id = cc.int
+			JOIN courses AS c ON cc.course_id = c.id
+			WHERE (
 				sic.grade_premidterms * c.weight_premidterms +
 				sic.grade_midterms * c.weight_midterms +
 				sic.grade_prefinals * c.weight_prefinals +
@@ -71,11 +78,7 @@ Class UserModel extends CI_model
 				sic.grade_prefinals * c.weight_prefinals +
 				sic.grade_practicals *c.weight_practicals +
 				sic.grade_others * c.weight_others
-			) AS `total`
-			FROM students_in_class  AS sic 
-			JOIN course_classes AS cc ON sic.class_id = cc.int
-			JOIN courses AS c ON cc.course_id = c.id
-			WHERE @total < 3.0 AND sic.class_id = $class_id";
+			) < 3.0 AND sic.class_id = $class_id";
 		
 		$ranks_qs = "
 			SELECT 
@@ -114,7 +117,7 @@ Class UserModel extends CI_model
 				WHERE sic.class_id = $class_id";
 
 		$data['ranks'] = $this->db->query($ranks_qs)->row();
-		$data['psc'] = $this->db->query($passed_qs)->num_rows();
+		$data['tc'] = $this->db->query($passed_qs)->row();
 
 		return $data;
 	}

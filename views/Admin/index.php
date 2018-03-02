@@ -55,6 +55,10 @@
 								<p><input class="form-control" placeholder="Username" id="add-user-username" name="username" type="text" required ></p>
 								<div class="help-block with-errors"></div>
 							</div>
+<!-- 							<div class="form-group">
+								<p><input class="form-control" placeholder="Name" id="add-user-name" name="name" type="text" required></p>
+								<div class="help-block with-errors"></div>
+							</div> -->
 							<div class="form-group">
 								<p><input class="form-control" placeholder="E-mail" id="add-user-email" name="email" type="email" required></p>
 								<div class="help-block with-errors"></div>

@@ -36,12 +36,22 @@ th{
 						<tbody>
 						    <tr align="center">
 						    	<td></td>
+						    		<td></td>
+						    		<td>1.0</td>
+									<td>2.0</td>
+									<td>3.0</td>
+									<td>4.0</td>
+						    	<td></td>
+						    	<td></td>			      
+						    </tr>							
+						    <tr align="center">
+						    	<td></td>
 						    	<td>Pre-Midterms Exam</td>
 						    	<td><?php echo $evaluation['ranks']->pmr1; ?></td>
 									<td><?php echo $evaluation['ranks']->pmr2; ?></td>
 									<td><?php echo $evaluation['ranks']->pmr3; ?></td>
 									<td><?php echo $evaluation['ranks']->pmr4; ?></td>
-						    	<td></td>
+						    	<td>80% of cohort with rating of 2.0 or bette</td>
 						    	<td></td>			      
 						    </tr>
 						    <tr align="center">

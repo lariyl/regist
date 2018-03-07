@@ -49,8 +49,8 @@
 												</div>
 												<div class='col-md-6'>
 													<div class='pull-right'>";
+													echo "<a href='#'  data-toggle='modal' data-target='#delete-class-modal' class='btn btn-danger btn-md'>DELETE CLASS</a>";
 									if($c->student_count > 0){
-										echo "<a href='#' class='btn btn-danger btn-md'>DELETE CLASS</a>";
 										echo "<a href='".base_url("User/viewReports?cid=$c->int")."' class='btn btn-success btn-md '>VIEW REPORTS</a>";
 										echo "<a href='".base_url("User/inputGrades?cid=$c->int")."' class='btn btn-primary btn-md'>INPUT GRADES</a>";
 									}
@@ -131,6 +131,18 @@
 							</div>	 
 						</div>
 					</form>
+				</div>
+			</div>
+		</div>
+
+		<div class="modal fade" id="delete-class-modal">
+			<div class="modal-dialog modal-sm">
+				<div class="modal-content">
+					<div class="modal-body">
+        		<h3>Are you sure?</h3>
+							<button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+							<button type="button" class="btn btn-danger" data-dismiss="modal" id="confirm-delete-user">Delete</button>
+					</div>
 				</div>
 			</div>
 		</div>

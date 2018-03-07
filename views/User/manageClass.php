@@ -172,18 +172,18 @@
 				$("#class-student-table").show();
 			},
 
-				deleteClass: function(){
-					$.ajax({
-						url: '<?php echo base_url('User/deleteClass')?>',
-						type: 'POST',
-						data: {id: currentUserID},
-						success: function(response){
-							currentUserRowElement.remove();
-							currentUserRowElement = null;
-							currentUserID = null;
-						}
-					});
-				},
+				// deleteClass: function(){
+				// 	$.ajax({
+				// 		url: '<?php echo base_url('User/deleteClass')?>',
+				// 		type: 'POST',
+				// 		data: {id: currentUserID},
+				// 		success: function(response){
+				// 			currentUserRowElement.remove();
+				// 			currentUserRowElement = null;
+				// 			currentUserID = null;
+				// 		}
+				// 	});
+				// },
 
 			csvToArray: function(csv){
 				var lines=csv.split("\n");
@@ -213,9 +213,9 @@
 					}
 				});
 
-					$('#confirm-delete-class').on('click',	function () {
-						pageApp.deleteClass();
-					});
+					// $('#confirm-delete-class').on('click',	function () {
+					// 	pageApp.deleteClass();
+					// });
 
 				$('#modal-confirm-add').on('click',function(){
 					var ajaxData = {

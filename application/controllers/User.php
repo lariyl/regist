@@ -129,6 +129,11 @@ class User extends CI_Controller
 		$this->load->view("User/changePassword");
 	}
 
+	public function pastClass()
+	{
+		$this->load->view("User/pastClass");
+	}
+
 	public function updatePassword()
 	{
 		$this->form_validation->set_rules('password', 'Current Password', 'required|alpha_numeric');

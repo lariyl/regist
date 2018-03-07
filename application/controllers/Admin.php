@@ -27,6 +27,7 @@ Class Admin extends CI_Controller
 			'username'=>$this->input->post('username'),
 			'email'=>$this->input->post('email'),
 			'password'=>md5($this->input->post('password')),
+			'name'=>$this->input->post('name'),
 			'role'=>$this->input->post('role'),
 		);
 

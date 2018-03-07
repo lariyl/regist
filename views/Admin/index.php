@@ -55,10 +55,10 @@
 								<p><input class="form-control" placeholder="Username" id="add-user-username" name="username" type="text" required ></p>
 								<div class="help-block with-errors"></div>
 							</div>
-<!-- 							<div class="form-group">
+							<div class="form-group">
 								<p><input class="form-control" placeholder="Name" id="add-user-name" name="name" type="text" required></p>
 								<div class="help-block with-errors"></div>
-							</div> -->
+							</div>
 							<div class="form-group">
 								<p><input class="form-control" placeholder="E-mail" id="add-user-email" name="email" type="email" required></p>
 								<div class="help-block with-errors"></div>
@@ -105,6 +105,7 @@
 				addUser: function(){
 					ajaxData = {
 						username: $('#add-user-username').val(),
+						name: $('#add-user-name').val(),
 						email: $('#add-user-email').val(),
 						password: $('#add-user-password').val(),
 						role: addMode
@@ -174,6 +175,7 @@
 					});
 					$('#add-user-modal').on('show.bs.modal', function(){
 						$('#add-user-username').val('');
+						$('#add-user-name').val(''),
 						$('#add-user-email').val('');
 						$('#add-user-password').val('');
 						$('#add-user-confirmpassword').val('');

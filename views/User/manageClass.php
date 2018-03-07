@@ -40,7 +40,7 @@
 										echo "<div class='panel course-panel ".($c->student_count == 0 ? 'panel-warning': 'panel-info')."'>";
 										echo "<div class='panel-heading'>
 														<div class='panel-title Title'>[$c->code] $c->title </div>
-														<div><b>Students Enrolled: </b><span class='badge badge-warning'>$c->student_count</span></div>
+														<div><b>Students Enrolled: </b><span class='badge badge-warning'>$c->student_count</span> <a href='#' class='btn btn-danger btn-md'>DELETE CLASS</a></div>
 													</div>";
 										echo "<div class='panel-body'><div class='row'>
 												<div class='col-md-6'>
@@ -50,7 +50,7 @@
 												<div class='col-md-6'>
 													<div class='pull-right'>";
 									if($c->student_count > 0){
-										echo "<a href='#' class='btn btn-danger btn-md'>DELETE CLASS</a>";
+										// echo "<a href='#' class='btn btn-danger btn-md'>DELETE CLASS</a>";
 										echo "<a href='".base_url("User/viewReports?cid=$c->int")."' class='btn btn-success btn-md '>VIEW REPORTS</a>";
 										echo "<a href='".base_url("User/inputGrades?cid=$c->int")."' class='btn btn-primary btn-md'>INPUT GRADES</a>";
 									}

@@ -121,4 +121,11 @@ Class UserModel extends CI_model
 
 		return $data;
 	}
+
+		public function deleteClass($id)
+	{
+		$this->db->where("int", $id);
+		$this->db->delete("course_classes");
+ 	} 
+
 }

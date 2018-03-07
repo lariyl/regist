@@ -141,7 +141,7 @@
 					<div class="modal-body">
         		<h3>Are you sure?</h3>
 							<button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-							<button type="button" class="btn btn-danger" data-dismiss="modal" id="confirm-delete-user">Delete</button>
+							<button type="button" class="btn btn-danger" data-dismiss="modal" id="confirm-delete-class">Delete</button>
 					</div>
 				</div>
 			</div>
@@ -172,6 +172,19 @@
 				$("#class-student-table").show();
 			},
 
+				deleteClass: function(){
+					$.ajax({
+						url: '<?php echo base_url('User/deleteClass')?>',
+						type: 'POST',
+						data: {id: currentUserID},
+						success: function(response){
+							currentUserRowElement.remove();
+							currentUserRowElement = null;
+							currentUserID = null;
+						}
+					});
+				},
+
 			csvToArray: function(csv){
 				var lines=csv.split("\n");
 				var result = [];
@@ -199,6 +212,10 @@
 						console.log('FileReader not supported');
 					}
 				});
+
+					$('#confirm-delete-class').on('click',	function () {
+						pageApp.deleteClass();
+					});
 
 				$('#modal-confirm-add').on('click',function(){
 					var ajaxData = {

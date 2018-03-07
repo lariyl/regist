@@ -28,6 +28,15 @@ class User extends CI_Controller
 		$this->load->view("User/manageClass",$data);
 	}
 
+
+	public function deleteClass()
+	{
+		$id = $_POST['int'];
+		$this->UserModel->deleteClass($id);
+		return;
+
+	}
+
 	public function inputGrades()
 	{
 		$data['classes'] = $this->UserModel->getClasses();

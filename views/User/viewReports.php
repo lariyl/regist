@@ -140,7 +140,7 @@ th{
 											<label for="data_interpretation"><u>Data Interpretation</u></label>
 											<textarea class="form-control" rows="5" id="data_interpretation" style="resize: vertical;"></textarea>
 										</div>
-										<label for="improvement_action"><u>Propose Improvement Action</u></label>
+										<label for="improvement_action" data-toggle='modal' data-target='#suggest-user-modal' class='suggest-user'><u>Propose Improvement Action</u> <i class='fa fa-sticky-note' style="padding-left: 5px;"></i></label>
 										<h6>In order to increase the course's performance improvement actions are recommended:</h6>
 										<div class="form-group">
 										  <textarea class="form-control" rows="5" id="improvement_action" style="resize: vertical;"></textarea>
@@ -158,6 +158,23 @@ th{
 								</div>
 							</div>
 						</div>
+							<div class="modal fade" id="suggest-user-modal">
+									<div class="modal-dialog modal-md">
+										<div class="modal-content">
+											 <div class="modal-header">
+										        <h5 class="modal-title">Suggestion</h5>
+										      </div>
+										      <div class="modal-body">
+										        <p>Add or Consider teaching - learning Activities.</p>
+										        <p>Add more learning Activities.</p>
+										       	<p>Revisit Syllabus</p>
+										      </div>
+										      <div class="modal-footer">
+										        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+										      </div>
+										</div>
+									</div>
+								</div>
 					</div>
 				</div>
 			</div>

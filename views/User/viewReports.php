@@ -2,6 +2,23 @@
 <html>
 	<head>
 		<?php $this->load->view('Partials/globalHead', array('title' => 'THESIS - View Reports')); ?>
+
+		<style>
+			.my-fieldset{
+				border: solid 1px rgb(55,123,181);
+				margin:5px;
+				margin-top:10px;
+				padding: 20px;
+				border-radius: 10px;
+			}
+			.my-fieldset > legend{
+				background-color: rgb(55,123,181);
+				color: white;
+				padding: 5px;
+				border-radius: 10px;
+				text-align: center;
+			}
+		</style>
 	</head>
 
 <style>
@@ -17,9 +34,8 @@ th{
 				<?php $this->load->view('Partials/sideBar',array('isViewReports' => 'active')); ?>
 
 				<div class="col-md-10 col-md-offset-2">
-					<h3 align="center">OBTL Form 4</h3>
-					<h5 align="center">Course Assessment Report</h5>
-					<br />
+					<fieldset class="my-fieldset">
+						<legend>OBTL Form 4: <span>Course Assessment Report</span></legend>
 					<div class="well">
 						<p class="pull-left"><b>Course Code & Title:</b> <?php echo $evaluation['tc']->course_code; ?> |  <?php echo $evaluation['tc']->course_title; ?> | Group# <?php echo $evaluation['tc']->class_group; ?></p>
 						<p align="right"><b>Name of Faculty: </b><a href="#" class="navbar-link"><?php echo $this->session->userdata('personname'); ?></a></p>
@@ -29,64 +45,64 @@ th{
 					<table class="table table-bordered table-responsive">
 						<thead>
 							<tr>
-								<th scope="col">Course Outcome</th>
-								<th scope="col">Assesment Task</th>
-								<th colspan="4" scope="col">Student's Level of Achievement of Outcome <br> (Frequency, Percentage)</th>
-								<th scope="col">Target</th>
-								<th scope="col">Gap</th>
+								<th rowspan="2" style="vertical-align: middle">Course Outcome</th>
+								<th rowspan="2" style="vertical-align: middle">Assesment Task</th>
+								<th colspan="4" >Student's Level of Achievement of Outcome <br> (Frequency, Percentage)</th>
+								<th rowspan="2" style="vertical-align: middle">Target</th>
+								<th rowspan="2" style="vertical-align: middle">Gap</th>
 							</tr>
 							<tr align="center">
-								<th colspan="2"></th>
+
 								<th>1.0</th>
 								<th>2.0</th>
 								<th>3.0</th>
 								<th>4.0</th>
-								<th colspan="2"></th>
+
 							</tr>
 						</thead>
 						<tbody>
 						    <tr align="center">
 									<?php $gap = (($evaluation['ranks']->pmr1 + $evaluation['ranks']->pmr2) / $evaluation['ranks']->sc < .8) ? (.8 - (($evaluation['ranks']->pmr1 + $evaluation['ranks']->pmr2) / $evaluation['ranks']->sc)) : 0 ?>
-						    	<td><?php echo $evaluation['tc']->course_outcome_1; ?></td>
+						    	<td rowspan="4" style="vertical-align: middle"><?php echo $evaluation['tc']->course_outcome_1; ?></td>
 						    	<td>Pre-Midterms Exam</td>
 						    	<td><?php echo $evaluation['ranks']->pmr1; ?></td>
 									<td><?php echo $evaluation['ranks']->pmr2; ?></td>
 									<td><?php echo $evaluation['ranks']->pmr3; ?></td>
 									<td><?php echo $evaluation['ranks']->pmr4; ?></td>
-						    	<td>80% of cohort with rating of 2.0 or bette</td>
+						    	<td rowspan="6" style="vertical-align: middle">80% of cohort <br />with rating of 2.0 or better</td>
 						    	<td><?php echo round($gap*$evaluation['ranks']->sc).' ('.(round($gap*100,2)).'%)'; ?></td>
 						    </tr>
 						    <tr align="center">
 									<?php $gap = (($evaluation['ranks']->mr1 + $evaluation['ranks']->mr2) / $evaluation['ranks']->sc < .8) ? (.8 - (($evaluation['ranks']->mr1 + $evaluation['ranks']->mr2) / $evaluation['ranks']->sc)) : 0 ?>
-									<td><?php echo $evaluation['tc']->course_outcome_1; ?></td>
+
 									<td>Midterms Exam</td>
 									<td><?php echo $evaluation['ranks']->mr1; ?></td>
 									<td><?php echo $evaluation['ranks']->mr2; ?></td>
 									<td><?php echo $evaluation['ranks']->mr3; ?></td>
 									<td><?php echo $evaluation['ranks']->mr4; ?></td>
-						    	<td>80% of cohort with rating of 2.0 or better</td>
+
 									<td><?php echo round($gap*$evaluation['ranks']->sc).' ('.(round($gap*100,2)).'%)'; ?></td>
 						    </tr>						
 						        <tr align="center">
 											<?php $gap = (($evaluation['ranks']->pfr1 + $evaluation['ranks']->pfr2) / $evaluation['ranks']->sc < .8) ? (.8 - (($evaluation['ranks']->pfr1 + $evaluation['ranks']->pfr2) / $evaluation['ranks']->sc)) : 0 ?>
-											<td><?php echo $evaluation['tc']->course_outcome_1; ?></td>
+
 											<td>Pre-Finals Exam</td>
 											<td><?php echo $evaluation['ranks']->pfr1; ?></td>
 											<td><?php echo $evaluation['ranks']->pfr2; ?></td>
 											<td><?php echo $evaluation['ranks']->pfr3; ?></td>
 											<td><?php echo $evaluation['ranks']->pfr4; ?></td>
-						    	<td>80% of cohort with rating of 2.0 or better</td>
+
 											<td><?php echo round($gap*$evaluation['ranks']->sc).' ('.(round($gap*100,2)).'%)'; ?></td>
 						    </tr>				
 						    <tr align="center">
 									<?php $gap = (($evaluation['ranks']->fr1 + $evaluation['ranks']->fr2) / $evaluation['ranks']->sc < .8) ? (.8 - (($evaluation['ranks']->fr1 + $evaluation['ranks']->fr2) / $evaluation['ranks']->sc)) : 0 ?>
-									<td><?php echo $evaluation['tc']->course_outcome_1; ?></td>
+
 									<td>Finals Exam</td>
 									<td><?php echo $evaluation['ranks']->fr1; ?></td>
 									<td><?php echo $evaluation['ranks']->fr2; ?></td>
 									<td><?php echo $evaluation['ranks']->fr3; ?></td>
 									<td><?php echo $evaluation['ranks']->fr4; ?></td>
-						    	<td>80% of cohort with rating of 2.0 or better</td>
+
 									<td><?php echo round($gap*$evaluation['ranks']->sc).' ('.(round($gap*100,2)).'%)'; ?></td>
 						    </tr>
 								<tr align="center">
@@ -97,7 +113,7 @@ th{
 									<td><?php echo $evaluation['ranks']->pr2; ?></td>
 									<td><?php echo $evaluation['ranks']->pr3; ?></td>
 									<td><?php echo $evaluation['ranks']->pr4; ?></td>
-									<td>80% of cohort with rating of 2.0 or better</td>
+
 									<td><?php echo round($gap*$evaluation['ranks']->sc).' ('.(round($gap*100,2)).'%)'; ?></td>
 								</tr>
 								<tr align="center">
@@ -108,7 +124,7 @@ th{
 									<td><?php echo $evaluation['ranks']->or2; ?></td>
 									<td><?php echo $evaluation['ranks']->or3; ?></td>
 									<td><?php echo $evaluation['ranks']->or4; ?></td>
-									<td>80% of cohort with rating of 2.0 or better</td>
+
 									<td><?php echo round($gap*$evaluation['ranks']->sc).' ('.(round($gap*100,2)).'%)'; ?></td>
 								</tr>
 						</tbody>   
@@ -152,14 +168,17 @@ th{
 											<div class="form-group">
 												<label for="data_interpretation"><u>Data Interpretation</u></label>
 												<textarea class="form-control" rows="5" id="data_interpretation" style="resize: vertical;"></textarea>
+												<br />
 											</div>
 										</div>
 										<div class="col-md-12">
-											<label for="improvement_action" data-toggle='modal' data-target='#suggest-user-modal' class='suggest-user'><u>Propose Improvement Action</u> <i class='fa fa-sticky-note' style="padding-left: 5px;"></i></label>
-											<h6>In order to increase the course's performance improvement actions are recommended:</h6>
-
 											<div class="form-group">
+												<label for="improvement_action" data-toggle='modal' data-target='#suggest-user-modal' class='suggest-user'>
+													<u>Propose Improvement Action</u> <i class='fa fa-sticky-note' style="padding-left: 5px;"></i> <br />
+													<span style="font-size: .8em; font-weight: normal;">In order to increase the course's performance improvement actions are recommended</span>
+												</label>
 												<textarea class="form-control" rows="5" id="improvement_action" style="resize: vertical;"></textarea>
+												<br />
 											</div>
 										</div>
 										<div class="col-md-12">
@@ -188,6 +207,7 @@ th{
 									</div>
 								</div>
 					</div>
+					</fieldset>
 				</div>
 			</div>
 		</div>

@@ -23,6 +23,7 @@
 
 		<script>
 			var $doc = $(document);
+			var currentSaveBtnClicked;
 
 			var pageApp = {
 				events: function(){
@@ -35,6 +36,9 @@
 							url: '<?php echo base_url('User/saveGrades')?>',
 							type: 'POST',
 							data: $(this).serialize(),
+							beforeSend: function(){
+								$(currentSaveBtnClicked).html("<i class='fa fa-spinner fa-spin'></i>");
+							},
 							success: function(response){
 								saveButton.html("Saved");
 								saveButton.switchClass('btn-primary','btn-success');
@@ -47,7 +51,8 @@
 					});
 
 					$doc.on('click','.save-grade-btn', function(){
-						$(this).html("<i class='fa fa-spinner fa-spin'></i>");
+						currentSaveBtnClicked = this;
+//						$(this).html("<i class='fa fa-spinner fa-spin'></i>");
 					});
 
 					$doc.on('change','.grade-field',function(){

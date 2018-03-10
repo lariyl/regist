@@ -56,7 +56,7 @@
 								<div class="help-block with-errors"></div>
 							</div>
 							<div class="form-group">
-								<p><input class="form-control" placeholder="Name" id="add-user-name" name="name" type="text" required></p>
+								<p><input class="form-control" placeholder="Name" id="add-user-name" name="personname" type="text" required></p>
 								<div class="help-block with-errors"></div>
 							</div>
 							<div class="form-group">

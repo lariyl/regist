@@ -45,6 +45,7 @@ Class Auth Extends CI_Controller
 				$this->session->set_userdata('id',$login['id']);
 				$this->session->set_userdata('username',$login['username']);
 				$this->session->set_userdata('role',$login['role']);
+				$this->session->set_userdata('personname',$login['personname']);
 				$this->index();
 			}
 			else

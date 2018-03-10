@@ -55,7 +55,13 @@ Class UserModel extends CI_model
 		return $enrollment_id;
 	}
 
+	public function startClass($class_id){
+		$this->db->where('int',$class_id)->update('course_classes',array('started' => 1));
+	}
+
 	public function saveGradesTable($table,$class_id){
+		$this->db->where('int',$class_id)->update('course_classes',array('started' => 1));
+
 		$this->db->delete('students_in_class', array('class_id' => $class_id));
 
 		return $this->db->insert_batch('students_in_class', $table);
@@ -66,6 +72,9 @@ Class UserModel extends CI_model
 			count(sic.student_id) AS `passed`,
 			c.code AS `course_code`,
 			c.title AS `course_title`,
+			c.co1 AS `course_outcome_1`,
+			c.co2 AS `course_outcome_2`,
+			c.co3 AS `course_outcome_3`,
 			cc.group AS `class_group`
 			FROM students_in_class  AS sic 
 			JOIN course_classes AS cc ON sic.class_id = cc.int

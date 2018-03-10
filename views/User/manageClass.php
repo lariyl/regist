@@ -13,7 +13,42 @@
 			.btn-md{
 				margin-left: 5px; 
 			}
+			.start-class{
+				font-size: .9em;
+			}
+			.my-label{
+				font-size: .9em;
+			}
 		</style>
+
+		<script>
+			$doc = $(document);
+			var pageApp = {
+				events: function(){
+					$doc.on('click','.start-class',function(){
+
+						$.ajax({
+							url: '<?php echo base_url('User/startClass');?>',
+							type: 'POST',
+							data: {cid: $(this).data('id')},
+							success: function(response){
+								console.log(response);
+								location.reload();
+
+								if(response.isOk){
+									//change status and alter buttons, or refresh page.
+								}
+							}
+						});
+					});
+				},
+				init: function(){
+					pageApp.events();
+				}
+			};
+
+			pageApp.init();
+		</script>
 	</head>
 
 	<body>
@@ -25,45 +60,15 @@
 				<div class="col-md-10 col-md-offset-2 main">
 					<div class="row">
 						<ul class="nav nav-tabs">
-							<li class="active"><a data-toggle="tab" href="#your_classes">Your Classes</a></li>
 							<li><a data-toggle="tab" href="#course_list">Course List</a></li>
+							<li class="active"><a data-toggle="tab" href="#current_classes">Current Classes</a></li>
+							<li><a data-toggle="tab" href="#completed_classes">Completed Classes</a></li>
 						</ul>
 					</div>
 
 					<div class="row">
 						<div class="tab-content">
-							<div id="your_classes" class="tab-pane fade in active">
-								<?php
-									foreach($classes->result() as $i => $c)
-									{
-										echo "<div class='col-md-12'>";
-										echo "<div class='panel course-panel ".($c->student_count == 0 ? 'panel-warning': 'panel-info')."'>";
-										echo "<div class='panel-heading'>
-														<div class='panel-title Title'>[$c->code] $c->title </div>
-														<div><b>Students Enrolled: </b><span class='badge badge-warning'>$c->student_count</span></div>
-													</div>";
-										echo "<div class='panel-body'><div class='row'>
-												<div class='col-md-6'>
-													<p><b>Group: </b> <span>$c->group</span></p>
-													<p><b>Schedule: </b> <span>$c->schedule</span></p>
-												</div>
-												<div class='col-md-6'>
-													<div class='pull-right'>";
-													echo "<a href='#'  data-toggle='modal' data-target='#delete-class-modal' class='btn btn-danger btn-md'>DELETE CLASS</a>";
-									if($c->student_count > 0){
-										echo "<a href='".base_url("User/viewReports?cid=$c->int")."' class='btn btn-success btn-md '>VIEW REPORTS</a>";
-										echo "<a href='".base_url("User/inputGrades?cid=$c->int")."' class='btn btn-primary btn-md'>INPUT GRADES</a>";
-									}
-									echo "</div>
-												</div>
-												</div>";
-										echo "</div>";
-										echo "</div>";
-										echo "</div>";
-									}
-								?>
-							</div>
-							<div id="course_list" class="tab-pane fade ">
+							<div id="course_list" class="tab-pane fade">
 								<?php
 								foreach($courses->result() as $i => $c)
 								{
@@ -78,6 +83,45 @@
 									echo "</div>";
 								}
 								?>
+							</div>
+							<div id="current_classes" class="tab-pane fade in active">
+								<?php
+									foreach($classes->result() as $i => $c)
+									{
+										echo "<div class='col-md-12'>";
+										echo "<div class='panel course-panel ".($c->student_count == 0 ? 'panel-warning': 'panel-info')."'>";
+										echo "<div class='panel-heading'>
+														<div class='panel-title Title'>[$c->code] $c->title </div>														
+													</div>";
+										echo "<div class='panel-body'><div class='row'>
+												<div class='col-md-6'>
+													<div><b>Students Enrolled: </b><span class='badge badge-warning'>$c->student_count</span></div>
+													<div><b>Group: </b> <span>$c->group</span></div>
+													<div><b>Schedule: </b> <span>$c->schedule</span></div>
+													<div><b>Status: </b> <span>".($c->started ? "<span class='label label-success my-label'>Class Started</span>" : "<span class='label label-warning my-label'>Not Yet Started</span> <a href='#' class='start-class' data-id='$c->int'>click to start class</a>")."</span></div>
+												</div>
+												<div class='col-md-6'>
+													<div class='pull-right'>";
+								if(!$c->started) {
+									echo "<a href='#'  data-toggle='modal' data-target='#delete-class-modal' class='btn btn-danger btn-md'>REMOVE CLASS</a>";
+								}
+									if($c->student_count > 0){
+										if($c->started) {
+											echo "<a href='" . base_url("User/viewReports?cid=$c->int") . "' class='btn btn-success btn-md '>VIEW REPORTS</a>";
+										}
+										echo "<a href='".base_url("User/inputGrades?cid=$c->int")."' class='btn btn-primary btn-md'>INPUT GRADES</a>";
+									}
+									echo "</div>
+												</div>
+												</div>";
+										echo "</div>";
+										echo "</div>";
+										echo "</div>";
+									}
+								?>
+							</div>
+							<div id="completed_classes" class="tab-pane fade">
+
 							</div>
 						</div>
 

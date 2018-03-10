@@ -44,6 +44,20 @@ class User extends CI_Controller
 		$this->load->view("User/inputGrades",$data);
 	}
 
+	public function startClass(){
+		if(isset($_POST['cid'])){
+			$this->UserModel->startClass($_POST['cid']);
+
+			$response['isOk'] = true;
+			$response['cid'] = $_POST['cid'];
+		}else{
+			$response['isOk'] = false;
+			$response['error'] = 'No Class ID found.';
+		}
+
+		echo json_encode($response);
+	}
+
 	public function saveGrades(){
 
 		$gradeTable = array();

@@ -1,6 +1,6 @@
 <nav class="navbar navbar-inverse navbar-fixed-top">
 	<div class="container-fluid">
-		<p class="navbar-text navbar-left">Signed in as <a href="<?php echo base_url('/');?>" class="navbar-link"><?php echo $this->session->userdata('username'); ?></a></p>
+		<p class="navbar-text navbar-left">Signed in as <a href="<?php echo base_url('/');?>" class="navbar-link"><?php echo $this->session->userdata('personname'); ?></a></p>
 		<a href="<?php echo base_url('auth/logout');?>"> <button type="button" class="btn btn-default navbar-btn pull-right navbar-buttons">Logout</button></a>
 
 		<?php

@@ -6,7 +6,13 @@
 		<style>
 			.course-panel{
 				width: 100%;
-				height: 150px;
+				height: 160px;
+				display: inline-block;
+				margin: 5px;
+			}
+			.course-panel-completed{
+				width: 100%;
+				height: 180px;
 				display: inline-block;
 				margin: 5px;
 			}
@@ -61,8 +67,8 @@
 					<div class="row">
 						<ul class="nav nav-tabs">
 							<li><a data-toggle="tab" href="#course_list">Course List</a></li>
-							<li class="active"><a data-toggle="tab" href="#current_classes">Current Classes</a></li>
-							<li><a data-toggle="tab" href="#completed_classes">Completed Classes</a></li>
+							<li <?php echo (isset($_GET['tab']) && $_GET['tab'] == "completed") ? "" : "class='active'" ?> ><a data-toggle="tab" href="#current_classes">Current Classes</a></li>
+							<li <?php echo (isset($_GET['tab']) && $_GET['tab'] == "completed") ? "class='active'" : "" ?> ><a data-toggle="tab" href="#completed_classes">Completed Classes</a></li>
 						</ul>
 					</div>
 
@@ -84,12 +90,12 @@
 								}
 								?>
 							</div>
-							<div id="current_classes" class="tab-pane fade in active">
+							<div id="current_classes" class="tab-pane fade in <?php echo (isset($_GET['tab']) && $_GET['tab'] == "completed") ? "" : "active" ?>">
 								<?php
 									foreach($classes->result() as $i => $c)
 									{
 										echo "<div class='col-md-12'>";
-										echo "<div class='panel course-panel ".($c->student_count == 0 ? 'panel-warning': 'panel-info')."'>";
+										echo "<div class='panel course-panel ".($c->student_count == 0 ? 'panel-warning': ($c->started == 1 ? 'panel-info' : 'panel-default'))."'>";
 										echo "<div class='panel-heading'>
 														<div class='panel-title Title'>[$c->code] $c->title </div>														
 													</div>";
@@ -107,7 +113,7 @@
 								}
 									if($c->student_count > 0){
 										if($c->started) {
-											echo "<a href='" . base_url("User/viewReports?cid=$c->int") . "' class='btn btn-success btn-md '>VIEW REPORTS</a>";
+											echo "<a href='" . base_url("User/viewReports?cid=$c->int") . "' class='btn btn-success btn-md '>VIEW REPORT</a>";
 										}
 										echo "<a href='".base_url("User/inputGrades?cid=$c->int")."' class='btn btn-primary btn-md'>INPUT GRADES</a>";
 									}
@@ -120,8 +126,34 @@
 									}
 								?>
 							</div>
-							<div id="completed_classes" class="tab-pane fade">
-
+							<div id="completed_classes" class="tab-pane fade in <?php echo (isset($_GET['tab']) && $_GET['tab'] == "completed") ? "active" : "" ?>">
+								<?php
+								foreach($completed->result() as $i => $c)
+								{
+									echo "<div class='col-md-12'>";
+									echo "<div class='panel course-panel-completed panel-success'>";
+									echo "<div class='panel-heading'>
+														<div class='panel-title Title'>[$c->code] $c->title </div>														
+													</div>";
+									echo "<div class='panel-body'><div class='row'>
+												<div class='col-md-6'>
+													<div><b>Students Enrolled: </b><span class='badge badge-warning'>$c->student_count</span></div>
+													<div><b>Group: </b> <span>$c->group</span></div>
+													<div><b>Schedule: </b> <span>$c->schedule</span></div>
+													<div><b>Report Submitted At: </b> <span>$c->submission_date</span></div>
+													<div><b>Status: </b> <span>".($c->started ? "<span class='label label-default my-label'>Class Completed</span>" : "<span class='label label-warning my-label'>Not Yet Started</span> <a href='#' class='start-class' data-id='$c->int'>click to start class</a>")."</span></div>
+												</div>
+												<div class='col-md-6'>
+													<div class='pull-right'>";
+									echo "<a href='" . base_url("User/viewReports?cid=$c->int") . "' class='btn btn-success btn-md '>VIEW REPORT</a>";
+									echo "</div>
+												</div>
+												</div>";
+									echo "</div>";
+									echo "</div>";
+									echo "</div>";
+								}
+								?>
 							</div>
 						</div>
 

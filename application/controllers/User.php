@@ -25,9 +25,9 @@ class User extends CI_Controller
 	{
 		$data['courses'] = $this->UserModel->getCourses();
 		$data['classes'] = $this->UserModel->getClasses();
+		$data['completed'] = $this->UserModel->getClasses("completed");
 		$this->load->view("User/manageClass",$data);
 	}
-
 
 	public function deleteClass()
 	{
@@ -53,6 +53,30 @@ class User extends CI_Controller
 		}else{
 			$response['isOk'] = false;
 			$response['error'] = 'No Class ID found.';
+		}
+
+		echo json_encode($response);
+	}
+
+	public function submitReport(){
+		if(isset($_POST['cid'])){
+			$cid = $_POST['cid'];
+			$data = array(
+				"class_id" => $cid,
+				"data_interpretation" => $_POST['interpretation'],
+				"proposed_improvement" => $_POST['improvement_proposal']
+			);
+			$this->UserModel->endClass($_POST['cid']);
+
+			$response['report_id'] = $this->UserModel->saveReport($data);
+			$response['loopback_data'] = $data;
+			$response['isOk'] = true;
+
+			redirect("User/viewReports?cid=$cid");
+
+		}else{
+			$response['isOk'] = false;
+			$response['error'] = "No class ID found.";
 		}
 
 		echo json_encode($response);
@@ -92,14 +116,17 @@ class User extends CI_Controller
 
 	public function viewReports()
 	{
-		$class_id = 0;
 		if(isset($_GET['cid'])) {
 			$class_id = $_GET['cid'];
+
+			$data['completed'] = $this->UserModel->isCompleted($class_id);
+			$data['evaluation'] = $this->UserModel->evaluateClass($class_id);
+			$data['loopback_cid'] = $class_id;
+
+			$this->load->view("User/viewReports",$data);
+		}else{
+			redirect("User/viewReports");
 		}
-
-		$data['evaluation'] = $this->UserModel->evaluateClass($class_id);
-
-		$this->load->view("User/viewReports",$data);
 	}
 
 	public function addClassSchedule(){

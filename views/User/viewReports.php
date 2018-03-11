@@ -18,15 +18,14 @@
 				border-radius: 10px;
 				text-align: center;
 			}
+			th{
+				text-align: center;
+				background-color: rgb(55,123,181);
+				color:white;
+			}
 		</style>
 	</head>
 
-<style>
-th{
-	text-align: center;
-	background-color: slategrey;
-}
-</style>
 	<body>
 		<?php $this->load->view('Partials/navBar'); ?>
 		<div class="container-fluid">
@@ -163,12 +162,17 @@ th{
 										</div>
 									</div>
 									<div class="panel-body">
-										<form>
+										<form method="post" action="<?php echo base_url('User/submitReport'); ?>">
 										<div class="col-md-12">
 											<div class="form-group">
 												<label for="data_interpretation"><u>Data Interpretation</u></label>
-												<textarea class="form-control" rows="5" id="data_interpretation" style="resize: vertical;"></textarea>
-												<br />
+												<?php
+													if($evaluation['tc']->is_completed){
+														echo "<div class='well'><p>".$evaluation['tc']->improvement_proposal."</p></div>";
+													}else{
+														echo "<textarea class='form-control' rows='5' id='data_interpretation' style='resize: vertical;' name='interpretation'></textarea><br />";
+													}
+												?>
 											</div>
 										</div>
 										<div class="col-md-12">
@@ -177,12 +181,25 @@ th{
 													<u>Propose Improvement Action</u> <i class='fa fa-sticky-note' style="padding-left: 5px;"></i> <br />
 													<span style="font-size: .8em; font-weight: normal;">In order to increase the course's performance improvement actions are recommended</span>
 												</label>
-												<textarea class="form-control" rows="5" id="improvement_action" style="resize: vertical;"></textarea>
-												<br />
+												<?php
+													if($evaluation['tc']->is_completed){
+														echo "<div class='well'><p>".$evaluation['tc']->interpretation."</p></div>";
+													}else{
+														echo "<textarea class='form-control' rows='5' id='improvement_action' style='resize: vertical;' name='improvement_proposal'></textarea><br />";
+													}
+												?>
+												
 											</div>
 										</div>
 										<div class="col-md-12">
-											<button class="pull-right btn btn-success">Submit Report</button>
+											<input type="hidden" name="cid" value="<?php echo $loopback_cid; ?>" />
+											<?php
+											if($evaluation['tc']->is_completed){
+												echo "<span class='pull-right label label-default' style='font-size: 1em;'>Submitted at: ".$evaluation['tc']->submission_date."</span>";
+											}else{
+												echo "<button class='pull-right btn btn-success' type='submit'>Submit Report</button>";
+											}
+											?>
 										</div>
 										</form>
 									</div>

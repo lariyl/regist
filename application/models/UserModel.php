@@ -12,15 +12,33 @@ Class UserModel extends CI_model
 		return $this->db->get("courses");
 	}
 
-	public function getClasses(){
+	public function getClasses($status = null){
+
+		if ($status == "completed"){
+			$status_filter = " AND cc.completed = 1";
+		}elseif ($status == "started"){
+			$status_filter = " AND cc.started = 1";
+		}else{
+			$status_filter = " AND cc.completed = 0";
+		}
+
 		$user = $this->session->userdata("id");
 		return $this->db->query("
 				SELECT *, 
 				(SELECT count(id) FROM students_in_class AS sic WHERE cc.int = sic.class_id) AS student_count,
+				DATE_FORMAT(cr.submitted_at,'%M %e, %Y (%l:%i:%s %p)') AS `submission_date`,
 				cc.int AS cc_id
-				FROM course_classes AS cc JOIN courses AS c ON c.id =  cc.course_id
+				FROM course_classes AS cc
+				JOIN courses AS c ON c.id =  cc.course_id
+				LEFT JOIN class_reports AS cr ON cr.class_id = cc.int 
 				WHERE cc.user_id = $user
+				$status_filter
 			");
+	}
+
+	public function isCompleted($class_id){
+		$query = $this->db->query("SELECT id FROM class_reports WHERE class_id = $class_id");
+		return  $query->num_rows() > 0 ? true : false;
 	}
 
 	public function getStudentsInClass(){
@@ -59,6 +77,10 @@ Class UserModel extends CI_model
 		$this->db->where('int',$class_id)->update('course_classes',array('started' => 1));
 	}
 
+	public function endClass($class_id){
+		$this->db->where('int',$class_id)->update('course_classes',array('completed' => 1));
+	}
+
 	public function saveGradesTable($table,$class_id){
 		$this->db->where('int',$class_id)->update('course_classes',array('started' => 1));
 
@@ -75,10 +97,15 @@ Class UserModel extends CI_model
 			c.co1 AS `course_outcome_1`,
 			c.co2 AS `course_outcome_2`,
 			c.co3 AS `course_outcome_3`,
+			cc.completed AS `is_completed`,
+			cr.data_interpretation AS `interpretation`,
+			cr.proposed_improvement AS `improvement_proposal`,
+			DATE_FORMAT(cr.submitted_at,'%M %e, %Y (%l:%i:%s %p)') AS `submission_date`,
 			cc.group AS `class_group`
 			FROM students_in_class  AS sic 
 			JOIN course_classes AS cc ON sic.class_id = cc.int
 			JOIN courses AS c ON cc.course_id = c.id
+			LEFT JOIN class_reports AS cr ON cr.class_id = cc.int
 			WHERE (
 				sic.grade_premidterms * c.weight_premidterms +
 				sic.grade_midterms * c.weight_midterms +
@@ -131,10 +158,15 @@ Class UserModel extends CI_model
 		return $data;
 	}
 
-		public function deleteClass($id)
+	public function deleteClass($id)
 	{
 		$this->db->where("int", $id);
 		$this->db->delete("course_classes");
- 	} 
+ 	}
+
+ 	public function saveReport($data){
+		$this->db->insert('class_reports',$data);
+		return $this->db->insert_id();
+	}
 
 }

@@ -160,8 +160,13 @@ Class UserModel extends CI_model
 
 	public function deleteClass($id)
 	{
+//		$this->db->where("class_id", $id);
+//		$this->db->delete("class_reports");
+//		$this->db->delete("students_in_class");
+
 		$this->db->where("int", $id);
 		$this->db->delete("course_classes");
+		return;
  	}
 
  	public function saveReport($data){

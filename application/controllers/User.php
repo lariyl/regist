@@ -31,10 +31,12 @@ class User extends CI_Controller
 
 	public function deleteClass()
 	{
-		$id = $_POST['int'];
+		$id = $_POST['cid'];
 		$this->UserModel->deleteClass($id);
-		return;
 
+		$response['isOk']= true;
+
+		echo json_encode($response);
 	}
 
 	public function inputGrades()

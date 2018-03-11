@@ -26,35 +26,6 @@
 				font-size: .9em;
 			}
 		</style>
-
-		<script>
-			$doc = $(document);
-			var pageApp = {
-				events: function(){
-					$doc.on('click','.start-class',function(){
-
-						$.ajax({
-							url: '<?php echo base_url('User/startClass');?>',
-							type: 'POST',
-							data: {cid: $(this).data('id')},
-							success: function(response){
-								console.log(response);
-								location.reload();
-
-								if(response.isOk){
-									//change status and alter buttons, or refresh page.
-								}
-							}
-						});
-					});
-				},
-				init: function(){
-					pageApp.events();
-				}
-			};
-
-			pageApp.init();
-		</script>
 	</head>
 
 	<body>
@@ -108,8 +79,8 @@
 												</div>
 												<div class='col-md-6'>
 													<div class='pull-right'>";
-								if(!$c->started) {
-									echo "<a href='#'  data-toggle='modal' data-target='#delete-class-modal' class='btn btn-danger btn-md'>REMOVE CLASS</a>";
+								if(!$c->started && $c->student_count == 0) {
+									echo "<span  data-toggle='modal' data-target='#delete-class-modal' class='btn btn-danger btn-md remove-class-btn' data-id='$c->int'>REMOVE CLASS</span>";
 								}
 									if($c->student_count > 0){
 										if($c->started) {
@@ -228,6 +199,7 @@
 		var $doc = $(document);
 		var studentList_id = [];
 		var studentList_name = [];
+		var classToDelete;
 
 		var pageApp = {
 
@@ -248,18 +220,19 @@
 				$("#class-student-table").show();
 			},
 
-				// deleteClass: function(){
-				// 	$.ajax({
-				// 		url: '<?php echo base_url('User/deleteClass')?>',
-				// 		type: 'POST',
-				// 		data: {id: currentUserID},
-				// 		success: function(response){
-				// 			currentUserRowElement.remove();
-				// 			currentUserRowElement = null;
-				// 			currentUserID = null;
-				// 		}
-				// 	});
-				// },
+			 deleteClass: function(){
+			
+				$.ajax({
+					url: '<?php echo base_url('User/deleteClass')?>',
+					type: 'POST',
+					data: {cid: classToDelete},
+					beforeSend: function(){alert('tea12312sd');},
+					success: function(response){
+						console.log(response);
+						location.reload();
+					}
+				});
+			 },
 
 			csvToArray: function(csv){
 				var lines=csv.split("\n");
@@ -272,6 +245,27 @@
 			},
 
 			events: function(){
+				$doc.on('click','.start-class',function(){
+
+					$.ajax({
+						url: '<?php echo base_url('User/startClass');?>',
+						type: 'POST',
+						data: {cid: $(this).data('id')},
+						success: function(response){
+							console.log(response);
+							location.reload();
+
+							if(response.isOk){
+								//change status and alter buttons, or refresh page.
+							}
+						}
+					});
+				});
+
+				$doc.on('click','.remove-class-btn',function(){
+					classToDelete = $(this).data('id');
+				});
+
 				$('#import-csv-btn').on('click',function(){
 					$('#import-students-csv').click();
 				});
@@ -289,9 +283,9 @@
 					}
 				});
 
-					// $('#confirm-delete-class').on('click',	function () {
-					// 	pageApp.deleteClass();
-					// });
+				 $('#confirm-delete-class').on('click',	function () {
+						pageApp.deleteClass();
+				 });
 
 				$('#modal-confirm-add').on('click',function(){
 					var ajaxData = {

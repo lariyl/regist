@@ -15,6 +15,7 @@
 								<th colspan="4"><a href="#" data-toggle="modal" data-target="#add-user-modal"><i class="fa fa-plus-square"></i></a> System Users</th>
 							</tr>
 							<tr class="success">
+								<th>Name</th>
 								<th>Usernamne</th>
 								<th>Email</th>
 								<th>Role</th>
@@ -25,6 +26,7 @@
 							<?php
 							foreach($users->result() as $row){
 								echo "<tr>";
+								echo "<td>$row->personname</td>";
 								echo "<td>$row->username</td>";
 								echo "<td>$row->email</td>";
 								echo "<td>$row->role</td>";
@@ -52,11 +54,11 @@
 					<form id="add-user-form"  data-toggle="validator" role="form">
 						<div class="modal-body">
 							<div class="form-group">
-								<p><input class="form-control" placeholder="Username" id="add-user-username" name="username" type="text" required ></p>
+								<p><input class="form-control" placeholder="Name" id="add-user-name" name="personname" type="text" required></p>
 								<div class="help-block with-errors"></div>
 							</div>
 							<div class="form-group">
-								<p><input class="form-control" placeholder="Name" id="add-user-name" name="personname" type="text" required></p>
+								<p><input class="form-control" placeholder="Username" id="add-user-username" name="username" type="text" required ></p>
 								<div class="help-block with-errors"></div>
 							</div>
 							<div class="form-group">

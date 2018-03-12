@@ -226,7 +226,6 @@
 					url: '<?php echo base_url('User/deleteClass')?>',
 					type: 'POST',
 					data: {cid: classToDelete},
-					beforeSend: function(){alert('tea12312sd');},
 					success: function(response){
 						console.log(response);
 						location.reload();

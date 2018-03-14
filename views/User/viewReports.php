@@ -23,13 +23,6 @@
 				background-color: rgb(55,123,181);
 				color:white;
 			}
-			@media print{
-				.title-header{
-					display: block !important;
-					text-align: center;
-					font-size: 8px;
-			    }	
-			}
 		</style>
 	</head>
 
@@ -38,8 +31,7 @@
 		<div class="container-fluid">
 			<div class="row">
 				<?php $this->load->view('Partials/sideBar',array('isViewReports' => 'active')); ?>
-				<p class="title-header" style="display: none;">University of San Carlos</br> School of Engineering </p></br>
-				<p class="title-header" style="display: none;"><b><u>OBTL Form 4</u></br> Course Assessment Report </p></b></br>
+
 				<div class="col-md-10 col-md-offset-2">
 					<fieldset class="my-fieldset">
 						<legend>OBTL Form 4: <span>Course Assessment Report</span></legend>
@@ -176,7 +168,7 @@
 												<label for="data_interpretation"><u>Data Interpretation</u></label>
 												<?php
 													if($evaluation['tc']->is_completed){
-														echo "<div class='well'><p>".$evaluation['tc']->interpretation."</p></div>";
+														echo "<div class='well'><p>".$evaluation['tc']->improvement_proposal."</p></div>";
 													}else{
 														echo "<textarea class='form-control' rows='5' id='data_interpretation' style='resize: vertical;' name='interpretation'></textarea><br />";
 													}
@@ -191,7 +183,7 @@
 												</label>
 												<?php
 													if($evaluation['tc']->is_completed){
-														echo "<div class='well'><p>".$evaluation['tc']->improvement_proposal."</p></div>";
+														echo "<div class='well'><p>".$evaluation['tc']->interpretation."</p></div>";
 													}else{
 														echo "<textarea class='form-control' rows='5' id='improvement_action' style='resize: vertical;' name='improvement_proposal'></textarea><br />";
 													}

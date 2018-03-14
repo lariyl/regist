@@ -92,33 +92,13 @@ class User extends CI_Controller
 			$cid = $_POST['courseClass'];
 
 			foreach ($_POST['studentid'] as $idx => $sid ){
-
-				if($_POST['premidterms'][$idx] == 0){
-					$_POST['premidterms'][$idx] = NULL;
-				}
-				if($_POST['midterms'][$idx] == 0){
-					$_POST['midterms'][$idx] = NULL;
-				}
-				if($_POST['prefinals'][$idx] == 0){
-					$_POST['prefinals'][$idx] = NULL;
-				}
-				if($_POST['finals'][$idx] == 0){
-					$_POST['finals'][$idx] = NULL;
-				}				
-				if($_POST['others'][$idx] == 0){
-					$_POST['others'][$idx] = NULL;
-				}
-				if($_POST['practicals'][$idx] == 0){
-					$_POST['practicals'][$idx] = NULL;
-				}
-
 				$studentGrades = array(
 					"class_id" => $cid,
 					"student_id" => $sid,
 					"grade_premidterms" => $_POST['premidterms'][$idx],
 					"grade_midterms" => $_POST['midterms'][$idx],
-					"grade_prefinals" => $_POST['prefinals'][$idx],
-					"grade_finals" => $_POST['finals'][$idx],
+					"grade_prefinals" => $_POST['finals'][$idx],
+					"grade_finals" => $_POST['prefinals'][$idx],
 					"grade_others" => $_POST['others'][$idx],
 					"grade_practicals" => $_POST['practicals'][$idx]
 				);

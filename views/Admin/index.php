@@ -107,7 +107,7 @@
 				addUser: function(){
 					ajaxData = {
 						username: $('#add-user-username').val(),
-						personname: $('#add-user-name').val(),
+						name: $('#add-user-name').val(),
 						email: $('#add-user-email').val(),
 						password: $('#add-user-password').val(),
 						role: addMode

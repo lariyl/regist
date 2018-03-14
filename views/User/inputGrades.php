@@ -22,18 +22,8 @@
 		</style>
 
 		<script>
-			
 			var $doc = $(document);
 			var currentSaveBtnClicked;
-
-			$( document ).ready(function() {
-				var tempArr = document.getElementsByClassName("form-control grade-field");
-				for(i=0;i<tempArr.length;i++)
-				{
-					var temp = parseFloat(tempArr[i].value);
-					tempArr[i].value = temp.toFixed(2);
-				}
-			});
 
 			var pageApp = {
 				events: function(){
@@ -197,14 +187,14 @@
 														<input type='hidden' class='form-control' name='studentid[]' value='$s->id' />
 													</td>
 													<td>$s->name</td>
-													<td><input type='number' tabindex='1' class='form-control grade-field' data-bid='gsb-$c->int' step='0.01' min='1.00' max='5.00' name='premidterms[]' value='$s->grade_premidterms' /></td>
-													<td><input type='number' tabindex='2' class='form-control grade-field' data-bid='gsb-$c->int' step='0.01' min='1.00' max='5.00' name='midterms[]' value='$s->grade_midterms' /></td>
-													<td><input type='number' tabindex='3' class='form-control grade-field' data-bid='gsb-$c->int' step='0.01' min='1.00' max='5.00' name='prefinals[]' value='$s->grade_prefinals' /></td>
-													<td><input type='number' tabindex='4' class='form-control grade-field' data-bid='gsb-$c->int' step='0.01' min='1.00' max='5.00' name='finals[]' value='$s->grade_finals' /></td>
-													<td><input type='number' tabindex='5' class='form-control grade-field' data-bid='gsb-$c->int' step='0.01' min='1.00' max='5.00' name='practicals[]' value='$s->grade_practicals' /></td>
-													<td><input type='number' tabindex='6' class='form-control grade-field' data-bid='gsb-$c->int' step='0.01' min='1.00' max='5.00' name='others[]' value='$s->grade_others' /></td>
+													<td><input type='number' class='form-control grade-field' data-bid='gsb-$c->int' step='.01' min='1.00' max='5.00' name='premidterms[]' value='$s->grade_premidterms' /></td>
+													<td><input type='number' class='form-control grade-field' data-bid='gsb-$c->int' step='.01' min='1.00' max='5.00' name='midterms[]' value='$s->grade_midterms' /></td>
+													<td><input type='number' class='form-control grade-field' data-bid='gsb-$c->int' step='.01' min='1.00' max='5.00' name='prefinals[]' value='$s->grade_prefinals' /></td>
+													<td><input type='number' class='form-control grade-field' data-bid='gsb-$c->int' step='.01' min='1.00' max='5.00' name='finals[]' value='$s->grade_finals' /></td>
+													<td><input type='number' class='form-control grade-field' data-bid='gsb-$c->int' step='.01' min='1.00' max='5.00' name='practicals[]' value='$s->grade_practicals' /></td>
+													<td><input type='number' class='form-control grade-field' data-bid='gsb-$c->int' step='.01' min='1.00' max='5.00' name='others[]' value='$s->grade_others' /></td>
 													<td><b class='total-grade' data-wpm='$c->weight_premidterms' data-wm=$c->weight_midterms'' data-wpf='$c->weight_prefinals' data-wf='$c->weight_finals' data-wp='$c->weight_practicals' data-wo='$c->weight_others'>
-														".number_format((($s->grade_premidterms * $c->weight_premidterms) + ($s->grade_midterms * $c->weight_midterms) + ($s->grade_prefinals * $c->weight_prefinals) + ($s->grade_finals * $c->weight_finals) +($s->grade_practicals * $c->weight_practicals) +($s->grade_others * $c->weight_others)),2)."
+														".(($s->grade_premidterms * $c->weight_premidterms) + ($s->grade_midterms * $c->weight_midterms) + ($s->grade_prefinals * $c->weight_prefinals) + ($s->grade_finals * $c->weight_finals) +($s->grade_practicals * $c->weight_practicals) +($s->grade_others * $c->weight_others))."
 													</b></td>
 												</tr>";
 										}

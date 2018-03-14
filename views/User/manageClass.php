@@ -145,11 +145,11 @@
 					<form id="add-class-form"  data-toggle="validator" role="form">
 						<div class="modal-body">
 							<div class="form-group">
-								<p><input class="form-control" placeholder="Groupnumber" id="add-class-group" min="1" max="99" step="1" name="group" type="number" required ></p>
+								<p><input class="form-control" placeholder="Groupnumber" id="add-class-group" min="1" max="99" step="1" name="group" type="number"  ></p>
 								<div class="help-block with-errors"></div>
 							</div>
 							<div class="form-group">
-								<p><input class="form-control" placeholder="Schedule" id="add-class-schedule"  name="schedule" pattern="[M,W,F,T,T,H,S]{1,4}[\-]([0-9]){1,4}(^|:)([0-9]){1,4}[\-]([0-9]){1,4}(^|:)([0-9]){1,4}" type="text"  data-error="Format Example: MW-7:30-10:30" required ></p>
+								<p><input class="form-control" placeholder="Schedule" id="add-class-schedule"  name="schedule" type="text"  data-error="Format Example: MW-7:30-10:30" ></p>
 								<div class="help-block with-errors"></div>
 							</div>
 							<div class="form-group">
@@ -174,7 +174,7 @@
 							</table>
 							<div class="modal-footer">
 								<button type="submit" class="btn btn-default" data-dismiss="modal">Close</button>
-								<button type="submit" class="btn btn-primary confirm-add" id="modal-confirm-add">Create Class</button>
+								<button type="submit" class="btn btn-primary confirm-add" id="modal-confirm-add" disabled>Create Class</button>
 							</div>	 
 						</div>
 					</form>
@@ -205,17 +205,46 @@
 
 			plotCSV: function(event){
 				var fileArr = pageApp.csvToArray(event.target.result.replace(/"/g,''));
+				var classListFound = false;
+				var groupNumberFound = false;
 
 				$("#class-student-table > tbody tr").remove();
-				for(var x=0; x < fileArr.length; x++){
-					studentList_id.push(fileArr[x][0]);
-					studentList_name.push(fileArr[x][2]+" "+fileArr[x][1]);
-					$("#class-student-table > tbody").append("<tr>" +
-						"<td>"+(x+1)+"</td>" +
-						"<td>"+fileArr[x][0]+"</td>" +
-						"<td>"+fileArr[x][2]+" "+fileArr[x][1]+"</td>" +
-						"</tr>");
+				var studentNumber=1;
+				for(var x=0; x < fileArr.length-1; x++){
+					if(groupNumberFound == false){
+						if(fileArr[x][4].indexOf("Group") > -1){
+							var splitter = fileArr[x][4].split(" ");
+							$('#add-class-group').val(splitter[1])
+							console.log(splitter);
+							var schedules = fileArr[x][9].split(" ");
+							var schedule = schedules[0]+" "+schedules[2]+" "+schedules[3]+" "+schedules[4]+" "+schedules[5]+" "+schedules[6];
+							x++;
+							//======================================
+							for(;fileArr[x][0]!="";x++){
+								schedules = fileArr[x][0].split(" ");
+								schedule = schedule+ ", " + schedules[0]+" "+schedules[2]+" "+schedules[3]+" "+schedules[4]+" "+schedules[5]+" "+schedules[6];
+							}
+							$('#add-class-schedule').val(schedule);
+							//======================================
+							groupNumberFound = true
+						}
+						
+					}
+					else if(classListFound==false){
+						if(fileArr[x][1]=="ID Number")classListFound = true;
+					}
+					else if(classListFound==true){
+						studentList_id.push(fileArr[x][1]);
+						studentList_name.push(fileArr[x][6]+" "+fileArr[x][5]);
+						$("#class-student-table > tbody").append("<tr>" +
+							"<td>"+(studentNumber)+"</td>" +
+							"<td>"+fileArr[x][1]+"</td>" +
+							"<td>"+fileArr[x][6]+" "+fileArr[x][5]+"</td>" +
+							"</tr>");
+						studentNumber++;
+					}
 				}
+				console.log(fileArr);
 
 				$("#class-student-table").show();
 			},
@@ -225,11 +254,9 @@
 				$.ajax({
 					url: '<?php echo base_url('User/deleteClass')?>',
 					type: 'POST',
-					data: {cid: classToDelete},
-					beforeSend: function(){alert('tea12312sd');},
 					success: function(response){
 						console.log(response);
-						location.reload();
+						// location.reload();
 					}
 				});
 			 },
@@ -313,9 +340,10 @@
 					$('#add-class-form').validator().on('submit', function (e) {
 						if (e.isDefaultPrevented()) {
 							//Do nothing on invalid form
+							$('#modal-confirm-add').removeAttr("disabled")
 						} else {
 							$('#add-class-modal').modal('hide');
-							pageApp.addUser();
+							// pageApp.addUser();
 						}
 					});				
 

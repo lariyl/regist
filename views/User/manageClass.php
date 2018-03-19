@@ -82,6 +82,9 @@
 								if(!$c->started && $c->student_count == 0) {
 									echo "<span  data-toggle='modal' data-target='#delete-class-modal' class='btn btn-danger btn-md remove-class-btn' data-id='$c->int'>REMOVE CLASS</span>";
 								}
+								if(!$c->started && $c->student_count > 0) {
+									echo "<span  data-toggle='modal' data-target='#delete-class-modal' class='btn btn-danger btn-md remove-class-btn' data-id='$c->int'>REMOVE CLASS</span>";
+								}
 									if($c->student_count > 0){
 										if($c->started) {
 											echo "<a href='" . base_url("User/viewReports?cid=$c->int") . "' class='btn btn-success btn-md '>VIEW REPORT</a>";
@@ -116,6 +119,7 @@
 												</div>
 												<div class='col-md-6'>
 													<div class='pull-right'>";
+									echo "<a href='#' class='btn btn-warning btn-md' onclick='printReport(cid=$c->int)'>PRINT REPORT</a>";
 									echo "<a href='" . base_url("User/viewReports?cid=$c->int") . "' class='btn btn-success btn-md '>VIEW REPORT</a>";
 									echo "</div>
 												</div>
@@ -368,6 +372,12 @@
 		$doc.ready(function(){
 			pageApp.init();
 		});
+
+		function printReport(URL){
+			let url = "viewReports?cid=" + URL;
+		    var mywindow = window.open(url);   
+		    mywindow.onload = function() { mywindow.print(); mywindow.close(); }
+		}
 	</script>
 
 	</body>

@@ -91,7 +91,16 @@ Class UserModel extends CI_model
 
 	public function evaluateClass($class_id){
 		$passed_qs = "SELECT 
-			count(sic.student_id) AS `passed`,
+			(SELECT count(sic.student_id) FROM students_in_class AS sic 
+			WHERE (
+				sic.grade_premidterms * c.weight_premidterms +
+				sic.grade_midterms * c.weight_midterms +
+				sic.grade_prefinals * c.weight_prefinals +
+				sic.grade_finals * c.weight_finals +
+				sic.grade_prefinals * c.weight_prefinals +
+				sic.grade_practicals *c.weight_practicals +
+				sic.grade_others * c.weight_others
+			) < 3.0 AND sic.class_id = $class_id) AS `passed`,
 			c.code AS `course_code`,
 			c.title AS `course_title`,
 			c.co1 AS `course_outcome_1`,
@@ -102,19 +111,10 @@ Class UserModel extends CI_model
 			cr.proposed_improvement AS `improvement_proposal`,
 			DATE_FORMAT(cr.submitted_at,'%M %e, %Y (%l:%i:%s %p)') AS `submission_date`,
 			cc.group AS `class_group`
-			FROM students_in_class  AS sic 
-			JOIN course_classes AS cc ON sic.class_id = cc.int
+			FROM course_classes  AS cc 
 			JOIN courses AS c ON cc.course_id = c.id
 			LEFT JOIN class_reports AS cr ON cr.class_id = cc.int
-			WHERE (
-				sic.grade_premidterms * c.weight_premidterms +
-				sic.grade_midterms * c.weight_midterms +
-				sic.grade_prefinals * c.weight_prefinals +
-				sic.grade_finals * c.weight_finals +
-				sic.grade_prefinals * c.weight_prefinals +
-				sic.grade_practicals *c.weight_practicals +
-				sic.grade_others * c.weight_others
-			) < 3.0 AND sic.class_id = $class_id";
+			WHERE cc.int = $class_id";
 		
 		$ranks_qs = "
 			SELECT 

@@ -279,7 +279,7 @@
 			$( document ).ready(function() {
 				let arr = []
 				let counter = 0
-				let exam = ["Pre-Midterms","Midterms","Pre-Finals", "Finals", "Practicals", "Others"]
+				let exam = ["In Pre-Midterms,","In Midterms,","In Pre-Finals,", "In Finals,", "In Practicals,", "In Others,"]
 				let arrClassName = document.getElementsByClassName('suggest')
 				let suggestion;
 				for(let i=0; i<arrClassName.length;i++){
@@ -292,17 +292,17 @@
 				console.log(arr)
 				arr.forEach(function(item){
 						if(item == 0){
-							document.getElementsByClassName('form-control')[0].value += exam[counter] + " " +"test0\n";
+							document.getElementsByClassName('form-control')[0].value += exam[counter] + " " +"the class performance for the class showed exemplary result.\t";
 						}else if(item <= 20.00){
-							document.getElementsByClassName('form-control')[0].value += exam[counter] + " " +"test1-20\n";
+							document.getElementsByClassName('form-control')[0].value += exam[counter] + " " +"some students may have difficulty in couping the lesson disccussed .\t";
 						}else if(item <= 40.00){
-							document.getElementsByClassName('form-control')[0].value += exam[counter] + " " +"test21-40\n";
+							document.getElementsByClassName('form-control')[0].value += exam[counter] + " " +"half of the students are having a hard time of the lesson.\t";
 						}else if(item <= 60.00){
-							document.getElementsByClassName('form-control')[0].value += exam[counter] + " " +"test41-60\n";
-						}else if(item < 80.00){
-							document.getElementsByClassName('form-control')[0].value += exam[counter] + " " +"test61-79\n";
+							document.getElementsByClassName('form-control')[0].value += exam[counter] + " " +" most students may have difficulty in the lesson.\t";
+						}else if(item <= 80.00){
+							document.getElementsByClassName('form-control')[0].value += exam[counter] + " " +"the class haven't reached the 80%.\t";
 						}else{
-							document.getElementsByClassName('form-control')[0].value += exam[counter] + " " +"testmax80\n";
+							document.getElementsByClassName('form-control')[0].value += exam[counter] + " " +"the class haven't reached the 80%.\t";
 						}					
 					counter++;
 				});

@@ -32,6 +32,7 @@ Class UserModel extends CI_model
 				JOIN courses AS c ON c.id =  cc.course_id
 				LEFT JOIN class_reports AS cr ON cr.class_id = cc.int 
 				WHERE cc.user_id = $user
+				AND cc.is_deleted = 0
 				$status_filter
 			");
 	}
@@ -46,7 +47,7 @@ Class UserModel extends CI_model
 		return $this->db->query("
 				SELECT *, sic.class_id AS cc_id FROM students_in_class AS sic 
 					JOIN students AS s ON s.id= sic.student_id
-					WHERE sic.class_id IN (SELECT cc.int FROM course_classes AS cc WHERE user_id = $user) ORDER BY s.name ASC
+					WHERE sic.class_id IN (SELECT cc.int FROM course_classes AS cc WHERE cc.user_id = $user AND cc.is_deleted = 0) ORDER BY s.name ASC
 			");
 	}
 
@@ -114,7 +115,8 @@ Class UserModel extends CI_model
 			FROM course_classes  AS cc 
 			JOIN courses AS c ON cc.course_id = c.id
 			LEFT JOIN class_reports AS cr ON cr.class_id = cc.int
-			WHERE cc.int = $class_id";
+			WHERE cc.int = $class_id
+			AND cc.is_deleted = 0";
 		
 		$ranks_qs = "
 			SELECT 
@@ -160,12 +162,16 @@ Class UserModel extends CI_model
 
 	public function deleteClass($id)
 	{
-//		$this->db->where("class_id", $id);
-//		$this->db->delete("class_reports");
-//		$this->db->delete("students_in_class");
+		// $this->db->where("class_id", $id);
+		// $this->db->delete("class_reports");
 
-		$this->db->where("int", $id);
-		$this->db->delete("course_classes");
+		// $this->db->where("class_id", $id);
+		// $this->db->delete("students_in_class");
+
+		// $this->db->where("int", $id);
+		// $this->db->delete("course_classes");
+
+		$this->db->where('int',$id)->update('course_classes',array('is_deleted' => 1));
 		return;
  	}
 

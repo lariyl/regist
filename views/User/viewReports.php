@@ -72,6 +72,9 @@
 				 .move-right{
 				 	padding-right: 6mm;
 				 }
+				 .noprint {
+				 	display:none;
+				 }
 			}
 		</style>
 	</head>
@@ -257,6 +260,7 @@
 											<?php
 											if($evaluation['tc']->is_completed){
 												echo "<span class='pull-right label label-default' style='font-size: 1em;'>Submitted at: ".$evaluation['tc']->submission_date."</span>";
+												echo "<a href='#' class='btn btn-warning btn-md noprint' onclick='printReport()'>PRINT REPORT</a>";												
 											}else{
 												echo "<button class='pull-right btn btn-success' type='submit'>Submit Report</button>";
 
@@ -308,6 +312,9 @@
 				});
 			});
 
+			function printReport() {
+    			window.print();
+			}
 		</script>
 	</body>
 </html>

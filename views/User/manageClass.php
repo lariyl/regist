@@ -119,7 +119,8 @@
 												</div>
 												<div class='col-md-6'>
 													<div class='pull-right'>";
-									echo "<a href='#' class='btn btn-warning btn-md' onclick='printReport(cid=$c->int)'>PRINT REPORT</a>";
+									// echo "<a href='#' class='btn btn-warning btn-md' onclick='printReport(cid=$c->int)'>PRINT REPORT</a>";
+									echo "<a href='".base_url("User/viewGrades?cid=$c->int")."' class='btn btn-primary btn-md'>VIEW GRADES</a>";					
 									echo "<a href='" . base_url("User/viewReports?cid=$c->int") . "' class='btn btn-success btn-md '>VIEW REPORT</a>";
 									echo "</div>
 												</div>
@@ -258,9 +259,10 @@
 				$.ajax({
 					url: '<?php echo base_url('User/deleteClass')?>',
 					type: 'POST',
+					data: {cid: classToDelete},
 					success: function(response){
 						console.log(response);
-						// location.reload();
+						location.reload();
 					}
 				});
 			 },

@@ -99,11 +99,11 @@
 					<table class="table table-bordered table-responsive table_resize custom-table">
 						<thead>
 							<tr class="custom-header">
-								<th class="table_results" rowspan="2" style="vertical-align: middle">Course Outcome</th>
+								<th class="table_results" rowspan="2" width='40%' style="vertical-align: middle">Course Outcome</th>
 								<th class="table_results" rowspan="2" style="vertical-align: middle">Assesment Task</th>
 								<th class="table_results" colspan="4" >Student's Level of Achievement of Outcome <br> (Frequency, Percentage)</th>
-								<th class="table_results" rowspan="2" style="vertical-align: middle">Target</th>
-								<th class="table_results" rowspan="2" style="vertical-align: middle">Gap</th>
+								<th class="table_results" rowspan="2" width='15%' style="vertical-align: middle">Target</th>
+								<th class="table_results" rowspan="2" width="8%" style="vertical-align: middle">Gap</th>
 							</tr>
 							<tr class="custom-header" align="center">
 
@@ -115,7 +115,103 @@
 							</tr>
 						</thead>
 						<tbody>
-						    <tr align="center">
+<?php 
+	$cid = $_GET['cid'];
+	$courseid = $evaluation['tc']->course_id;
+
+	$report = $this->db->query("
+		select 
+		co.course_id,
+	a.longname as assesment,
+	co.id as co_id,
+	co.title as co_title,
+    CONCAT(co.title,' - ',co.description) as course_outcome,
+    (
+		select count(id) from class_exam_scores as ces
+        where ces.exam_id = e.id
+        and ces.class_id = $cid
+        and ces.grade >= 1 and ces.grade < 2
+    ) as level1,
+    (
+		select count(id) from class_exam_scores as ces
+        where ces.exam_id = e.id
+        and ces.class_id = $cid
+        and ces.grade >= 2 and ces.grade < 3
+    ) as level2,
+    (
+		select count(id) from class_exam_scores as ces
+        where ces.exam_id = e.id
+        and ces.class_id = $cid
+        and ces.grade >= 3 and ces.grade < 4
+    ) as level3,
+    (
+		select count(id) from class_exam_scores as ces
+        where ces.exam_id = e.id
+        and ces.class_id = $cid
+        and ces.grade >= 4 and ces.grade < 5
+    ) as level4
+from examinations as e 
+join assesments as a  on e.assesment_id = a.id
+join course_outcomes as co on e.course_outcomes_id = co.id
+where co.course_id = $courseid
+order by co.course_id, a.sort;
+");
+
+
+$rowspan = [];
+$prev_co =  '';
+foreach($report->result() as $r){
+	if(isset($rowspan[$r->co_id])){
+		$rowspan[$r->co_id] += 1; 
+	}else{
+		$rowspan[$r->co_id] = 1; 
+	}
+}
+
+$nos = $evaluation['ranks']->sc;
+
+foreach($report->result() as $i=>$r){
+
+
+	$t = ceil($nos*.8);
+	$gapp = round((.8-($r->level1 + $r->level2) /  $t )* 100);
+	$gap = ceil($nos*.8) - ($r->level1 + $r->level2);
+
+	if($gapp < 0 ){
+		$gapp = 0;
+		$gap =0;
+	}
+
+	echo "<tr data-co='".$r->co_title."'  data-assesment='".$r->assesment."'  data-gap='$gapp' class='yooo_gap'>";
+	if($prev_co != $r->course_outcome){
+		echo "<td rowspan=".$rowspan[$r->co_id]." style='text-align:center; vertical-align:middle' >".$r->course_outcome."</td>";
+		$prev_co = $r->course_outcome;		
+	}
+	
+	echo "<td style='text-align:center; vertical-align:middle'>".$r->assesment."</td>";
+	echo "<td style='text-align:center; vertical-align:middle'>".$r->level1."</td>";
+	echo "<td style='text-align:center; vertical-align:middle'>".$r->level2."</td>";
+	echo "<td style='text-align:center; vertical-align:middle'>".$r->level3."</td>";
+	echo "<td style='text-align:center; vertical-align:middle'>".$r->level4."</td>";
+	
+	if($i == 0){
+		echo "<td rowspan=".count($report->result())." style='text-align:center; vertical-align:middle'>80% of cohort with rating of 2.0 or better</td>";	
+	}
+	
+	
+
+	echo "<td>$gap ($gapp%)</td>";
+	echo "</tr>";
+}
+
+
+?>
+
+
+
+
+
+						    <!-- <tr align="center">
 									<?php $gap = (($evaluation['ranks']->pmr1 + $evaluation['ranks']->pmr2) / $evaluation['ranks']->sc < .8) ? (.8 - (($evaluation['ranks']->pmr1 + $evaluation['ranks']->pmr2) / $evaluation['ranks']->sc)) : 0 ?>
 						    	<td rowspan="4" style="vertical-align: middle"><?php echo $evaluation['tc']->course_outcome_1; ?></td>
 						    	<td style="font-size: .8em">Pre-Midterms Exam</td>
@@ -180,7 +276,7 @@
 									<td><?php echo $evaluation['ranks']->or4; ?></td>
 
 									<td class="suggest"><?php echo round($gap*$evaluation['ranks']->sc).' ('.(round($gap*100,2)).'%)'; ?></td>
-								</tr>
+								</tr> -->
 						</tbody>   
 					</table>
 
@@ -203,8 +299,25 @@
 							</tr>
 						</thead>	
 						<tbody>
+							<?php 
+							$cid = isset($_GET['cid'])  ? $_GET['cid'] : 0;
+							$sgrades = $this->db->query("
+select class_id, student_id, s.name, sum(ces.grade * e.weight) as total_grade from class_exam_scores as ces
+join examinations as e on ces.exam_id = e.id
+join students as s on ces.student_id = s.id
+where ces.class_id  = $cid
+group by class_id, student_id;
+								");
+
+							$passers = 0;
+
+							foreach ($sgrades->result() as $sg) {
+								if($sg->total_grade <= 3 && $sg->total_grade >=1) $passers += 1;
+							}
+
+							?>
 							<tr>
-								<td><b>Number of Students Passed: <span class="label label-primary span-border" style="font-size: 1.1em"> <?php echo $evaluation['tc']->passed; ?></span></b></td>						
+								<td><b>Number of Students Passed: <span class="label label-primary span-border" style="font-size: 1.1em"> <?php echo $passers; ?></span></b></td>						
 								<td><i class="fa fa-square"></i> Class Record</td>
 								<td><i class="fa fa-square"> Sample of Assessment Task Output</td>
 								<td><i class="fa fa-square-o"> Others:</td>
@@ -281,35 +394,60 @@
 
 		<script>
 			$( document ).ready(function() {
-				let arr = []
-				let counter = 0
-				let exam = ["In Pre-Midterms,","In Midterms,","In Pre-Finals,", "In Finals,", "In Practicals,", "In Others,"]
-				let arrClassName = document.getElementsByClassName('suggest')
-				let suggestion;
-				for(let i=0; i<arrClassName.length;i++){
-					temp = arrClassName[i].innerText
-					let temp2 = temp.split(' ')
-					let final = parseFloat(temp2[1].match(/-?(?:\d+(?:\.\d*)?|\.\d+)/)[0]);
+				// let arr = []
+				// let counter = 0
+				// let exam = ["In Pre-Midterms,","In Midterms,","In Pre-Finals,", "In Finals,", "In Practicals,", "In Others,"]
+				// let arrClassName = document.getElementsByClassName('suggest')
+				// let suggestion;
+				// for(let i=0; i<arrClassName.length;i++){
+				// 	temp = arrClassName[i].innerText
+				// 	let temp2 = temp.split(' ')
+				// 	let final = parseFloat(temp2[1].match(/-?(?:\d+(?:\.\d*)?|\.\d+)/)[0]);
 
-					arr.push(final);
-				}
-				console.log(arr)
-				arr.forEach(function(item){
-						if(item == 0){
-							document.getElementsByClassName('form-control')[0].value += exam[counter] + " " +"the class performance for the class showed exemplary result.\t";
-						}else if(item <= 20.00){
-							document.getElementsByClassName('form-control')[0].value += exam[counter] + " " +"some students may have difficulty in couping the lesson disccussed .\t";
-						}else if(item <= 40.00){
-							document.getElementsByClassName('form-control')[0].value += exam[counter] + " " +"half of the students are having a hard time of the lesson.\t";
-						}else if(item <= 60.00){
-							document.getElementsByClassName('form-control')[0].value += exam[counter] + " " +" most students may have difficulty in the lesson.\t";
-						}else if(item <= 80.00){
-							document.getElementsByClassName('form-control')[0].value += exam[counter] + " " +"the class haven't reached the 80%.\t";
-						}else{
-							document.getElementsByClassName('form-control')[0].value += exam[counter] + " " +"the class haven't reached the 80%.\t";
-						}					
-					counter++;
+				// 	arr.push(final);
+				// }
+				// console.log(arr)
+				// arr.forEach(function(item){
+				// 		if(item == 0){
+				// 			document.getElementsByClassName('form-control')[0].value += exam[counter] + " " +"the class performance for the class showed exemplary result.\t";
+				// 		}else if(item <= 20.00){
+				// 			document.getElementsByClassName('form-control')[0].value += exam[counter] + " " +"some students may have difficulty in couping the lesson disccussed .\t";
+				// 		}else if(item <= 40.00){
+				// 			document.getElementsByClassName('form-control')[0].value += exam[counter] + " " +"half of the students are having a hard time of the lesson.\t";
+				// 		}else if(item <= 60.00){
+				// 			document.getElementsByClassName('form-control')[0].value += exam[counter] + " " +" most students may have difficulty in the lesson.\t";
+				// 		}else if(item <= 80.00){
+				// 			document.getElementsByClassName('form-control')[0].value += exam[counter] + " " +"the class haven't reached the 80%.\t";
+				// 		}else{
+				// 			document.getElementsByClassName('form-control')[0].value += exam[counter] + " " +"the class haven't reached the 80%.\t";
+				// 		}					
+				// 	counter++;
+				// });
+
+				$('#data_interpretation').val();
+
+				$.each($('.yooo_gap'),function(i,e){
+					var assesment = $(e).data('assesment');
+					var gap = $(e).data('gap');
+					var co = $(e).data('co');
+
+					if(gap == 0){
+						$('#data_interpretation').append(co+" - "+ assesment+" the class performance for the class showed exemplary result.\n");
+					}else if(gap <= 20.00){
+						$('#data_interpretation').append(co+" - "+ assesment+" some students may have difficulty in couping the lesson disccussed .\n");
+					}else if(gap <= 40.00){
+						$('#data_interpretation').append(co+" - "+ assesment+" half of the students are having a hard time of the lesson.\n");
+					}else if(gap <= 60.00){
+						$('#data_interpretation').append(co+" - "+ assesment+" most students may have difficulty in the lesson.\n");
+					}else if(gap <= 80.00){
+						$('#data_interpretation').append(co+" - "+ assesment+" the class haven't reached the 80%.\n");
+					}else{
+						$('#data_interpretation').append(co+" - "+ assesment+" the class haven't reached the 80%.\n");
+					}	
+
 				});
+
+
 			});
 
 			function printReport() {

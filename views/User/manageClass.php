@@ -120,7 +120,7 @@
 												<div class='col-md-6'>
 													<div class='pull-right'>";
 									// echo "<a href='#' class='btn btn-warning btn-md' onclick='printReport(cid=$c->int)'>PRINT REPORT</a>";
-									echo "<a href='".base_url("User/viewGrades?cid=$c->int")."' class='btn btn-primary btn-md'>VIEW GRADES</a>";					
+									echo "<a href='".base_url("User/inputGrades?cid=$c->int&viewOnly=1")."' class='btn btn-primary btn-md'>VIEW GRADES</a>";					
 									echo "<a href='" . base_url("User/viewReports?cid=$c->int") . "' class='btn btn-success btn-md '>VIEW REPORT</a>";
 									echo "</div>
 												</div>

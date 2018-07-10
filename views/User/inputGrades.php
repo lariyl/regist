@@ -8,7 +8,7 @@
 				font-weight: bold;
 				background-color: lightgrey;
 				text-align: center;
-				vertical-align: middle;
+				vertical-align: middle;	
 			}
 			.grades-table > tbody{
 				font-size: .8em;
@@ -19,6 +19,21 @@
 			.grades-table thead tr td, .grades-table tbody tr td{
 				vertical-align:middle;
 			}
+			@media print{
+				 .noprint {
+				 	display:none !important;
+				 }
+			    }
+			<?php 
+				if(  isset($_GET['viewOnly']) && $_GET['viewOnly'] == 1){
+					echo "input{ pointer-events:none;  }";
+					echo ".print-btn{ display: block; }";
+					echo ".save-grade-btn { display: none; }";
+				}
+				else{
+					echo ".print-btn{ display: none; }";
+				}
+			?>
 		</style>
 
 		<script>
@@ -37,6 +52,11 @@
 
 			var pageApp = {
 				events: function(){
+					$doc.on('click',".print-btn",function(e){
+						e.preventDefault();
+						window.print();
+					});	
+
 					$doc.on('submit','.course-grades',function(e){
 						e.preventDefault();
 
@@ -50,6 +70,8 @@
 								$(currentSaveBtnClicked).html("<i class='fa fa-spinner fa-spin'></i>");
 							},
 							success: function(response){
+
+
 								saveButton.html("Saved");
 								saveButton.switchClass('btn-primary','btn-success');
 								saveButton.attr('disabled','disabled');
@@ -156,8 +178,9 @@
 									if($c->student_count > 0){
 										echo "<div class='col-md-3'>
 												<div class='pull-right'>
-												<a href='".base_url("User/viewReports?cid=$c->int")."' class='btn btn-success'>View Reports</a>
-												<button type='submit' data-id='$c->int' id='gsb-$c->int' data-saved='0' class='btn btn-primary save-grade-btn'>Save Grade</button>												
+												<a href='".base_url("User/viewReports?cid=$c->int")."' class='btn btn-success noprint'>View Reports</a>
+												<button type='submit' data-id='$c->int' id='gsb-$c->int' data-saved='0' class='btn btn-primary save-grade-btn'>Save Grade</button>
+												<button class='btn btn-warning print-btn noprint '>Print</button>
 												</div>
 											  </div>";
 									}
@@ -174,14 +197,19 @@
 													<tr>
 														<td></td>
 														<td>ID #</td>
-														<td>STUDENT NAME</td>
-														<td>PRE-MIDTERMS <br /> ($pwpm%)</td>
-														<td>MIDTERMS <br /> ($pwm%)</td>
-														<td>PRE-FINALS <br /> ($pwpf%)</td>
-														<td>FINALS <br /> ($pwf%)</td>
-														<td>PRACTICALS <br /> ($pwp%)</td>
-														<td>OTHERS <br /> ($pwo%)</td>
-														<td>TOTAL</td>
+														<td>STUDENT NAME</td>";
+									
+									$exams = $this->UserModel->getCourseExams($c->course_id);
+
+								
+									foreach ($exams->result() as $e) {
+										echo  "<td>".$e->exam_name." (".($e->weight*100)."%) </td>
+											<input type='hidden' name='examid[]' value='".$e->exam_id."' >";						
+									}
+																		
+
+
+									echo "				<td>TOTAL</td>
 													</tr>
 												</thead>";
 									echo "<tbody>";
@@ -196,15 +224,27 @@
 													<td>$s->id
 														<input type='hidden' class='form-control' name='studentid[]' value='$s->id' />
 													</td>
-													<td>$s->name</td>
-													<td><input type='number' tabindex='1' class='form-control grade-field' data-bid='gsb-$c->int' step='0.01' min='1.00' max='5.00' name='premidterms[]' value='$s->grade_premidterms' /></td>
-													<td><input type='number' tabindex='2' class='form-control grade-field' data-bid='gsb-$c->int' step='0.01' min='1.00' max='5.00' name='midterms[]' value='$s->grade_midterms' /></td>
-													<td><input type='number' tabindex='3' class='form-control grade-field' data-bid='gsb-$c->int' step='0.01' min='1.00' max='5.00' name='prefinals[]' value='$s->grade_prefinals' /></td>
-													<td><input type='number' tabindex='4' class='form-control grade-field' data-bid='gsb-$c->int' step='0.01' min='1.00' max='5.00' name='finals[]' value='$s->grade_finals' /></td>
-													<td><input type='number' tabindex='5' class='form-control grade-field' data-bid='gsb-$c->int' step='0.01' min='1.00' max='5.00' name='practicals[]' value='$s->grade_practicals' /></td>
-													<td><input type='number' tabindex='6' class='form-control grade-field' data-bid='gsb-$c->int' step='0.01' min='1.00' max='5.00' name='others[]' value='$s->grade_others' /></td>
-													<td><b class='total-grade' data-wpm='$c->weight_premidterms' data-wm=$c->weight_midterms'' data-wpf='$c->weight_prefinals' data-wf='$c->weight_finals' data-wp='$c->weight_practicals' data-wo='$c->weight_others'>
-														".number_format((($s->grade_premidterms * $c->weight_premidterms) + ($s->grade_midterms * $c->weight_midterms) + ($s->grade_prefinals * $c->weight_prefinals) + ($s->grade_finals * $c->weight_finals) +($s->grade_practicals * $c->weight_practicals) +($s->grade_others * $c->weight_others)),2)."
+													<td>$s->name</td>";
+													$total = 0;
+											foreach ($exams->result() as $ie=> $e) {
+												
+$mygrade = $this->db->query("SELECT grade FROM class_exam_scores WHERE exam_id = ".$e->exam_id." AND student_id = ".$s->id." AND class_id = ".$s->cc_id)->row();
+$mygrade = isset($mygrade) ? $mygrade->grade : '';												
+												echo  "<td><input type='number' tabindex='".($ie%count($exams->result()))."' class='form-control grade-field' data-bid='gsb-$c->int' step='0.01' min='1.00' max='5.00' name='exam_".$e->exam_id.$s->id."' 
+			value='".($mygrade == 0 ? '' : $mygrade)."' /></td>";		
+			$total = $total + ($e->weight * $mygrade);				
+											}	
+
+													// <td><input type='number' tabindex='1' class='form-control grade-field' data-bid='gsb-$c->int' step='0.01' min='1.00' max='5.00' name='premidterms[]' value='$s->grade_premidterms' /></td>
+													// <td><input type='number' tabindex='2' class='form-control grade-field' data-bid='gsb-$c->int' step='0.01' min='1.00' max='5.00' name='midterms[]' value='$s->grade_midterms' /></td>
+													// <td><input type='number' tabindex='3' class='form-control grade-field' data-bid='gsb-$c->int' step='0.01' min='1.00' max='5.00' name='prefinals[]' value='$s->grade_prefinals' /></td>
+													// <td><input type='number' tabindex='4' class='form-control grade-field' data-bid='gsb-$c->int' step='0.01' min='1.00' max='5.00' name='finals[]' value='$s->grade_finals' /></td>
+													// <td><input type='number' tabindex='5' class='form-control grade-field' data-bid='gsb-$c->int' step='0.01' min='1.00' max='5.00' name='practicals[]' value='$s->grade_practicals' /></td>
+													// <td><input type='number' tabindex='6' class='form-control grade-field' data-bid='gsb-$c->int' step='0.01' min='1.00' max='5.00' name='others[]' value='$s->grade_others' /></td>	
+
+											echo "
+												<td><b class='total-grade' data-wpm='$c->weight_premidterms' data-wm=$c->weight_midterms'' data-wpf='$c->weight_prefinals' data-wf='$c->weight_finals' data-wp='$c->weight_practicals' data-wo='$c->weight_others'>
+														".number_format($total,2)."
 													</b></td>
 												</tr>";
 										}

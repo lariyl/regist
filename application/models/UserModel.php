@@ -12,7 +12,7 @@ Class UserModel extends CI_model
 		return $this->db->get("courses");
 	}
 
-	public function getClasses($status = null){
+	public function getClasses($status = null,$cid = null){
 
 		if ($status == "completed"){
 			$status_filter = " AND cc.completed = 1";
@@ -23,11 +23,28 @@ Class UserModel extends CI_model
 		}
 
 		$user = $this->session->userdata("id");
-		return $this->db->query("
+
+		if($cid != null){
+			return $this->db->query("
 				SELECT *, 
 				(SELECT count(id) FROM students_in_class AS sic WHERE cc.int = sic.class_id) AS student_count,
 				DATE_FORMAT(cr.submitted_at,'%M %e, %Y (%l:%i:%s %p)') AS `submission_date`,
-				cc.int AS cc_id
+				cc.int AS cc_id,
+				c.id as course_id
+				FROM course_classes AS cc
+				JOIN courses AS c ON c.id =  cc.course_id
+				LEFT JOIN class_reports AS cr ON cr.class_id = cc.int 
+				WHERE cc.user_id = $user
+				AND cc.int = $cid
+				AND cc.is_deleted = 0
+			");
+		}else{
+			return $this->db->query("
+				SELECT *, 
+				(SELECT count(id) FROM students_in_class AS sic WHERE cc.int = sic.class_id) AS student_count,
+				DATE_FORMAT(cr.submitted_at,'%M %e, %Y (%l:%i:%s %p)') AS `submission_date`,
+				cc.int AS cc_id,
+				c.id as course_id
 				FROM course_classes AS cc
 				JOIN courses AS c ON c.id =  cc.course_id
 				LEFT JOIN class_reports AS cr ON cr.class_id = cc.int 
@@ -35,6 +52,7 @@ Class UserModel extends CI_model
 				AND cc.is_deleted = 0
 				$status_filter
 			");
+		}
 	}
 
 	public function isCompleted($class_id){
@@ -48,6 +66,17 @@ Class UserModel extends CI_model
 				SELECT *, sic.class_id AS cc_id FROM students_in_class AS sic 
 					JOIN students AS s ON s.id= sic.student_id
 					WHERE sic.class_id IN (SELECT cc.int FROM course_classes AS cc WHERE cc.user_id = $user AND cc.is_deleted = 0) ORDER BY s.name ASC
+			");
+	}
+
+	public function getCourseExams($course_id){
+		return $this->db->query("
+				SELECT e.id as exam_id, e.weight, c.title, a.longname, a.shortname, co.title, co.description, e.weight, CONCAT(a.shortname, '-', co.title) as exam_name FROM examinations AS e
+				JOIN assesments AS a ON e.assesment_id = a.id
+				JOIN course_outcomes AS co ON e.course_outcomes_id = co.id
+				JOIN courses AS c ON co.course_id = c.id
+				WHERE c.id = $course_id
+				ORDER BY c.id, a.sort
 			");
 	}
 
@@ -102,6 +131,7 @@ Class UserModel extends CI_model
 				sic.grade_practicals *c.weight_practicals +
 				sic.grade_others * c.weight_others
 			) < 3.0 AND sic.class_id = $class_id) AS `passed`,
+			c.id AS `course_id`,
 			c.code AS `course_code`,
 			c.title AS `course_title`,
 			c.co1 AS `course_outcome_1`,

@@ -41,7 +41,12 @@ class User extends CI_Controller
 
 	public function inputGrades()
 	{
-		$data['classes'] = $this->UserModel->getClasses();
+		if(isset($_GET['viewOnly']) && $_GET['viewOnly'] == 1){
+			$data['classes'] = $this->UserModel->getClasses(null,$_GET['cid']);
+		}else{
+			$data['classes'] = $this->UserModel->getClasses();
+		}
+		
 		$data['students'] = $this->UserModel->getStudentsInClass();
 		$this->load->view("User/inputGrades",$data);
 	}
@@ -91,43 +96,18 @@ class User extends CI_Controller
 		if(isset($_POST['courseClass'])){
 			$cid = $_POST['courseClass'];
 
-			foreach ($_POST['studentid'] as $idx => $sid ){
+			if(isset($_POST['examid'])){
 
-				if($_POST['premidterms'][$idx] == 0){
-					$_POST['premidterms'][$idx] = NULL;
-				}
-				if($_POST['midterms'][$idx] == 0){
-					$_POST['midterms'][$idx] = NULL;
-				}
-				if($_POST['prefinals'][$idx] == 0){
-					$_POST['prefinals'][$idx] = NULL;
-				}
-				if($_POST['finals'][$idx] == 0){
-					$_POST['finals'][$idx] = NULL;
-				}				
-				if($_POST['others'][$idx] == 0){
-					$_POST['others'][$idx] = NULL;
-				}
-				if($_POST['practicals'][$idx] == 0){
-					$_POST['practicals'][$idx] = NULL;
-				}
+				foreach ($_POST['examid'] as $e) {
+					foreach ($_POST['studentid'] as $idx => $sid ){
+					$this->db->delete('class_exam_scores', array('class_id' => $cid, 'student_id' => $sid, 'exam_id' => $e));
+					$this->db->insert('class_exam_scores', array('class_id' => $cid, 'student_id' => $sid, 'exam_id' => $e, 'grade'=> $_POST["exam_".$e.$sid]) );
+					}
 
-				$studentGrades = array(
-					"class_id" => $cid,
-					"student_id" => $sid,
-					"grade_premidterms" => $_POST['premidterms'][$idx],
-					"grade_midterms" => $_POST['midterms'][$idx],
-					"grade_prefinals" => $_POST['prefinals'][$idx],
-					"grade_finals" => $_POST['finals'][$idx],
-					"grade_others" => $_POST['others'][$idx],
-					"grade_practicals" => $_POST['practicals'][$idx]
-				);
-
-				array_push($gradeTable, $studentGrades);
-			}
-
-			$response['insert_status']  = $this->UserModel->saveGradesTable($gradeTable,$cid);
-			$response['isOk'] = true;
+					// $response['insert_status']  = $this->UserModel->saveGradesTable($gradeTable,$cid);
+					$response['isOk'] = true;
+				}
+			}			
 		}else{
 			$response['isOk'] = false;
 			$response['error'] = 'Course class not set.';

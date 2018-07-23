@@ -16,7 +16,7 @@
 							</tr>
 							<tr class="success">
 								<th>Name</th>
-								<th>Usernamne</th>
+								<th>Username</th>
 								<th>Email</th>
 								<th>Role</th>
 								<th></th>

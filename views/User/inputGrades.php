@@ -23,6 +23,12 @@
 				 .noprint {
 				 	display:none !important;
 				 }
+				 .tablegrade{
+				 	display: none !important;
+				 }
+				 .tarea{
+				 	display: none !important;
+				 }
 			    }
 			<?php 
 				if(  isset($_GET['viewOnly']) && $_GET['viewOnly'] == 1){
@@ -142,6 +148,7 @@
 		<?php $this->load->view('Partials/navBar'); ?>
 		<div class="container-fluid">
 			<div class="row">
+				<p class="navbar-text navbar-left">Teacher :<a href="" class="navbar-link"><?php echo $this->session->userdata('personname'); ?></a></p>
 				<?php $this->load->view('Partials/sideBar',array('isInputGrades' => 'active')); ?>
 
 				<div class="col-md-10 col-md-offset-2 main">
@@ -173,7 +180,7 @@
 
 									echo "<div class='panel-heading'>";
 									echo "<div class='row'>";
-									echo "<div class='col-md-9 courses-heading' data-toggle='collapse' data-parent='#inputGradeAccordion' id='$c->int' data-target='#collapse$c->int'><h4><span class='badge'>Group #$c->group</span> [$c->code] $c->title</h4></div>";
+									echo "<div class='col-md-9 courses-heading' data-toggle='collapse' data-parent='#inputGradeAccordion' id='$c->int' data-target='#collapse$c->int'><h4><span class='badge'>Grp #$c->group $c->schedule</span> [$c->code] $c->title</h4></div>";
 
 									if($c->student_count > 0){
 										echo "<div class='col-md-3'>
@@ -189,7 +196,7 @@
 									echo "</div>";
 
 									echo "<div id='collapse$c->int' class='panel-collapse collapse'>";
-									echo "<div class='panel-body'>";
+									echo "<div class='panel-body table_resize'>";
 
 
 									echo "<table class='table table-striped table-bordered grades-table'>";
@@ -204,7 +211,7 @@
 								
 									foreach ($exams->result() as $e) {
 										echo  "<td>".$e->exam_name." (".($e->weight*100)."%) </td>
-											<input type='hidden' name='examid[]' value='".$e->exam_id."' >";						
+											<input type='hidden'  class='tablegrade' name='examid[]' value='".$e->exam_id."' >";						
 									}
 																		
 
@@ -243,7 +250,7 @@ $mygrade = isset($mygrade) ? $mygrade->grade : '';
 													// <td><input type='number' tabindex='6' class='form-control grade-field' data-bid='gsb-$c->int' step='0.01' min='1.00' max='5.00' name='others[]' value='$s->grade_others' /></td>	
 
 											echo "
-												<td><b class='total-grade' data-wpm='$c->weight_premidterms' data-wm=$c->weight_midterms'' data-wpf='$c->weight_prefinals' data-wf='$c->weight_finals' data-wp='$c->weight_practicals' data-wo='$c->weight_others'>
+												<td><b class='total-grade' data-wpm='$c->weight_premidterms' data-wm=$c->weight_midterms'' data-wpf='$c->weight_prefinals' data-wf='$c->weight_finals' data-wp='$c->weight_practicals' data-wo='$c->weight_others tarea'>
 														".number_format($total,2)."
 													</b></td>
 												</tr>";

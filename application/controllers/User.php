@@ -97,7 +97,7 @@ class User extends CI_Controller
 			$cid = $_POST['courseClass'];
 
 			if(isset($_POST['examid'])){
-
+					
 				foreach ($_POST['examid'] as $e) {
 					foreach ($_POST['studentid'] as $idx => $sid ){
 					$this->db->delete('class_exam_scores', array('class_id' => $cid, 'student_id' => $sid, 'exam_id' => $e));

@@ -154,7 +154,7 @@ from examinations as e
 join assesments as a  on e.assesment_id = a.id
 join course_outcomes as co on e.course_outcomes_id = co.id
 where co.course_id = $courseid
-order by co.course_id, a.sort;
+order by co.course_id, co.sort, a.sort;
 ");
 
 
@@ -318,7 +318,7 @@ group by class_id, student_id;
 							?>
 							<tr>
 								<td><b>Number of Students Passed: <span class="label label-primary span-border" style="font-size: 1.1em"> <?php echo $passers; ?></span></b></td>						
-								<td><i class="fa fa-square"></i> Class Record</td>
+								<td><i class="fa fa-square"> Class Record</td>
 								<td><i class="fa fa-square"> Sample of Assessment Task Output</td>
 								<td><i class="fa fa-square-o"> Others:</td>
 							</tr>

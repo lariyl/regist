@@ -94,7 +94,7 @@
 						<p class="pull-left"><b>Course Code & Title:</b> <?php echo $evaluation['tc']->course_code; ?> |  <?php echo $evaluation['tc']->course_title; ?> | Group# <?php echo $evaluation['tc']->class_group; ?></p>
 						<p align="right"><b>Name of Faculty: </b><a href="#" class="navbar-link"><?php echo $this->session->userdata('personname'); ?></a></p>
 						<p class="pull-left"><b>Name of Program: </b>BS Computer Engineering</p>
-						<p align="right"><b>Term & AY: </b>Second Semester, AY 2016-2017</p>
+						<p align="right"><b>Term & AY: </b>Transition Semester, AY 2017-2018</p>
 					</div>
 					<table class="table table-bordered table-responsive table_resize custom-table">
 						<thead>

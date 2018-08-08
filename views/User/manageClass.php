@@ -240,11 +240,11 @@
 					}
 					else if(classListFound==true){
 						studentList_id.push(fileArr[x][1]);
-						studentList_name.push(fileArr[x][6]+" "+fileArr[x][5]);
+						studentList_name.push(fileArr[x][5]+", "+fileArr[x][6]);
 						$("#class-student-table > tbody").append("<tr>" +
 							"<td>"+(studentNumber)+"</td>" +
 							"<td>"+fileArr[x][1]+"</td>" +
-							"<td>"+fileArr[x][6]+" "+fileArr[x][5]+"</td>" +
+							"<td>"+fileArr[x][5]+", "+fileArr[x][6]+"</td>" +
 							"</tr>");
 						studentNumber++;
 					}

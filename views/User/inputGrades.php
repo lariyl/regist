@@ -19,6 +19,9 @@
 			.grades-table thead tr td, .grades-table tbody tr td{
 				vertical-align:middle;
 			}
+			.inline-btn{
+				display: inline-block;
+			}
 			@media print{
 				 .noprint {
 				 	display:none !important;
@@ -33,7 +36,7 @@
 			<?php 
 				if(  isset($_GET['viewOnly']) && $_GET['viewOnly'] == 1){
 					echo "input{ pointer-events:none;  }";
-					echo ".print-btn{ display: block; }";
+					echo ".print-btn{ display: inline-btn; }";
 					echo ".save-grade-btn { display: none; }";
 				}
 				else{
@@ -148,7 +151,7 @@
 		<?php $this->load->view('Partials/navBar'); ?>
 		<div class="container-fluid">
 			<div class="row">
-				<p class="navbar-text navbar-left">Teacher :<a href="" class="navbar-link"><?php echo $this->session->userdata('personname'); ?></a></p>
+				<p class="navbar-text navbar-left">Teacher :<?php echo $this->session->userdata('personname'); ?></p>
 				<?php $this->load->view('Partials/sideBar',array('isInputGrades' => 'active')); ?>
 
 				<div class="col-md-10 col-md-offset-2 main">
@@ -180,14 +183,14 @@
 
 									echo "<div class='panel-heading'>";
 									echo "<div class='row'>";
-									echo "<div class='col-md-9 courses-heading' data-toggle='collapse' data-parent='#inputGradeAccordion' id='$c->int' data-target='#collapse$c->int'><h4><span class='badge'>Grp #$c->group $c->schedule</span> [$c->code] $c->title</h4></div>";
+									echo "<div class='col-md-9 courses-heading' data-toggle='collapse' data-parent='#inputGradeAccordion' id='$c->int' data-target='#collapse$c->int'><h4><span class='badge'>Grp #$c->group $c->schedule</span>  <br /> [$c->code] $c->title</h4></div>";
 
 									if($c->student_count > 0){
 										echo "<div class='col-md-3'>
 												<div class='pull-right'>
-												<a href='".base_url("User/viewReports?cid=$c->int")."' class='btn btn-success noprint'>View Reports</a>
-												<button type='submit' data-id='$c->int' id='gsb-$c->int' data-saved='0' class='btn btn-primary save-grade-btn'>Save Grade</button>
-												<button class='btn btn-warning print-btn noprint '>Print</button>
+												<a href='".base_url("User/viewReports?cid=$c->int")."' class='btn btn-success btn-sm noprint inline-btn' >View Reports</a>
+												<button type='submit' data-id='$c->int' id='gsb-$c->int' data-saved='0' class='btn btn-primary btn-sm save-grade-btn inline-btn' >Save Grade</button>
+												<a href='#' class='btn btn-warning btn-sm print-btn noprint inline-btn'>Print</a>
 												</div>
 											  </div>";
 									}
@@ -236,10 +239,16 @@
 											foreach ($exams->result() as $ie=> $e) {
 												
 $mygrade = $this->db->query("SELECT grade FROM class_exam_scores WHERE exam_id = ".$e->exam_id." AND student_id = ".$s->id." AND class_id = ".$s->cc_id)->row();
-$mygrade = isset($mygrade) ? $mygrade->grade : '';												
-												echo  "<td><input type='number' tabindex='".($ie%count($exams->result()))."' class='form-control grade-field' data-bid='gsb-$c->int' step='0.01' min='1.00' max='5.00' name='exam_".$e->exam_id.$s->id."' 
+$mygrade = isset($mygrade) ? $mygrade->grade : '';		
+
+												if(isset($_GET['viewOnly']) &&  $_GET['viewOnly'] == 1){
+													echo "<td><label>".($mygrade == 0 ? '' : $mygrade)."</label></td>";
+												}else{
+													echo  "<td><input type='number' tabindex='".($ie%count($exams->result()))."' class='form-control grade-field' data-bid='gsb-$c->int' step='0.01' min='1.00' max='5.00' name='exam_".$e->exam_id.$s->id."' 
 			value='".($mygrade == 0 ? '' : $mygrade)."' /></td>";		
-			$total = $total + ($e->weight * $mygrade);				
+												}
+												$total = $total + ($e->weight * $mygrade);
+																
 											}	
 
 													// <td><input type='number' tabindex='1' class='form-control grade-field' data-bid='gsb-$c->int' step='0.01' min='1.00' max='5.00' name='premidterms[]' value='$s->grade_premidterms' /></td>

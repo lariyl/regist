@@ -65,7 +65,8 @@ Class UserModel extends CI_model
 		return $this->db->query("
 				SELECT *, sic.class_id AS cc_id FROM students_in_class AS sic 
 					JOIN students AS s ON s.id= sic.student_id
-					WHERE sic.class_id IN (SELECT cc.int FROM course_classes AS cc WHERE cc.user_id = $user AND cc.is_deleted = 0) ORDER BY s.name ASC
+					WHERE sic.class_id IN (SELECT cc.int FROM course_classes AS cc WHERE cc.user_id = $user AND cc.is_deleted = 0) 
+					ORDER BY s.name ASC
 			");
 	}
 
